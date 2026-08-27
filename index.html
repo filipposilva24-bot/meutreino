@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Diário de Cargas Natural & Nutri Coach</title>
+    <!-- BIBLIOTECA PARA GERAR DOWNLOAD DA IMAGEM REAL -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
             --bg-main: #0a0f1d;
@@ -678,20 +680,20 @@
         </div>
     </div>
 
-    <!-- MODAL DE EXPORTAÇÃO COM COMPARTILHAMENTO NATIVO -->
+    <!-- MODAL DE EXPORTAÇÃO COM DOWNLOAD DE IMAGEM REAL -->
     <div id="exportModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); z-index: 3000; align-items: center; justify-content: center; padding: 16px;">
         <div class="card-box" style="max-width: 440px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                 <div class="question-title" id="exportModalTitle" style="margin: 0; font-size: 1.1rem; color: var(--text-highlight);">🎨 Card Semanal Gerado</div>
                 <button onclick="closeExportModal()" style="background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer; font-weight: 800;">✕</button>
             </div>
-            <div class="question-sub" style="margin-bottom: 10px;">Clique no botão abaixo para baixar ou enviar o card completo:</div>
+            <div class="question-sub" style="margin-bottom: 10px;">Clique no botão abaixo para baixar o card completo direto na sua galeria:</div>
             
-            <!-- CONTAINER ONDE O CARD DA SEMANA COMPLETA É RENDERIZADO -->
+            <!-- CONTAINER ONDE O CARD DA SEMANA COMPLETA É RENDERIZADO COM ID CAPTURECARD -->
             <div id="visualCardContainer"></div>
 
-            <button class="btn-primary" style="background: linear-gradient(135deg, var(--accent-green) 0%, #059669 100%); margin-bottom: 8px;" onclick="shareOrDownloadCard()">
-                📤 SALVAR OU COMPARTILHAR CARD
+            <button class="btn-primary" style="background: linear-gradient(135deg, var(--accent-green) 0%, #059669 100%); margin-bottom: 8px;" onclick="downloadCardAsImage()">
+                📥 BAIXAR CARD EM IMAGEM (PNG)
             </button>
             <button class="btn-primary btn-secondary" onclick="copyVisualTextAsMarkdown()">
                 📋 Copiar Texto para o WhatsApp
@@ -699,26 +701,39 @@
         </div>
     </div>
 
-    <!-- MODAL DE AJUDA AMPLIADO COM WHATSAPP -->
-    <div id="helpModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 3000; align-items: center; justify-content: center; padding: 16px;">
+    <!-- MODAL DE AJUDA COMPLETO -->
+    <div id="helpModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 3000; align-items: center; justify-content: center; padding: 16px;">
         <div class="card-box" style="max-width: 440px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                <div class="question-title" style="margin: 0; font-size: 1.1rem;">❓ Central de Ajuda & Guia</div>
+                <div class="question-title" style="margin: 0; font-size: 1.1rem;">❓ Central de Ajuda & Guia Completo</div>
                 <button onclick="toggleHelpModal()" style="background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer; font-weight: 800;">✕</button>
             </div>
 
-            <div style="font-size: 0.85rem; line-height: 1.5; color: var(--text-sub);">
-                <b style="color: var(--text-title); display: block; margin-top: 6px;">📥 Salvar Fichas e Dietas:</b>
-                Gere o card visual e clique em "Salvar ou Compartilhar Card" para abrir o menu nativo do seu celular e salvar na galeria.
+            <div style="font-size: 0.85rem; line-height: 1.6; color: var(--text-sub);">
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">🏋️‍♂️ Como usar o Diário de Treino:</b>
+                Selecione o dia da semana nas caixas de seleção, insira as cargas (kg) e repetições executadas a cada série. Clique no botão de check (✓) ao lado da série para iniciar automaticamente o cronômetro de descanso adequado para o seu grupamento muscular.
                 <br><br>
-                <b style="color: var(--text-title); display: block; margin-top: 6px;">📸 Câmera de Alimentos & Barras:</b>
-                No menu Nutri Coach, use o botão de foto do prato para enviar imagens para a IA estimar os macros, ou o leitor de código de barras para verificar produtos.
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">📌 O que significam os botões F e D?</b>
+                <br>• <b>[F] - Falha Muscular:</b> Marque esta opção caso tenha chegado ao ponto em que não consegue realizar nenhuma repetição adicional com boa forma na série.
+                <br>• <b>[D] - Drop-Set:</b> Marque esta opção se realizou a técnica avançada de reduzir a carga imediatamente após a falha para continuar executando mais repetições.
+                <br><br>
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">🔄 Aparelho Ocupado / Tutoriais:</b>
+                Se o equipamento da academia estiver ocupado, clique no botão <b>Ocupado</b> para escolher alternativas equivalentes. Use o botão <b>Tutorial</b> para ver dicas corretas de postura e execução.
+                <br><br>
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">🔋 Condição Biológica & Modos:</b>
+                No início da aba de treinos, você pode alternar para o <i>Modo Express</i> (focado em agilizar o treino em 25 minutos) ou ajustar sua energia do dia (Normal, Cansado ou Modo Economia com redução automática de séries).
+                <br><br>
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">✨ Nutri Coach & Fotos de Pratos:</b>
+                Na aba do Nutri Coach, preencha seus dados para calcular calorias e macros. Você pode usar os botões de câmera para fotografar refeições para estimativa de macros por inteligência artificial ou escanear códigos de barras.
+                <br><br>
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">📥 Como Baixar Cards em Imagem:</b>
+                Ao gerar o card visual da semana de treino ou dieta, clique em <b>"Baixar Card em Imagem (PNG)"</b> para que o arquivo seja gerado internamente e baixado direto para a galeria do seu celular. Caso prefira, utilize a opção de copiar texto para enviar por mensagem.
                 <br><br>
                 <hr style="border: 0; border-top: 1px solid var(--border-card); margin: 16px 0;">
                 
-                <div style="text-align: center; font-weight: 700; color: var(--text-title); margin-bottom: 8px;">Ainda precisa de suporte ou quer falar com a gente?</div>
+                <div style="text-align: center; font-weight: 700; color: var(--text-title); margin-bottom: 8px;">Ainda tem dúvidas ou precisa de suporte?</div>
                 <a href="https://wa.me/5511982818590?text=Olá!%20Estou%20usando%20o%20Diário%20Natural%20e%20preciso%20de%20ajuda." target="_blank" class="whatsapp-help-btn">
-                    💬 FALAR PELO WHATSAPP (+55 11 98281-8590)
+                    💬 FALAR PELO WHATSAPP
                 </a>
             </div>
         </div>
@@ -811,7 +826,7 @@
         const exerciseLibrary = {
             supino_m: { name: "Supino Reto na Máquina", group: "Peito", options: ["Supino Reto na Máquina", "Supino Reto com Halteres", "Supino Reto no Smith", "Supino Reto com Barra"], tutorial: "<b>Postura:</b> Ajuste o banco na linha do meio do peito. Mantenha escápulas coladas." },
             remada_c: { name: "Remada Curvada com Barra", group: "Costas", options: ["Remada Curvada com Barra", "Remada Baixa com Triângulo", "Remada Articulada"], tutorial: "<b>Postura:</b> Tronco a 45°, coluna reta, puxe em direção ao umbigo." },
-            desenv_m: { name: "Desenvolvimento na Máquina", group: "Ombros", options: ["Desenvolvimento na Máquina", "Desenvolvimento com Halteres"], tutorial: "<b>Postura:</b> Coluna apoiada, empurre para cima sem esticar totalmente os cotovelos." },
+            desenv_m: { name: "Desenvolvimento na Máquina", group: "Ombros", options: ["Desenvolvimento na Máquina", "Desenvolvimento with Halteres"], tutorial: "<b>Postura:</b> Coluna apoiada, empurre para cima sem esticar totalmente os cotovelos." },
             puxada_a: { name: "Puxada Alta (Pegada Aberta)", group: "Costas", options: ["Puxada Alta (Pegada Aberta)", "Puxada Articulada"], tutorial: "<b>Postura:</b> Estufe o peito e puxe a barra em direção ao topo do tórax." },
             agach_hack: { name: "Agachamento no Hack / Smith", group: "Pernas", options: ["Agachamento no Hack / Smith", "Leg Press 45°"], tutorial: "<b>Postura:</b> Pés na largura dos ombros, desça controlando os joelhos a 90°." },
             stiff_smith: { name: "Stiff na Máquina Smith", group: "Pernas", options: ["Stiff na Máquina Smith", "Mesa Flexora"], tutorial: "<b>Postura:</b> Incline o quadril para trás sentindo alongar os posteriores." },
@@ -1445,10 +1460,10 @@
             renderReport();
         }
 
-        // GERADOR DE CARD VISUAL COMPLETO DA SEMANA DE TREINO
+        // GERADOR DE CARD VISUAL COMPLETO DA SEMANA DE TREINO COM ID CAPTURECARD
         function exportWeeklyWorkoutVisualCard() {
             let cardHtml = `
-                <div class="visual-card-preview">
+                <div id="captureCard" class="visual-card-preview">
                     <div class="vc-header">
                         <span class="vc-title">📋 FICHA COMPLETA DA SEMANA</span>
                         <span style="font-size:0.7rem; color:var(--text-highlight);">DIÁRIO NATURAL</span>
@@ -1482,10 +1497,10 @@
             document.getElementById('exportModal').style.display = 'flex';
         }
 
-        // GERADOR DE CARD VISUAL COMPLETO DA SEMANA DE DIETA + COMPRAS
+        // GERADOR DE CARD VISUAL COMPLETO DA SEMANA DE DIETA + COMPRAS COM ID CAPTURECARD
         function exportWeeklyDietVisualCard() {
             let cardHtml = `
-                <div class="visual-card-preview">
+                <div id="captureCard" class="visual-card-preview">
                     <div class="vc-header">
                         <span class="vc-title">✨ CARDÁPIO & COMPRAS DA SEMANA</span>
                         <span style="font-size:0.7rem; color:#c084fc;">NUTRI COACH</span>
@@ -1531,18 +1546,19 @@
             document.getElementById('exportModal').style.display = 'flex';
         }
 
-        // COMPARTILHAMENTO OU SALVAMENTO NATIVO NO CELULAR
-        function shareOrDownloadCard() {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Diário Natural & Nutri Coach',
-                    text: lastExportMarkdown,
-                }).catch(() => {
-                    alert('Compartilhamento cancelado.');
-                });
-            } else {
-                copyVisualTextAsMarkdown();
-            }
+        // DOWNLOAD REAL DE IMAGEM PNG COM HTML2CANVAS
+        function downloadCardAsImage() {
+            const cardElement = document.getElementById('captureCard');
+            if (!cardElement) return;
+
+            html2canvas(cardElement, { scale: 2, backgroundColor: '#0a0f1d', useCORS: true }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'diario-natural-card.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(err => {
+                alert('Erro ao gerar imagem. Tente tirar um print.');
+            });
         }
 
         function closeExportModal() {
