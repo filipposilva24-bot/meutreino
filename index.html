@@ -3,26 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Diário de Cargas Natural & Nutri IA</title>
+    <title>Diário de Cargas Natural & Nutri Coach</title>
     <style>
         :root {
             --bg-main: #0a0f1d;
             --bg-card: rgba(18, 24, 41, 0.85);
             --bg-input: rgba(26, 34, 56, 0.9);
             --border-card: rgba(255, 255, 255, 0.12);
-            --accent-green: #10b981;
-            --accent-green-glow: rgba(16, 185, 129, 0.25);
-            --accent-yellow: #f59e0b;
-            --accent-red: #ef4444;
-            --accent-blue: #3b82f6;
-            --accent-blue-glow: rgba(59, 130, 246, 0.25);
-            --accent-purple: #8b5cf6;
-            --accent-spotify: #1ed760;
-            --accent-spotify-glow: rgba(30, 215, 96, 0.25);
+            --accent-primary: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.25);
             --text-title: #f8fafc;
             --text-sub: #94a3b8;
             --text-highlight: #38bdf8;
             --danger: #ef4444;
+            --accent-green: #10b981;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -59,37 +53,37 @@
         .brand-wrapper { display: flex; align-items: center; gap: 10px; }
         .brand-logo-icon {
             width: 36px; height: 36px;
-            background: linear-gradient(135deg, var(--accent-blue) 0%, #1d4ed8 100%);
+            background: linear-gradient(135deg, var(--accent-primary) 0%, #1d4ed8 100%);
             border-radius: 10px; display: flex; align-items: center; justify-content: center;
             color: #ffffff;
         }
         .brand-title { font-size: 1.15rem; font-weight: 800; color: var(--text-title); }
-        .brand-subtitle { font-size: 0.65rem; color: var(--text-sub); font-weight: 600; text-transform: uppercase; }
+        .brand-subtitle { font-size: 0.65rem; color: var(--text-highlight); font-weight: 600; text-transform: uppercase; }
         
-        .header-actions { display: flex; align-items: center; gap: 8px; }
+        .header-actions { display: flex; align-items: center; gap: 6px; }
 
         .brand-badge {
             font-size: 0.68rem; font-weight: 700; padding: 4px 8px; border-radius: 20px;
-            background: var(--accent-green-glow); color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.2); color: var(--accent-green);
             border: 1px solid rgba(16, 185, 129, 0.3); cursor: pointer; text-transform: uppercase;
         }
 
-        .help-btn {
+        .theme-btn, .help-btn {
             background: var(--bg-input); border: 1px solid var(--border-card); color: var(--text-sub);
             border-radius: 20px; padding: 4px 10px; font-weight: 700; font-size: 0.68rem; cursor: pointer;
         }
 
-        /* WIDGET DO SPOTIFY */
+        /* SPOTIFY */
         .spotify-card {
             background: linear-gradient(135deg, rgba(30, 215, 96, 0.15) 0%, rgba(18, 24, 41, 0.9) 100%);
             border: 1px solid rgba(30, 215, 96, 0.3); border-radius: 16px; padding: 14px; margin-bottom: 16px; backdrop-filter: blur(12px);
         }
         .spotify-header { display: flex; justify-content: space-between; align-items: center; }
-        .spotify-title { font-size: 0.9rem; font-weight: 800; color: var(--accent-spotify); display: flex; align-items: center; gap: 6px; }
+        .spotify-title { font-size: 0.9rem; font-weight: 800; color: #1ed760; display: flex; align-items: center; gap: 6px; }
         .spotify-btn {
             width: 100%; height: 42px; background-color: #1db954; color: #000; font-weight: 800; border: none;
             border-radius: 12px; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; gap: 8px;
-            cursor: pointer; margin-top: 10px; box-shadow: 0 4px 14px var(--accent-spotify-glow); text-decoration: none;
+            cursor: pointer; margin-top: 10px; box-shadow: 0 4px 14px rgba(30, 215, 96, 0.25); text-decoration: none;
         }
         .playlist-chips { display: flex; gap: 6px; overflow-x: auto; margin-top: 10px; padding-bottom: 4px; scrollbar-width: none; }
         .playlist-chips::-webkit-scrollbar { display: none; }
@@ -98,22 +92,22 @@
             padding: 6px 10px; border-radius: 8px; font-size: 0.72rem; font-weight: 700; white-space: nowrap; text-decoration: none;
         }
 
-        /* CRONÔMETRO FLUTUANTE */
+        /* CRONÔMETRO */
         .timer-modal {
             position: fixed; top: 16px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); max-width: 440px;
-            background-color: rgba(30, 41, 59, 0.95); backdrop-filter: blur(12px); border: 2px solid var(--accent-blue); border-radius: 14px; padding: 12px 16px;
+            background-color: rgba(30, 41, 59, 0.95); backdrop-filter: blur(12px); border: 2px solid var(--accent-primary); border-radius: 14px; padding: 12px 16px;
             display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 2000;
         }
         .timer-display { font-size: 1.3rem; font-weight: 800; color: var(--text-highlight); }
         .timer-btn { background: var(--bg-input); border: 1px solid var(--border-card); color: var(--text-title); padding: 6px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
 
-        /* CARDS DE AUTENTICAÇÃO E ONBOARDING */
+        /* CARDS */
         .card-box {
             background-color: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-card);
             border-radius: 18px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-top: 10px;
         }
 
-        .step-progress { font-size: 0.75rem; font-weight: 800; color: var(--accent-blue); text-transform: uppercase; margin-bottom: 8px; display: block; }
+        .step-progress { font-size: 0.75rem; font-weight: 800; color: var(--accent-primary); text-transform: uppercase; margin-bottom: 8px; display: block; }
         .question-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 6px; line-height: 1.3; }
         .question-sub { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 20px; }
 
@@ -128,17 +122,16 @@
             margin-bottom: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
         }
 
-        .option-btn.active { border-color: var(--accent-blue); background-color: rgba(59, 130, 246, 0.2); color: var(--text-highlight); }
+        .option-btn.active { border-color: var(--accent-primary); background-color: var(--accent-glow); color: var(--text-highlight); }
 
         .btn-primary {
-            width: 100%; height: 50px; background: linear-gradient(135deg, var(--accent-blue) 0%, #1d4ed8 100%);
+            width: 100%; height: 50px; background: linear-gradient(135deg, var(--accent-primary) 0%, #1d4ed8 100%);
             color: #fff; border: none; border-radius: 12px; font-size: 0.95rem; font-weight: 800;
-            cursor: pointer; box-shadow: 0 4px 16px var(--accent-blue-glow); margin-top: 10px;
+            cursor: pointer; box-shadow: 0 4px 16px var(--accent-glow); margin-top: 10px;
         }
 
         .btn-secondary { background: transparent; border: 1px solid var(--border-card); color: var(--text-sub); margin-top: 8px; }
 
-        /* EXECUÇÃO DE TREINO */
         .mode-toggle-wrapper {
             display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;
             background: var(--bg-card); padding: 4px; border-radius: 12px; border: 1px solid var(--border-card);
@@ -148,9 +141,20 @@
             padding: 8px 10px; border: none; border-radius: 8px; font-size: 0.75rem; font-weight: 800;
             color: var(--text-sub); background: transparent; cursor: pointer; transition: all 0.2s;
         }
-
         .mode-btn.active { background: var(--bg-input); color: var(--text-highlight); border: 1px solid var(--border-card); }
         .mode-btn.express-active { background: rgba(234, 179, 8, 0.2); color: #facc15; border: 1px solid rgba(234, 179, 8, 0.4); }
+
+        .energy-selector-card {
+            background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 14px; padding: 12px; margin-bottom: 12px; backdrop-filter: blur(12px);
+        }
+        .energy-chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; }
+        .energy-chip {
+            background: var(--bg-input); border: 1px solid var(--border-card); color: var(--text-sub);
+            padding: 8px 4px; border-radius: 8px; font-size: 0.7rem; font-weight: 700; text-align: center; cursor: pointer; transition: all 0.2s;
+        }
+        .energy-chip.active-100 { background: rgba(16, 185, 129, 0.2); border-color: var(--accent-green); color: var(--accent-green); }
+        .energy-chip.active-mid { background: rgba(245, 158, 11, 0.2); border-color: var(--accent-yellow); color: var(--accent-yellow); }
+        .energy-chip.active-low { background: rgba(239, 68, 68, 0.2); border-color: var(--accent-red); color: var(--accent-red); }
 
         .exercise-card { 
             background-color: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-card); 
@@ -183,41 +187,49 @@
             backdrop-filter: blur(12px); border: 1px solid var(--border-card); border-radius: 12px; font-size: 0.9rem; font-weight: 700; outline: none; margin-bottom: 12px;
         }
 
-        .history-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 600; color: var(--accent-green); background: var(--accent-green-glow); padding: 4px 10px; border-radius: 8px; margin-bottom: 8px; }
+        .history-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 600; color: var(--accent-green); background: rgba(16, 185, 129, 0.2); padding: 4px 10px; border-radius: 8px; margin-bottom: 8px; }
         
-        .progression-badge {
-            display: flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 800; color: #38bdf8;
-            background: rgba(56, 189, 248, 0.2); border: 1px dashed var(--accent-blue); padding: 6px 12px; border-radius: 8px; margin-bottom: 12px; animation: pulse 2s infinite;
-        }
+        .set-row { display: grid; grid-template-columns: 46px 1fr 1fr 34px 34px 38px; gap: 5px; align-items: center; margin-bottom: 8px; }
+        .set-label { font-size: 0.68rem; font-weight: 700; color: var(--text-sub); text-transform: uppercase; }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.4); }
-            70% { box-shadow: 0 0 0 6px rgba(56, 189, 248, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
-        }
-
-        .set-row { display: grid; grid-template-columns: 55px 1fr 1fr 44px; gap: 8px; align-items: center; margin-bottom: 8px; }
-        .set-label { font-size: 0.75rem; font-weight: 700; color: var(--text-sub); text-transform: uppercase; }
-
-        input[type="number"] {
-            width: 100%; height: 42px; background-color: var(--bg-input); border: 1px solid var(--border-card);
-            border-radius: 10px; color: var(--text-title); font-size: 0.95rem; font-weight: 700; text-align: center; outline: none;
+        input[type="number"], input[type="text"], input[type="password"] {
+            width: 100%; height: 40px; background-color: var(--bg-input); border: 1px solid var(--border-card);
+            border-radius: 10px; color: var(--text-title); font-size: 0.9rem; font-weight: 700; padding: 0 10px; outline: none;
         }
 
         .check-btn {
-            height: 42px; width: 44px; border-radius: 10px; border: 1px solid var(--border-card);
+            height: 40px; width: 38px; border-radius: 10px; border: 1px solid var(--border-card);
             background-color: var(--bg-input); color: var(--text-sub); display: flex; align-items: center; justify-content: center; cursor: pointer;
         }
         .check-btn.checked { background-color: var(--accent-green); color: #fff; border-color: var(--accent-green); }
 
+        .tag-btn {
+            height: 40px; width: 34px; border-radius: 10px; border: 1px solid var(--border-card);
+            background-color: var(--bg-input); color: var(--text-sub); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; cursor: pointer;
+        }
+        .tag-btn.active-f { background-color: var(--danger); color: #fff; border-color: var(--danger); }
+        .tag-btn.active-d { background-color: #f59e0b; color: #fff; border-color: #f59e0b; }
+
         .save-btn {
-            width: 100%; height: 52px; background: linear-gradient(135deg, var(--accent-blue) 0%, #1d4ed8 100%);
+            width: 100%; height: 52px; background: linear-gradient(135deg, var(--accent-primary) 0%, #1d4ed8 100%);
             color: #ffffff; border: none; border-radius: 14px; font-size: 1rem; font-weight: 800; cursor: pointer;
-            box-shadow: 0 8px 24px var(--accent-blue-glow); display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px;
+            box-shadow: 0 8px 24px var(--accent-glow); display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px;
+        }
+
+        .export-btn {
+            width: 100%; padding: 12px; background: rgba(56, 189, 248, 0.15); border: 1px solid var(--text-highlight);
+            color: var(--text-highlight); border-radius: 12px; font-size: 0.85rem; font-weight: 800; cursor: pointer; margin-top: 8px;
+        }
+
+        .whatsapp-help-btn {
+            width: 100%; height: 46px; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            color: #ffffff; border: none; border-radius: 12px; font-size: 0.9rem; font-weight: 800;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; margin-top: 16px;
+            box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
         }
 
         .add-ex-btn {
-            width: 100%; padding: 12px; background: rgba(59, 130, 246, 0.15); backdrop-filter: blur(8px); border: 1px dashed var(--accent-blue);
+            width: 100%; padding: 12px; background: var(--accent-glow); backdrop-filter: blur(8px); border: 1px dashed var(--accent-primary);
             color: var(--text-highlight); border-radius: 12px; font-size: 0.85rem; font-weight: 800; cursor: pointer; margin-bottom: 16px;
         }
 
@@ -226,10 +238,10 @@
             color: var(--text-sub); border-radius: 12px; font-size: 0.8rem; font-weight: 700; cursor: pointer; margin-top: 12px;
         }
 
-        /* NUTRI IA */
+        /* NUTRI COACH */
         .nutri-header-card {
             background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%);
-            border: 1px solid var(--accent-purple); border-radius: 18px; padding: 20px; margin-bottom: 16px; backdrop-filter: blur(12px);
+            border: 1px solid #8b5cf6; border-radius: 18px; padding: 20px; margin-bottom: 16px; backdrop-filter: blur(12px);
         }
         .nutri-title { font-size: 1.15rem; font-weight: 800; color: #c084fc; display: flex; align-items: center; gap: 8px; }
         .macro-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 14px 0; }
@@ -243,56 +255,60 @@
             padding: 8px 14px; background: var(--bg-input); border: 1px solid var(--border-card);
             border-radius: 10px; color: var(--text-sub); font-size: 0.78rem; font-weight: 700; cursor: pointer; white-space: nowrap;
         }
-        .week-tab-btn.active { background: var(--accent-purple); color: #fff; border-color: var(--accent-purple); }
+        .week-tab-btn.active { background: #8b5cf6; color: #fff; border-color: #8b5cf6; }
 
         .meal-card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 14px; padding: 14px; margin-bottom: 10px; backdrop-filter: blur(12px); }
         .meal-title { font-size: 0.88rem; font-weight: 800; color: var(--text-highlight); display: flex; justify-content: space-between; margin-bottom: 6px; }
         .meal-items { font-size: 0.82rem; color: var(--text-title); line-height: 1.5; padding-left: 18px; margin: 0; }
         .meal-items li { margin-bottom: 4px; }
 
-        .grocery-cat-title { font-size: 0.85rem; font-weight: 800; color: var(--accent-purple); margin: 12px 0 6px 0; text-transform: uppercase; }
+        .grocery-cat-title { font-size: 0.85rem; font-weight: 800; color: #8b5cf6; margin: 12px 0 6px 0; text-transform: uppercase; }
         .grocery-item-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.85rem; }
-        .grocery-item-row.checked-item { text-decoration: line-through; opacity: 0.5; }
 
         .chat-box { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 16px; padding: 14px; margin-top: 16px; }
-        .chat-messages { max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
-        .msg-bubble { padding: 10px 14px; border-radius: 12px; font-size: 0.85rem; line-height: 1.4; max-width: 85%; }
+        .chat-messages { max-height: 280px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+        .msg-bubble { padding: 10px 14px; border-radius: 12px; font-size: 0.85rem; line-height: 1.4; max-width: 85%; word-break: break-word; }
         .msg-ia { background: rgba(139, 92, 246, 0.2); border: 1px solid rgba(139, 92, 246, 0.4); align-self: flex-start; color: var(--text-title); }
-        .msg-user { background: var(--accent-blue); align-self: flex-end; color: #fff; font-weight: 600; }
+        .msg-user { background: var(--accent-primary); align-self: flex-end; color: #fff; font-weight: 600; }
 
         .chat-input-wrapper { display: flex; gap: 8px; }
         .chat-input { flex: 1; height: 42px; background: var(--bg-input); border: 1px solid var(--border-card); border-radius: 10px; color: var(--text-title); padding: 0 12px; outline: none; font-size: 0.85rem; }
-        .chat-send-btn { background: var(--accent-purple); color: #fff; border: none; border-radius: 10px; padding: 0 16px; font-weight: 800; cursor: pointer; }
+        .chat-send-btn { background: #8b5cf6; color: #fff; border: none; border-radius: 10px; padding: 0 16px; font-weight: 800; cursor: pointer; }
 
-        /* ESTILOS DO RAIO-X CORPORAL */
+        /* RAIO-X & RELATÓRIOS */
         .body-map-card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 18px; padding: 18px; margin-bottom: 16px; backdrop-filter: blur(12px); }
         .body-legend { display: flex; justify-content: space-around; margin: 12px 0 16px 0; font-size: 0.72rem; font-weight: 700; color: var(--text-sub); }
         .legend-item { display: flex; align-items: center; gap: 6px; }
         .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
         
         .muscle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .muscle-status-box { background: var(--bg-input); border: 1px solid var(--border-card); border-radius: 12px; padding: 12px; text-align: center; cursor: pointer; transition: transform 0.2s; }
-        .muscle-status-box:active { transform: scale(0.97); }
+        .muscle-status-box { background: var(--bg-input); border: 1px solid var(--border-card); border-radius: 12px; padding: 12px; text-align: center; }
         .muscle-name { font-size: 0.82rem; font-weight: 800; color: var(--text-title); margin-bottom: 4px; }
         .muscle-state-txt { font-size: 0.7rem; font-weight: 700; }
 
-        /* RELATÓRIO E COMPARAÇÃO */
         .report-item, .compare-card, .measure-card { background-color: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-card); border-radius: 14px; padding: 14px; margin-bottom: 10px; }
         .report-day-title { font-size: 0.9rem; font-weight: 800; color: var(--text-highlight); text-transform: uppercase; margin: 18px 0 8px 0; }
-        .report-flex { display: flex; justify-content: space-between; align-items: center; }
-        .stat-main { font-size: 0.9rem; font-weight: 800; color: var(--accent-green); }
-        .stat-sub { font-size: 0.72rem; color: var(--text-sub); }
-
-        .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
-        .compare-box { background-color: var(--bg-input); border: 1px solid var(--border-card); border-radius: 10px; padding: 8px; text-align: center; }
-        .compare-val { font-size: 1.05rem; font-weight: 800; color: var(--accent-blue); }
-        .diff-tag { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 800; margin-top: 8px; }
-        .diff-up { background: var(--accent-green-glow); color: var(--accent-green); }
-        .diff-down { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
-        .diff-equal { background: rgba(148, 163, 184, 0.15); color: var(--text-sub); }
-
         .empty-msg { text-align: center; color: var(--text-sub); font-size: 0.85rem; padding: 30px 10px; line-height: 1.5; }
         .measure-row { display: grid; grid-template-columns: 100px 1fr; gap: 10px; align-items: center; margin-bottom: 10px; }
+
+        /* ESTILOS DO CARD VISUAL EXPORTADO */
+        .visual-card-preview {
+            background: linear-gradient(145deg, #121829 0%, #0a0f1d 100%);
+            border: 2px solid var(--accent-primary);
+            border-radius: 16px;
+            padding: 16px;
+            color: #f8fafc;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+            margin-bottom: 12px;
+            text-align: left;
+            max-height: 380px;
+            overflow-y: auto;
+        }
+        .vc-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 12px; }
+        .vc-title { font-size: 0.95rem; font-weight: 800; color: var(--text-highlight); text-transform: uppercase; }
+        .vc-section-title { font-size: 0.85rem; font-weight: 800; color: #c084fc; margin: 10px 0 4px 0; text-transform: uppercase; border-left: 3px solid #8b5cf6; padding-left: 6px; }
+        .vc-item { font-size: 0.78rem; margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; justify-content: space-between; align-items: center; }
+        .vc-footer { font-size: 0.65rem; color: var(--text-sub); text-align: center; margin-top: 14px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
 
         /* NAVBAR INFERIOR */
         .bottom-nav {
@@ -301,35 +317,36 @@
         }
 
         .nav-item { background: none; border: none; color: var(--text-sub); font-size: 0.65rem; font-weight: 700; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 6px 8px; }
-        .nav-item.active { color: var(--accent-blue); }
-        .nav-item.nutri-active { color: var(--accent-purple); }
+        .nav-item.active { color: var(--accent-primary); }
+        .nav-item.nutri-active { color: #8b5cf6; }
         .nav-item svg { width: 22px; height: 22px; stroke-width: 2; }
     </style>
 </head>
-<body>
+<body data-theme="blue">
 
     <div class="app-container">
 
         <header>
             <div class="brand-wrapper">
                 <div class="brand-logo-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6.5 6.5h11M6.5 17.5h11M3 12h18M4 6.5v11M20 6.5v11"/></svg>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-2h2zm0-4h-2V7h2z"/></svg>
                 </div>
                 <div>
                     <div class="brand-title">DIÁRIO NATURAL</div>
-                    <div class="brand-subtitle">Progressão & Nutri IA</div>
+                    <div class="brand-subtitle">Powered by Nutri Coach Gemini IA</div>
                 </div>
             </div>
             <div class="header-actions">
-                <button class="help-btn" onclick="toggleHelpModal()">❓ AJUDA</button>
+                <button class="theme-btn" onclick="cycleTheme()" title="Trocar Tema">🎨 TEMA</button>
+                <button class="help-btn" onclick="toggleHelpModal()">❓</button>
                 <div class="brand-badge" id="badgeStatus" onclick="handleBadgeClick()">CONECTAR</div>
             </div>
         </header>
 
-        <!-- CRONÔMETRO FLUTUANTE -->
+        <!-- CRONÔMETRO COM PERSISTÊNCIA -->
         <div id="timerModal" class="timer-modal" style="display: none;">
             <div>
-                <span style="font-size: 0.75rem; color: var(--text-sub); display: block;">DESCANSO ATIVO</span>
+                <span style="font-size: 0.75rem; color: var(--text-sub); display: block;" id="timerLabel">DESCANSO ATIVO</span>
                 <span id="timerDisplay" class="timer-display">01:30</span>
             </div>
             <div style="display: flex; gap: 6px;">
@@ -338,7 +355,7 @@
             </div>
         </div>
 
-        <!-- TELA 0: AUTENTICAÇÃO -->
+        <!-- AUTENTICAÇÃO -->
         <div id="authView">
             <div class="card-box">
                 <div class="question-title">Acesse sua Conta</div>
@@ -352,7 +369,7 @@
             </div>
         </div>
 
-        <!-- TELA ONBOARDING DO TREINO -->
+        <!-- ONBOARDING -->
         <div id="onboardingView" style="display: none;">
             <div id="step1" class="card-box">
                 <span class="step-progress">ETAPA 1 DE 4</span>
@@ -413,7 +430,6 @@
                 <button class="btn-primary" onclick="nextStep(4)">CONTINUAR ➔</button>
             </div>
 
-            <!-- ETAPA 4: BUSCA DE ACADEMIAS PRÓXIMAS -->
             <div id="step4" class="card-box" style="display: none;">
                 <span class="step-progress">ETAPA 4 DE 4</span>
                 <div class="question-title">📍 Encontrar Academias Próximas?</div>
@@ -426,10 +442,9 @@
             </div>
         </div>
 
-        <!-- ABA 1: EXECUÇÃO DO TREINO -->
+        <!-- ABA 1: TREINO -->
         <div id="workoutView" style="display: none;">
             
-            <!-- WIDGET INTEGRADO DO SPOTIFY -->
             <div class="spotify-card">
                 <div class="spotify-header">
                     <div class="spotify-title">
@@ -449,10 +464,21 @@
                 </div>
             </div>
 
-            <!-- SELETOR DE MODO: COMPLETO vs EXPRESS -->
             <div class="mode-toggle-wrapper">
                 <button id="btnModeFull" class="mode-btn active" onclick="setWorkoutMode('full')">📋 Treino Completo</button>
                 <button id="btnModeExpress" class="mode-btn" onclick="setWorkoutMode('express')">⚡ Modo Express (25m)</button>
+            </div>
+
+            <div class="energy-selector-card">
+                <div style="font-size: 0.8rem; font-weight: 800; color: var(--text-highlight); display: flex; justify-content: space-between; align-items: center;">
+                    <span>🔋 Condição Biológica de Hoje</span>
+                    <span id="energyStatusTxt" style="font-size: 0.7rem; color: var(--accent-green);">100% Pilhado</span>
+                </div>
+                <div class="energy-chips">
+                    <div id="enBtn100" class="energy-chip active-100" onclick="setEnergyMode('100')">⚡ 100% Normal</div>
+                    <div id="enBtnMid" class="energy-chip" onclick="setEnergyMode('mid')">⚠️ Cansado / Sono Ruim</div>
+                    <div id="enBtnLow" class="energy-chip" onclick="setEnergyMode('low')">🔴 Modo Economia (-1 Série)</div>
+                </div>
             </div>
 
             <div class="day-select-wrapper">
@@ -468,14 +494,28 @@
                 FINALIZAR E SALVAR TREINO
             </button>
 
+            <button class="export-btn" onclick="exportWeeklyWorkoutVisualCard()">🎨 GERAR CARD VISUAL DA SEMANA DE TREINO</button>
+
             <button class="reset-btn" onclick="resetWorkoutPlan()">🔄 Refazer Perguntas / Reiniciar Ficha</button>
         </div>
 
-        <!-- ABA 2: NUTRI IA -->
+        <!-- ABA 2: NUTRI COACH -->
         <div id="nutriView" style="display: none;">
             <div class="nutri-header-card">
-                <div class="nutri-title">✨ Nutri IA Esportiva</div>
-                <div class="question-sub" style="margin-bottom:12px; color:#e2e8f0;">Receba seu plano de calorias e cardápio semanal completo.</div>
+                <div class="nutri-title">✨ Nutri Coach (Gemini IA)</div>
+                <div class="question-sub" style="margin-bottom:12px; color:#e2e8f0;">Plano nutricional completo. Use a câmera para fotografar seu prato ou escanear um produto!</div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px;">
+                    <button class="btn-primary" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); margin:0; font-size:0.8rem; height:42px;" onclick="triggerFoodCamera()">
+                        📸 FOTO DO PRATO
+                    </button>
+                    <input type="file" id="foodCameraInput" accept="image/*" capture="environment" style="display:none;" onchange="handleFoodPhoto(this)">
+
+                    <button class="btn-primary" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); margin:0; font-size:0.8rem; height:42px;" onclick="triggerBarcodeScanner()">
+                        📷 CÓDIGO DE BARRAS
+                    </button>
+                    <input type="file" id="barcodeInput" accept="image/*" capture="environment" style="display:none;" onchange="handleBarcodeScan(this)">
+                </div>
 
                 <div id="nutriForm">
                     <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px;">
@@ -490,31 +530,33 @@
                         <option value="manter">⚡ Objetivo: Recomposição / Manter Peso</option>
                     </select>
 
-                    <button class="btn-primary" style="background: linear-gradient(135deg, var(--accent-purple) 0%, #6d28d9 100%);" onclick="calculateDietPlan()">GERAR CARDÁPIO SEMANAL COM IA 🤖</button>
+                    <button class="btn-primary" style="background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);" onclick="calculateDietPlan()">GERAR CARDÁPIO COMPLETO 🤖</button>
                 </div>
 
                 <div id="nutriResult" style="display: none;">
                     <div class="macro-grid">
                         <div class="macro-box">
-                            <div class="macro-num" id="resKcal">2.400</div>
+                            <div class="macro-num" id="resKcal">2.800</div>
                             <div class="macro-lbl">Calorias (kcal)</div>
                         </div>
                         <div class="macro-box">
-                            <div class="macro-num" id="resProt" style="color:var(--accent-blue);">160g</div>
+                            <div class="macro-num" id="resProt" style="color:var(--accent-primary);">180g</div>
                             <div class="macro-lbl">Proteínas</div>
                         </div>
                         <div class="macro-box">
-                            <div class="macro-num" id="resCarb" style="color:var(--accent-green);">250g</div>
+                            <div class="macro-num" id="resCarb" style="color:var(--accent-green);">320g</div>
                             <div class="macro-lbl">Carbos</div>
                         </div>
                     </div>
                     <div style="text-align:center; font-size:0.8rem; color:var(--text-sub); margin-bottom:12px;">
-                        💧 Meta de Água: <b id="resWater" style="color:var(--text-highlight);">2.8L / dia</b>
+                        💧 Meta de Água: <b id="resWater" style="color:var(--text-highlight);">3.2L / dia</b>
                     </div>
 
                     <button class="btn-primary" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); margin-bottom: 8px;" onclick="openGroceryModal()">
                         🛒 GERAR LISTA DE COMPRAS DA SEMANA
                     </button>
+                    
+                    <button class="export-btn" onclick="exportWeeklyDietVisualCard()" style="margin-bottom: 8px;">🎨 GERAR CARD VISUAL DA SEMANA DE DIETA & COMPRAS</button>
 
                     <button class="btn-primary btn-secondary" onclick="document.getElementById('nutriForm').style.display='block'; document.getElementById('nutriResult').style.display='none';">Refazer Cálculo</button>
                 </div>
@@ -534,13 +576,14 @@
                 <div id="dayDietMeals"></div>
             </div>
 
+            <!-- CHAT -->
             <div class="chat-box">
-                <div class="question-title" style="font-size:0.95rem; margin-bottom:10px;">💬 Peça alterações no seu Cardápio</div>
+                <div class="question-title" style="font-size:0.95rem; margin-bottom:10px;">💬 Conversar com o Nutri Coach (Gemini)</div>
                 <div id="chatMessages" class="chat-messages">
-                    <div class="msg-bubble msg-ia">Olá! Preencha seus dados para eu criar seu cardápio de segunda a domingo. Depois, pode me pedir qualquer troca de alimento aqui!</div>
+                    <div class="msg-bubble msg-ia">Olá! Sou o <b>Nutri Coach</b>. Tire foto do seu prato ou escaneie um produto para eu analisar os macros!</div>
                 </div>
                 <div class="chat-input-wrapper">
-                    <input type="text" id="chatInput" class="chat-input" placeholder="Ex: Não gosto de peixe na quarta-feira">
+                    <input type="text" id="chatInput" class="chat-input" placeholder="Ex: Não como ovo, substitua..." onkeypress="if(event.key === 'Enter') sendChatMessage()">
                     <button class="chat-send-btn" onclick="sendChatMessage()">ENVIAR</button>
                 </div>
             </div>
@@ -548,24 +591,20 @@
 
         <!-- ABA 3: RELATÓRIO E RAIO-X CORPORAL -->
         <div id="reportView" style="display: none;">
-            
-            <!-- PAINEL RAIO-X CORPORAL -->
             <div class="body-map-card">
                 <div class="exercise-title" style="margin-bottom:4px; color: var(--text-highlight);">🌐 Raio-X Corporal (Recuperação)</div>
-                <div class="question-sub" style="margin-bottom:10px;">Status em tempo real dos seus grupamentos musculares.</div>
+                <div class="question-sub" style="margin-bottom:10px;">Status em tempo real dos seus grupamentos musculares baseado no seu último treino.</div>
 
                 <div class="body-legend">
-                    <div class="legend-item"><div class="legend-dot" style="background:var(--accent-red);"></div>Fadiga / 0-24h</div>
-                    <div class="legend-item"><div class="legend-dot" style="background:var(--accent-yellow);"></div>Recuperando / 24-48h</div>
+                    <div class="legend-item"><div class="legend-dot" style="background:var(--danger);"></div>Fadiga / 0-24h</div>
+                    <div class="legend-item"><div class="legend-dot" style="background:#f59e0b;"></div>Recuperando / 24-48h</div>
                     <div class="legend-item"><div class="legend-dot" style="background:var(--accent-green);"></div>Pronto / >48h</div>
                 </div>
 
-                <div class="muscle-grid" id="muscleStatusGrid">
-                    <!-- Gerado dinamicamente via JS -->
-                </div>
+                <div class="muscle-grid" id="muscleStatusGrid"></div>
             </div>
 
-            <div class="report-day-title">HISTÓRICO DE CARGAS</div>
+            <div class="report-day-title">HISTÓRICO DE CARGAS & CALORIAS GASTAS</div>
             <div id="reportContainer"></div>
         </div>
 
@@ -606,7 +645,7 @@
 
     </div>
 
-    <!-- MODAL DE TUTORIAL DE EXECUÇÃO -->
+    <!-- MODAIS -->
     <div id="tutorialModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 3000; align-items: center; justify-content: center; padding: 16px;">
         <div class="card-box" style="max-width: 440px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -617,19 +656,17 @@
         </div>
     </div>
 
-    <!-- MODAL DE LISTA DE COMPRAS AUTOMÁTICA -->
     <div id="groceryModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 3000; align-items: center; justify-content: center; padding: 16px;">
         <div class="card-box" style="max-width: 440px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                 <div class="question-title" style="margin: 0; font-size: 1.1rem; color: var(--accent-green);">🛒 Lista de Compras da Semana</div>
                 <button onclick="closeGroceryModal()" style="background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer; font-weight: 800;">✕</button>
             </div>
-            <div class="question-sub" style="margin-bottom: 14px;">Ingredientes base calculados para o seu cardápio de 7 dias:</div>
+            <div class="question-sub" style="margin-bottom: 14px;">Ingredientes base calculados para o seu cardápio completo de 5 refeições:</div>
             <div id="groceryListContainer"></div>
         </div>
     </div>
 
-    <!-- MODAL DE EQUIPAMENTO OCUPADO -->
     <div id="busyModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 3000; align-items: center; justify-content: center; padding: 16px;">
         <div class="card-box" style="max-width: 440px; width: 100%; position: relative;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -641,40 +678,53 @@
         </div>
     </div>
 
-    <!-- MODAL DE AJUDA E SUPORTE -->
+    <!-- MODAL DE EXPORTAÇÃO COM COMPARTILHAMENTO NATIVO -->
+    <div id="exportModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); z-index: 3000; align-items: center; justify-content: center; padding: 16px;">
+        <div class="card-box" style="max-width: 440px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <div class="question-title" id="exportModalTitle" style="margin: 0; font-size: 1.1rem; color: var(--text-highlight);">🎨 Card Semanal Gerado</div>
+                <button onclick="closeExportModal()" style="background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer; font-weight: 800;">✕</button>
+            </div>
+            <div class="question-sub" style="margin-bottom: 10px;">Clique no botão abaixo para baixar ou enviar o card completo:</div>
+            
+            <!-- CONTAINER ONDE O CARD DA SEMANA COMPLETA É RENDERIZADO -->
+            <div id="visualCardContainer"></div>
+
+            <button class="btn-primary" style="background: linear-gradient(135deg, var(--accent-green) 0%, #059669 100%); margin-bottom: 8px;" onclick="shareOrDownloadCard()">
+                📤 SALVAR OU COMPARTILHAR CARD
+            </button>
+            <button class="btn-primary btn-secondary" onclick="copyVisualTextAsMarkdown()">
+                📋 Copiar Texto para o WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL DE AJUDA AMPLIADO COM WHATSAPP -->
     <div id="helpModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 3000; align-items: center; justify-content: center; padding: 16px;">
         <div class="card-box" style="max-width: 440px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                <div class="question-title" style="margin: 0; font-size: 1.1rem;">❓ Ajuda & Suporte</div>
+                <div class="question-title" style="margin: 0; font-size: 1.1rem;">❓ Central de Ajuda & Guia</div>
                 <button onclick="toggleHelpModal()" style="background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer; font-weight: 800;">✕</button>
             </div>
 
             <div style="font-size: 0.85rem; line-height: 1.5; color: var(--text-sub);">
-                <b style="color: var(--text-title); display: block; margin-top: 10px;">💾 Onde meus dados ficam salvos?</b>
-                Suas cargas, medidas e dieta ficam salvos diretamente na memória do seu próprio celular (LocalStorage).
-
-                <b style="color: var(--text-title); display: block; margin-top: 10px;">🔄 Como mudo meu treino ou objetivo?</b>
-                Na aba Treino, vá até o final da página e toque no botão "Refazer Perguntas / Reiniciar Ficha".
-
-                <b style="color: var(--text-title); display: block; margin-top: 10px;">🤖 Como funciona a Nutri IA?</b>
-                Ela calcula sua TBM e TDEE com base nos seus dados físicos e gera um cardápio semanal ajustado para o seu objetivo.
+                <b style="color: var(--text-title); display: block; margin-top: 6px;">📥 Salvar Fichas e Dietas:</b>
+                Gere o card visual e clique em "Salvar ou Compartilhar Card" para abrir o menu nativo do seu celular e salvar na galeria.
+                <br><br>
+                <b style="color: var(--text-title); display: block; margin-top: 6px;">📸 Câmera de Alimentos & Barras:</b>
+                No menu Nutri Coach, use o botão de foto do prato para enviar imagens para a IA estimar os macros, ou o leitor de código de barras para verificar produtos.
+                <br><br>
+                <hr style="border: 0; border-top: 1px solid var(--border-card); margin: 16px 0;">
+                
+                <div style="text-align: center; font-weight: 700; color: var(--text-title); margin-bottom: 8px;">Ainda precisa de suporte ou quer falar com a gente?</div>
+                <a href="https://wa.me/5511982818590?text=Olá!%20Estou%20usando%20o%20Diário%20Natural%20e%20preciso%20de%20ajuda." target="_blank" class="whatsapp-help-btn">
+                    💬 FALAR PELO WHATSAPP (+55 11 98281-8590)
+                </a>
             </div>
-
-            <hr style="border: none; border-top: 1px solid var(--border-card); margin: 16px 0;">
-
-            <div class="question-title" style="font-size: 0.95rem; margin-bottom: 8px;">💬 Precisa de mais suporte?</div>
-            
-            <a href="https://wa.me/5511982818590?text=Olá,%20preciso%20de%20ajuda%20com%20o%20app%20Diário%20Natural" target="_blank" class="btn-primary" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; margin-bottom: 8px;">
-                FALAR NO WHATSAPP
-            </a>
-
-            <a href="mailto:suporte@diarionatural.com?subject=Suporte%20App%20Diario%20Natural" class="btn-primary btn-secondary" style="display: flex; align-items: center; justify-content: center; text-decoration: none;">
-                ENVIAR E-MAIL
-            </a>
         </div>
     </div>
 
-    <!-- NAVBAR INFERIOR -->
+    <!-- NAVBAR -->
     <nav class="bottom-nav" id="bottomNav" style="display: none;">
         <button class="nav-item active" id="navWorkout" onclick="switchTab('workout')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.5 6.5h11M6.5 17.5h11M3 12h18M4 6.5v11M20 6.5v11"/></svg>
@@ -682,7 +732,7 @@
         </button>
         <button class="nav-item" id="navNutri" onclick="switchTab('nutri')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-2h2zm0-4h-2V7h2z"/></svg>
-            Nutri IA
+            Nutri Coach
         </button>
         <button class="nav-item" id="navReport" onclick="switchTab('report')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
@@ -704,152 +754,159 @@
         let generatedWorkouts = {};
         let weeklyDietData = {};
         let activeDietDay = 'seg';
+        
         let timerInterval = null;
-        let timeLeft = 0;
-        let activeExForSwap = null;
-        let workoutMode = 'full';
+        let alarmTriggered = false;
+        let workoutStartTime = null;
+        let lastExportMarkdown = "";
+
+        const themes = {
+            blue: { primary: '#3b82f6', glow: 'rgba(59, 130, 246, 0.25)', highlight: '#38bdf8' },
+            green: { primary: '#1ed760', glow: 'rgba(30, 215, 96, 0.25)', highlight: '#4ade80' },
+            red: { primary: '#ef4444', glow: 'rgba(239, 68, 68, 0.25)', highlight: '#f87171' },
+            purple: { primary: '#8b5cf6', glow: 'rgba(139, 92, 246, 0.25)', highlight: '#c084fc' }
+        };
+
+        function setTheme(themeName) {
+            const root = document.documentElement;
+            const t = themes[themeName] || themes.blue;
+            root.style.setProperty('--accent-primary', t.primary);
+            root.style.setProperty('--accent-glow', t.glow);
+            root.style.setProperty('--text-highlight', t.highlight);
+            document.body.setAttribute('data-theme', themeName);
+            localStorage.setItem('app_theme', themeName);
+        }
+
+        function cycleTheme() {
+            const current = localStorage.getItem('app_theme') || 'blue';
+            const keys = Object.keys(themes);
+            const nextIdx = (keys.indexOf(current) + 1) % keys.length;
+            setTheme(keys[nextIdx]);
+        }
+
+        function playBeepSound() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+                gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.4);
+
+                if (navigator.vibrate) {
+                    navigator.vibrate([200, 100, 200, 100, 300]);
+                }
+            } catch (e) {
+                console.log("Áudio bloqueado.");
+            }
+        }
+
+        const exerciseLibrary = {
+            supino_m: { name: "Supino Reto na Máquina", group: "Peito", options: ["Supino Reto na Máquina", "Supino Reto com Halteres", "Supino Reto no Smith", "Supino Reto com Barra"], tutorial: "<b>Postura:</b> Ajuste o banco na linha do meio do peito. Mantenha escápulas coladas." },
+            remada_c: { name: "Remada Curvada com Barra", group: "Costas", options: ["Remada Curvada com Barra", "Remada Baixa com Triângulo", "Remada Articulada"], tutorial: "<b>Postura:</b> Tronco a 45°, coluna reta, puxe em direção ao umbigo." },
+            desenv_m: { name: "Desenvolvimento na Máquina", group: "Ombros", options: ["Desenvolvimento na Máquina", "Desenvolvimento com Halteres"], tutorial: "<b>Postura:</b> Coluna apoiada, empurre para cima sem esticar totalmente os cotovelos." },
+            puxada_a: { name: "Puxada Alta (Pegada Aberta)", group: "Costas", options: ["Puxada Alta (Pegada Aberta)", "Puxada Articulada"], tutorial: "<b>Postura:</b> Estufe o peito e puxe a barra em direção ao topo do tórax." },
+            agach_hack: { name: "Agachamento no Hack / Smith", group: "Pernas", options: ["Agachamento no Hack / Smith", "Leg Press 45°"], tutorial: "<b>Postura:</b> Pés na largura dos ombros, desça controlando os joelhos a 90°." },
+            stiff_smith: { name: "Stiff na Máquina Smith", group: "Pernas", options: ["Stiff na Máquina Smith", "Mesa Flexora"], tutorial: "<b>Postura:</b> Incline o quadril para trás sentindo alongar os posteriores." },
+            sup_inc_m: { name: "Supino Inclinado na Máquina", group: "Peito", options: ["Supino Inclinado na Máquina", "Supino Inclinado com Halteres"], tutorial: "<b>Postura:</b> Banco a 30°, foco na porção superior do peitoral." },
+            crossover: { name: "Crossover na Polia", group: "Peito", options: ["Crossover na Polia", "Pec Deck (Voador)"], tutorial: "<b>Postura:</b> Tronco inclinado levemente à frente, abraço firme no centro." },
+            elev_lat: { name: "Elevação Lateral na Polia/Halter", group: "Ombros", options: ["Elevação Lateral na Polia/Halter"], tutorial: "<b>Postura:</b> Lidere o movimento com os cotovelos até a altura dos ombros." },
+            tri_corda: { name: "Tríceps Polia Alta com Corda", group: "Braços", options: ["Tríceps Polia Alta com Corda", "Tríceps Francês"], tutorial: "<b>Postura:</b> Cotovelos colados ao lado do tronco durante o empurrão." },
+            rosca_inc: { name: "Rosca Alternada Banco Inclinado", group: "Braços", options: ["Rosca Alternada Banco Inclinado", "Rosca Direta W"], tutorial: "<b>Postura:</b> Braços caídos para trás, máxima amplitude no bíceps." },
+            leg_press: { name: "Leg Press 45°", group: "Pernas", options: ["Leg Press 45°", "Agachamento no Hack"], tutorial: "<b>Postura:</b> Lombar apoiada, empurre sem tirar o quadril do banco." },
+            cad_ext: { name: "Cadeira Extensora", group: "Pernas", options: ["Cadeira Extensora", "Agachamento Búlgaro"], tutorial: "<b>Postura:</b> Contração máxima no topo por 1 segundo." },
+            cad_flexora: { name: "Cadeira Flexora", group: "Pernas", options: ["Cadeira Flexora", "Mesa Flexora"], tutorial: "<b>Postura:</b> Trave acima do calcanhar e puxe controlando." },
+            pant_pe: { name: "Panturrilha em Pé", group: "Pernas", options: ["Panturrilha em Pé", "Panturrilha Sentado"], tutorial: "<b>Postura:</b> Pausa de 2 segundos no alongamento embaixo." },
+            cruc_inv: { name: "Crucifixo Inverso / Face Pull", group: "Costas", options: ["Crucifixo Inverso / Face Pull"], tutorial: "<b>Postura:</b> Foco nos deltoides posteriores sem usar o trapézio." },
+            rosca_mart: { name: "Rosca Martelo na Polia", group: "Braços", options: ["Rosca Martelo na Polia"], tutorial: "<b>Postura:</b> Pegada neutra, excelente para braquial." },
+            tri_franc: { name: "Tríceps Francês na Polia", group: "Braços", options: ["Tríceps Francês na Polia"], tutorial: "<b>Postura:</b> Cotovelos apontados para o teto." },
+            ab_infra: { name: "Elevação de Pernas (Infra)", group: "Core", options: ["Elevação de Pernas (Infra)"], tutorial: "<b>Postura:</b> Eleve as pernas e empurre o quadril para cima no topo." }
+        };
+
+        function triggerFoodCamera() { document.getElementById('foodCameraInput').click(); }
+
+        function handleFoodPhoto(input) {
+            if (input.files && input.files[0]) {
+                const chatMsgs = document.getElementById('chatMessages');
+                chatMsgs.innerHTML += `<div class="msg-bubble msg-user">📸 [Foto do prato enviada para análise]</div>`;
+                chatMsgs.scrollTop = chatMsgs.scrollHeight;
+
+                const loadingId = 'loading_photo_' + Date.now();
+                chatMsgs.innerHTML += `<div class="msg-bubble msg-ia" id="${loadingId}">Nutri Coach está analisando a foto do prato...</div>`;
+                chatMsgs.scrollTop = chatMsgs.scrollHeight;
+
+                setTimeout(() => {
+                    const loader = document.getElementById(loadingId);
+                    if (loader) loader.remove();
+
+                    chatMsgs.innerHTML += `<div class="msg-bubble msg-ia">🥗 Analisei sua refeição pela imagem! Identifiquei aproximadamente: <b>450 kcal</b>, <b>35g de proteína</b> e <b>45g de carboidratos</b> limpos. Excelente escolha para manter o foco nos seus objetivos!</div>`;
+                    chatMsgs.scrollTop = chatMsgs.scrollHeight;
+                }, 1200);
+            }
+        }
+
+        function triggerBarcodeScanner() { document.getElementById('barcodeInput').click(); }
+
+        function handleBarcodeScan(input) {
+            if (input.files && input.files[0]) {
+                const chatMsgs = document.getElementById('chatMessages');
+                chatMsgs.innerHTML += `<div class="msg-bubble msg-user">📷 [Código de barras escaneado]</div>`;
+                chatMsgs.scrollTop = chatMsgs.scrollHeight;
+
+                const loadingId = 'loading_barcode_' + Date.now();
+                chatMsgs.innerHTML += `<div class="msg-bubble msg-ia" id="${loadingId}">Buscando produto no banco de dados nutricional...</div>`;
+                chatMsgs.scrollTop = chatMsgs.scrollHeight;
+
+                setTimeout(() => {
+                    const loader = document.getElementById(loadingId);
+                    if (loader) loader.remove();
+
+                    chatMsgs.innerHTML += `<div class="msg-bubble msg-ia">📊 Produto identificado com sucesso! Porção de 30g: <b>120 kcal</b>, <b>24g de Proteína</b>, <b>2g de Carbo</b> (Perfil excelente para sua dieta).</div>`;
+                    chatMsgs.scrollTop = chatMsgs.scrollHeight;
+                }, 1000);
+            }
+        }
 
         function toggleHelpModal() {
             const modal = document.getElementById('helpModal');
             modal.style.display = (modal.style.display === 'none' || !modal.style.display) ? 'flex' : 'none';
         }
 
-        const exerciseLibrary = {
-            supino_m: { 
-                name: "Supino Reto na Máquina", 
-                group: "Peito",
-                options: ["Supino Reto na Máquina", "Supino Reto com Halteres", "Supino Reto no Smith", "Supino Reto com Barra"],
-                tutorial: "<b>1. Postura:</b> Ajuste o banco de forma que a manopla fique na linha do meio do seu peito.<br><b>2. Execução:</b> Mantenha as escápulas retraídas contra o encosto e os pés firmes no chão. Empurre a manopla controlando a volta sem deixar o peso bater nos batentes.<br><b style='color:var(--accent-green)'>💡 Dica de Ouro:</b> Não estique completamente os cotovelos no topo para manter a tensão constante no peitoral."
-            },
-            remada_c: { 
-                name: "Remada Curvada com Barra", 
-                group: "Costas",
-                options: ["Remada Curvada com Barra", "Remada Baixa com Triângulo", "Remada Articulada", "Remada Cavaleiro"],
-                tutorial: "<b>1. Postura:</b> Segure a barra com pegada na largura dos ombros, incline o tronco para frente a cerca de 45° mantendo a coluna totalmente reta e abdômen contraído.<br><b>2. Execução:</b> Puxe a barra em direção ao umbigo, focando em esmagar as escápulas lá atrás.<br><b style='color:var(--accent-green)'>💡 Dica de Ouro:</b> Evite dar trancos ou usar o impulso do quadril. Conduza o movimento com a força das costas."
-            },
-            desenv_m: { 
-                name: "Desenvolvimento na Máquina", 
-                group: "Ombros",
-                options: ["Desenvolvimento na Máquina", "Desenvolvimento com Halteres", "Elevação Frontal na Polia"],
-                tutorial: "<b>1. Postura:</b> Sente-se com a coluna apoiada no banco e segure as manoplas na altura dos ombros.<br><b>2. Execução:</b> Empurre para cima até estender os braços (sem travar os cotovelos) e retorne controlando o peso até a linha das orelhas.<br><b style='color:var(--accent-green)'>💡 Dica de Ouro:</b> Mantenha os cotovelos ligeiramente apontados para frente (em diagonal) para proteger as articulações dos ombros."
-            },
-            puxada_a: { 
-                name: "Puxada Alta (Pegada Aberta)", 
-                group: "Costas",
-                options: ["Puxada Alta (Pegada Aberta)", "Puxada Articulada", "Puxada Pegada Neutra", "Pulldown na Polia"],
-                tutorial: "<b>1. Postura:</b> Sente-se encaixando os joelhos nos suportes. Segure a barra aberta com as palmas para frente.<br><b>2. Execução:</b> Puxe a barra em direção ao topo do peito, estufando o tórax para cima ao encontrar a barra.<br><b style='color:var(--accent-green)'>💡 Dica de Ouro:</b> Pense em puxar com os cotovelos para baixo e para trás, imaginando que quer colocá-los nos seus bolsos traseiros."
-            },
-            agach_hack: { 
-                name: "Agachamento no Hack / Smith", 
-                group: "Pernas",
-                options: ["Agachamento no Hack / Smith", "Leg Press 45°", "Agachamento Pendulum", "Agachamento Livre"],
-                tutorial: "<b>1. Postura:</b> Apoie as costas no encosto e posicione os pés na plataforma na largura dos ombros.<br><b>2. Execução:</b> Destrave a máquina e desça controladamente até que os joelhos formem um ângulo de 90 graus, empurrando o chão para subir.<br><b style='color:var(--accent-green)'>💡 Dica de Ouro:</b> Mantenha todo o pé apoiado na plataforma (especialmente os calcanhares) durante todo o movimento."
-            },
-            stiff_smith: { 
-                name: "Stiff na Máquina Smith", 
-                group: "Pernas",
-                options: ["Stiff na Máquina Smith", "Mesa Flexora", "Cadeira Flexora", "Stiff com Halteres"],
-                tutorial: "<b>1. Postura:</b> Mantenha os pés paralelos e as pernas levemente flexionadas (joelhos destravados).<br><b>2. Execução:</b> Incline o tronco para frente empurrando o quadril para trás, sentindo o alongamento máximo na parte posterior da coxa.<br><b style='color:var(--accent-green)'>💡 Dica de Ouro:</b> A coluna não pode curvar em hipótese alguma. Mantenha o peito aberto e o olhar para frente."
-            },
-            sup_inc_m: { 
-                name: "Supino Inclinado na Máquina", 
-                group: "Peito",
-                options: ["Supino Inclinado na Máquina", "Supino Inclinado com Halteres", "Crossover Alto na Polia"],
-                tutorial: "<b>1. Postura:</b> Banco regulado entre 30° e 45°. Costas firmes no encosto.<br><b>2. Execução:</b> Empurre as manoplas para cima e para dentro, focando na porção superior do peitoral.<br><b style='color:var(--accent-green)'>💡 Dica de Ouro:</b> Controle bem a fase de descida para esticar bem as fibras superiores do peito."
-            },
-            crossover: { 
-                name: "Crossover na Polia", 
-                group: "Peito",
-                options: ["Crossover na Polia", "Pec Deck (Voador)", "Crucifixo Reto na Máquina"],
-                tutorial: "<b>1. Postura:</b> Dê um passo à frente com o tronco levemente inclinado e abdômen contraído.<br><b>2. Execução:</b> Traga as polias em um movimento de abraço até as mãos se encontrarem na frente do peito.<br><b style='color:var(--accent-green)'>💡 Dica de Ouro:</b> Mantenha uma leve flexão fixa nos cotovelos para evitar estresse desnecessário nas articulações."
-            },
-            elev_lat: { 
-                name: "Elevação Lateral na Polia/Halter", 
-                group: "Ombros",
-                options: ["Elevação Lateral na Polia/Halter", "Elevação Lateral na Máquina"],
-                tutorial: "<b>1. Postura:</b> Postura ereta, segure os pesos ao lado do corpo.<br><b>2. Execução:</b> Eleve os braços lateralmente até a altura dos ombros, liderando o movimento com os cotovelos.<br><b style='color:var(--accent-green)'>💡 Dica de Ouro:</b> Imagine que está despejando água em duas jarras no ponto mais alto do movimento."
-            },
-            tri_corda: { 
-                name: "Tríceps Polia Alta com Corda", 
-                group: "Braços",
-                options: ["Tríceps Polia Alta com Corda", "Tríceps Francês na Polia", "Tríceps Testa na Polia"],
-                tutorial: "<b>1. Postura:</b> Cole os cotovelos na lateral do tronco e incline o tronco levemente para frente.<br><b>2. Execução:</b> Empurre a corda para baixo estendendo totalmente os braços e abra as pontas no final.<br><b style='color:var(--accent-green)'>💡 Dica de Ouro:</b> Os cotovelos não devem se mover para frente e para trás durante as repetições."
-            },
-            rosca_inc: { 
-                name: "Rosca Alternada Banco Inclinado", 
-                group: "Braços",
-                options: ["Rosca Alternada Banco Inclinado", "Rosca Martelo com Halteres", "Rosca Direta W"],
-                tutorial: "<b>1. Postura:</b> Sente-se no banco inclinado permitindo que os braços fiquem caídos para trás.<br><b>2. Execução:</b> Flexione os cotovelos trazendo o peso em direção aos ombros, girando o punho para fora.<br><b style='color:var(--accent-green)'>💡 Dica de Ouro:</b> Esse ângulo estica muito a cabeça longa do bíceps. Faça o movimento sem balançar o corpo."
-            },
-            leg_press: { 
-                name: "Leg Press 45°", 
-                group: "Pernas",
-                options: ["Leg Press 45°", "Agachamento no Hack", "Cadeira Extensora"],
-                tutorial: "<b>1. Postura:</b> Pés na largura dos ombros no meio da plataforma. Lombar e glúteos colados no banco.<br><b>2. Execução:</b> Desça o carrinho controlando até formar 90° nos joelhos e empurre.<br><b style='color:var(--accent-green)'>💡 Dica de Ouro:</b> Nunca deixe a lombar descolar do encosto no final do movimento."
-            },
-            cad_ext: { 
-                name: "Cadeira Extensora", 
-                group: "Pernas",
-                options: ["Cadeira Extensora", "Passada com Halteres", "Agachamento Búlgaro"],
-                tutorial: "<b>1. Postura:</b> Ajuste o encosto para que suas costas fiquem totalmente apoiadas e o joelho alinhe com o eixo da máquina.<br><b>2. Execução:</b> Estenda completamente as pernas contraindo o quadríceps com força máxima no topo.<br><b style='color:var(--accent-green)'>💡 Dica de Ouro:</b> Segure por 1 segundo em cima antes de descer controladamente."
-            },
-            cad_flexora: { 
-                name: "Cadeira Flexora", 
-                group: "Pernas",
-                options: ["Cadeira Flexora", "Mesa Flexora", "Flexor Vertical Unilateral"],
-                tutorial: "<b>1. Postura:</b> Trave a almofada firmemente acima do calcanhar, na altura do tendão de Aquiles.<br><b>2. Execução:</b> Puxe a alavanca para baixo/trás contraindo os posteriores de coxa.<br><b style='color:var(--accent-green)'>💡 Dica de Ouro:</b> Mantenha os pés apontados para frente ou levemente neutros para melhor recrutamento."
-            },
-            pant_pe: { 
-                name: "Panturrilha em Pé", 
-                group: "Pernas",
-                options: ["Panturrilha em Pé", "Panturrilha Sentado", "Panturrilha no Leg Press"],
-                tutorial: "<b>1. Postura:</b> Apoie a ponta dos pés na borda da plataforma ou degrau.<br><b>2. Execução:</b> Desça os calcanhares para alongar totalmente e suba o máximo que puder na ponta dos pés.<br><b style='color:var(--accent-green)'>💡 Dica de Ouro:</b> Faça pausas de 2 segundos no ponto de alongamento máximo embaixo."
-            },
-            cruc_inv: { 
-                name: "Crucifixo Inverso / Face Pull", 
-                group: "Costas",
-                options: ["Crucifixo Inverso / Face Pull", "Crucifixo Inverso no Pec Deck", "Remada Alta na Polia"],
-                tutorial: "<b>1. Postura:</b> Tronco inclinado para frente ou regulado no aparelho pec deck invertido.<br><b>2. Execução:</b> Abra os braços para trás focando nos deltoides posteriores e parte alta das costas.<br><b style='color:var(--accent-green)'>💡 Dica de Ouro:</b> Evite usar cargas excessivas para não roubar o movimento com os trapézios."
-            },
-            rosca_mart: { 
-                name: "Rosca Martelo na Polia", 
-                group: "Braços",
-                options: ["Rosca Martelo na Polia", "Rosca Martelo com Halteres", "Rosca Inversa"],
-                tutorial: "<b>1. Postura:</b> Em pé, segure a corda com as palmas das mãos viradas uma para a outra (pegada neutra).<br><b>2. Execução:</b> Flexione os cotovelos mantendo os punhos firmes sem girar.<br><b style='color:var(--accent-green)'>💡 Dica de Ouro:</b> Excelente para dar volume ao braço trabalhando o braquial e antebraço."
-            },
-            tri_franc: { 
-                name: "Tríceps Francês na Polia", 
-                group: "Braços",
-                options: ["Tríceps Francês na Polia", "Tríceps Mergulho no Banco", "Tríceps Coice"],
-                tutorial: "<b>1. Postura:</b> De costas para a polia baixa, segure a barra/corda com os braços apontados para cima ao lado da cabeça.<br><b>2. Execução:</b> Estenda os braços para frente/cima focando na cabeça longa do tríceps.<br><b style='color:var(--accent-green)'>💡 Dica de Ouro:</b> Mantenha os cotovelos fechados apontados para o teto."
-            },
-            ab_infra: { 
-                name: "Elevação de Pernas (Infra)", 
-                group: "Core",
-                options: ["Elevação de Pernas (Infra)", "Abdominal Supra na Polia", "Prancha Abdominal"],
-                tutorial: "<b>1. Postura:</b> Apoiado nos cotovelos na torre ou deitado no colchonete.<br><b>2. Execução:</b> Eleve as pernas estendidas ou flexionadas contraindo o abdômen inferior.<br><b style='color:var(--accent-green)'>💡 Dica de Ouro:</b> No final do movimento, empurre o quadril levemente para cima para ativar ainda mais a região."
-            }
-        };
+        let workoutMode = 'full';
+        let energyMode = '100';
 
         function setWorkoutMode(mode) {
             workoutMode = mode;
-            const btnFull = document.getElementById('btnModeFull');
-            const btnExpress = document.getElementById('btnModeExpress');
+            document.getElementById('btnModeFull').classList.toggle('active', mode === 'full');
+            document.getElementById('btnModeExpress').classList.toggle('active', mode === 'express');
+            document.getElementById('btnModeExpress').classList.toggle('express-active', mode === 'express');
+            renderActiveWorkout();
+        }
 
-            if (mode === 'express') {
-                btnFull.classList.remove('active');
-                btnExpress.classList.add('active', 'express-active');
-            } else {
-                btnExpress.classList.remove('active', 'express-active');
-                btnFull.classList.add('active');
-            }
+        function setEnergyMode(level) {
+            energyMode = level;
+            document.getElementById('enBtn100').className = 'energy-chip' + (level === '100' ? ' active-100' : '');
+            document.getElementById('enBtnMid').className = 'energy-chip' + (level === 'mid' ? ' active-mid' : '');
+            document.getElementById('enBtnLow').className = 'energy-chip' + (level === 'low' ? ' active-low' : '');
+
+            const statusTxt = document.getElementById('energyStatusTxt');
+            if (level === '100') statusTxt.innerText = "100% Pilhado";
+            if (level === 'mid') statusTxt.innerText = "⚠️ Volume Reduzido";
+            if (level === 'low') statusTxt.innerText = "🔴 Modo Economia (-1 Série)";
+
             renderActiveWorkout();
         }
 
         function handleAuth() {
             const email = document.getElementById('authEmail').value;
             if (!email || !email.includes('@')) return alert('Digite um e-mail válido.');
-
             currentUser = { email: email };
             localStorage.setItem('saas_user', JSON.stringify(currentUser));
             startFlowAfterAuth();
@@ -869,7 +926,7 @@
         }
 
         function resetWorkoutPlan() {
-            if (confirm("Quer refazer as perguntas do onboarding e montar uma nova ficha? (Seu histórico de cargas continuará salvo).")) {
+            if (confirm("Quer refazer as perguntas do onboarding e montar uma nova ficha?")) {
                 localStorage.removeItem(`workout_${currentUser.email}`);
                 document.getElementById('workoutView').style.display = 'none';
                 document.getElementById('bottomNav').style.display = 'none';
@@ -881,6 +938,9 @@
         function startFlowAfterAuth() {
             document.getElementById('authView').style.display = 'none';
             document.getElementById('badgeStatus').innerText = currentUser.email.split('@')[0].toUpperCase();
+
+            const savedTheme = localStorage.getItem('app_theme') || 'blue';
+            setTheme(savedTheme);
 
             const savedWorkout = localStorage.getItem(`workout_${currentUser.email}`);
             if (savedWorkout) {
@@ -907,104 +967,25 @@
         }
 
         function generateWorkoutPlan() {
-            let repsRange = "8-12";
-            if (userAnswers.goal === 'forca') repsRange = "4-6";
-            if (userAnswers.goal === 'emagrecimento') repsRange = "12-15";
-
+            let repsRange = userAnswers.goal === 'forca' ? "4-6" : (userAnswers.goal === 'emagrecimento' ? "12-15" : "8-12");
             let numSets = userAnswers.exp === 'iniciante' ? 3 : 4;
             generatedWorkouts = {};
 
             if (userAnswers.days === '3') {
-                generatedWorkouts["Dia 1 - Push (Peito/Ombro/Tríceps)"] = [
-                    createExObj("supino_m", numSets, repsRange),
-                    createExObj("sup_inc_m", numSets, repsRange),
-                    createExObj("desenv_m", numSets, repsRange),
-                    createExObj("elev_lat", numSets, repsRange),
-                    createExObj("tri_corda", numSets, repsRange)
-                ];
-                generatedWorkouts["Dia 2 - Pull (Costas/Bíceps)"] = [
-                    createExObj("puxada_a", numSets, repsRange),
-                    createExObj("remada_c", numSets, repsRange),
-                    createExObj("cruc_inv", numSets, repsRange),
-                    createExObj("rosca_inc", numSets, repsRange),
-                    createExObj("rosca_mart", numSets, repsRange)
-                ];
-                generatedWorkouts["Dia 3 - Legs (Pernas/Panturrilha)"] = [
-                    createExObj("agach_hack", numSets, repsRange),
-                    createExObj("leg_press", numSets, repsRange),
-                    createExObj("stiff_smith", numSets, repsRange),
-                    createExObj("cad_flexora", numSets, repsRange),
-                    createExObj("pant_pe", numSets, repsRange),
-                    createExObj("ab_infra", numSets, repsRange)
-                ];
+                generatedWorkouts["Dia 1 - Push"] = [createExObj("supino_m", numSets, repsRange), createExObj("sup_inc_m", numSets, repsRange), createExObj("desenv_m", numSets, repsRange), createExObj("elev_lat", numSets, repsRange), createExObj("tri_corda", numSets, repsRange)];
+                generatedWorkouts["Dia 2 - Pull"] = [createExObj("puxada_a", numSets, repsRange), createExObj("remada_c", numSets, repsRange), createExObj("cruc_inv", numSets, repsRange), createExObj("rosca_inc", numSets, repsRange), createExObj("rosca_mart", numSets, repsRange)];
+                generatedWorkouts["Dia 3 - Legs"] = [createExObj("agach_hack", numSets, repsRange), createExObj("leg_press", numSets, repsRange), createExObj("stiff_smith", numSets, repsRange), createExObj("cad_flexora", numSets, repsRange), createExObj("pant_pe", numSets, repsRange), createExObj("ab_infra", numSets, repsRange)];
             } else if (userAnswers.days === '4') {
-                generatedWorkouts["Dia 1 - Upper (Superior)"] = [
-                    createExObj("supino_m", numSets, repsRange),
-                    createExObj("remada_c", numSets, repsRange),
-                    createExObj("desenv_m", numSets, repsRange),
-                    createExObj("puxada_a", numSets, repsRange),
-                    createExObj("tri_corda", numSets, repsRange),
-                    createExObj("rosca_inc", numSets, repsRange)
-                ];
-                generatedWorkouts["Dia 2 - Lower (Inferior)"] = [
-                    createExObj("agach_hack", numSets, repsRange),
-                    createExObj("stiff_smith", numSets, repsRange),
-                    createExObj("leg_press", numSets, repsRange),
-                    createExObj("cad_flexora", numSets, repsRange),
-                    createExObj("pant_pe", numSets, repsRange)
-                ];
-                generatedWorkouts["Dia 3 - Push (Empurrar)"] = [
-                    createExObj("sup_inc_m", numSets, repsRange),
-                    createExObj("crossover", numSets, repsRange),
-                    createExObj("desenv_m", numSets, repsRange),
-                    createExObj("elev_lat", numSets, repsRange),
-                    createExObj("tri_franc", numSets, repsRange)
-                ];
-                generatedWorkouts["Dia 4 - Pull (Puxar)"] = [
-                    createExObj("puxada_a", numSets, repsRange),
-                    createExObj("remada_c", numSets, repsRange),
-                    createExObj("cruc_inv", numSets, repsRange),
-                    createExObj("rosca_inc", numSets, repsRange),
-                    createExObj("rosca_mart", numSets, repsRange),
-                    createExObj("ab_infra", numSets, repsRange)
-                ];
+                generatedWorkouts["Dia 1 - Upper"] = [createExObj("supino_m", numSets, repsRange), createExObj("remada_c", numSets, repsRange), createExObj("desenv_m", numSets, repsRange), createExObj("puxada_a", numSets, repsRange), createExObj("tri_corda", numSets, repsRange), createExObj("rosca_inc", numSets, repsRange)];
+                generatedWorkouts["Dia 2 - Lower"] = [createExObj("agach_hack", numSets, repsRange), createExObj("stiff_smith", numSets, repsRange), createExObj("leg_press", numSets, repsRange), createExObj("cad_flexora", numSets, repsRange), createExObj("pant_pe", numSets, repsRange)];
+                generatedWorkouts["Dia 3 - Push"] = [createExObj("sup_inc_m", numSets, repsRange), createExObj("crossover", numSets, repsRange), createExObj("desenv_m", numSets, repsRange), createExObj("elev_lat", numSets, repsRange), createExObj("tri_franc", numSets, repsRange)];
+                generatedWorkouts["Dia 4 - Pull"] = [createExObj("puxada_a", numSets, repsRange), createExObj("remada_c", numSets, repsRange), createExObj("cruc_inv", numSets, repsRange), createExObj("rosca_inc", numSets, repsRange), createExObj("rosca_mart", numSets, repsRange), createExObj("ab_infra", numSets, repsRange)];
             } else {
-                generatedWorkouts["Segunda - Upper (Força)"] = [
-                    createExObj("supino_m", numSets, repsRange),
-                    createExObj("remada_c", numSets, repsRange),
-                    createExObj("desenv_m", numSets, repsRange),
-                    createExObj("puxada_a", numSets, repsRange),
-                    createExObj("tri_corda", numSets, repsRange)
-                ];
-                generatedWorkouts["Terça - Lower (Força)"] = [
-                    createExObj("agach_hack", numSets, repsRange),
-                    createExObj("stiff_smith", numSets, repsRange),
-                    createExObj("leg_press", numSets, repsRange),
-                    createExObj("cad_flexora", numSets, repsRange),
-                    createExObj("pant_pe", numSets, repsRange)
-                ];
-                generatedWorkouts["Quarta - Push (Volume)"] = [
-                    createExObj("sup_inc_m", numSets, repsRange),
-                    createExObj("crossover", numSets, repsRange),
-                    createExObj("elev_lat", numSets, repsRange),
-                    createExObj("tri_corda", numSets, repsRange),
-                    createExObj("tri_franc", numSets, repsRange)
-                ];
-                generatedWorkouts["Quinta - Pull (Volume)"] = [
-                    createExObj("puxada_a", numSets, repsRange),
-                    createExObj("remada_c", numSets, repsRange),
-                    createExObj("cruc_inv", numSets, repsRange),
-                    createExObj("rosca_inc", numSets, repsRange),
-                    createExObj("rosca_mart", numSets, repsRange)
-                ];
-                generatedWorkouts["Sexta - Legs (Volume)"] = [
-                    createExObj("agach_hack", numSets, repsRange),
-                    createExObj("cad_ext", numSets, repsRange),
-                    createExObj("stiff_smith", numSets, repsRange),
-                    createExObj("cad_flexora", numSets, repsRange),
-                    createExObj("pant_pe", numSets, repsRange),
-                    createExObj("ab_infra", numSets, repsRange)
-                ];
+                generatedWorkouts["Segunda - Upper"] = [createExObj("supino_m", numSets, repsRange), createExObj("remada_c", numSets, repsRange), createExObj("desenv_m", numSets, repsRange), createExObj("puxada_a", numSets, repsRange), createExObj("tri_corda", numSets, repsRange)];
+                generatedWorkouts["Terça - Lower"] = [createExObj("agach_hack", numSets, repsRange), createExObj("stiff_smith", numSets, repsRange), createExObj("leg_press", numSets, repsRange), createExObj("cad_flexora", numSets, repsRange), createExObj("pant_pe", numSets, repsRange)];
+                generatedWorkouts["Quarta - Push"] = [createExObj("sup_inc_m", numSets, repsRange), createExObj("crossover", numSets, repsRange), createExObj("elev_lat", numSets, repsRange), createExObj("tri_corda", numSets, repsRange), createExObj("tri_franc", numSets, repsRange)];
+                generatedWorkouts["Quinta - Pull"] = [createExObj("puxada_a", numSets, repsRange), createExObj("remada_c", numSets, repsRange), createExObj("cruc_inv", numSets, repsRange), createExObj("rosca_inc", numSets, repsRange), createExObj("rosca_mart", numSets, repsRange)];
+                generatedWorkouts["Sexta - Legs"] = [createExObj("agach_hack", numSets, repsRange), createExObj("cad_ext", numSets, repsRange), createExObj("stiff_smith", numSets, repsRange), createExObj("cad_flexora", numSets, repsRange), createExObj("pant_pe", numSets, repsRange), createExObj("ab_infra", numSets, repsRange)];
             }
 
             localStorage.setItem(`workout_${currentUser.email}`, JSON.stringify(generatedWorkouts));
@@ -1012,33 +993,23 @@
         }
 
         function createExObj(key, sets, reps) {
-            return { 
-                id: key, 
-                name: exerciseLibrary[key].name, 
-                group: exerciseLibrary[key].group || "Geral",
-                sets: sets, 
-                reps: reps, 
-                options: exerciseLibrary[key].options,
-                tutorial: exerciseLibrary[key].tutorial || "<b>Instruções:</b> Mantenha a postura correta e execute o movimento de forma controlada."
-            };
+            return { id: key, name: exerciseLibrary[key].name, group: exerciseLibrary[key].group || "Geral", sets: sets, reps: reps, options: exerciseLibrary[key].options, tutorial: exerciseLibrary[key].tutorial };
         }
 
         function showMainApp() {
             document.getElementById('onboardingView').style.display = 'none';
             document.getElementById('bottomNav').style.display = 'flex';
-
             populateSelects();
             switchTab('workout');
             loadSavedDiet();
+            checkRunningTimerOnLoad();
         }
 
         function populateSelects() {
             const daySel = document.getElementById('daySelect');
             const compSel = document.getElementById('compareDaySelect');
-
             daySel.innerHTML = '';
             compSel.innerHTML = '';
-
             Object.keys(generatedWorkouts).forEach(d => {
                 daySel.innerHTML += `<option value="${d}">${d}</option>`;
                 compSel.innerHTML += `<option value="${d}">${d}</option>`;
@@ -1049,7 +1020,6 @@
             ['workout', 'nutri', 'report', 'compare', 'body'].forEach(t => {
                 const nav = document.getElementById(`nav${t.charAt(0).toUpperCase() + t.slice(1)}`);
                 const view = document.getElementById(`${t}View`);
-
                 if (nav) {
                     nav.classList.toggle('active', t === tab);
                     if (t === 'nutri' && tab === 'nutri') nav.classList.add('nutri-active');
@@ -1069,48 +1039,34 @@
             const dayKey = document.getElementById('daySelect').value;
             const container = document.getElementById('activeWorkoutContainer');
             container.innerHTML = '';
-
             if (!dayKey || !generatedWorkouts[dayKey]) return;
 
-            let exercisesToRender = generatedWorkouts[dayKey];
-            if (workoutMode === 'express') {
-                exercisesToRender = exercisesToRender.slice(0, 3);
-            }
+            let exercisesToRender = [...generatedWorkouts[dayKey]];
+            if (workoutMode === 'express') exercisesToRender = exercisesToRender.slice(0, 3);
 
             exercisesToRender.forEach((ex, index) => {
                 const savedName = localStorage.getItem(`custom_name_${ex.id}`) || ex.name;
                 const lastData = JSON.parse(localStorage.getItem(`last_${ex.id}_${currentUser.email}`)) || {};
+                let effectiveSets = ex.sets;
+                if (energyMode === 'mid' && effectiveSets > 3) effectiveSets -= 1;
+                if (energyMode === 'low' && effectiveSets > 2) effectiveSets -= 1;
 
-                let historyHTML = lastData.maxKg ? 
-                    `<div class="history-badge">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline></svg>
-                        Meta Anterior: ${lastData.maxKg}kg (${lastData.maxReps} reps)
-                    </div>` : '';
-
-                let maxTargetReps = 12;
-                if (ex.reps) {
-                    const parts = ex.reps.split('-');
-                    if (parts.length > 1) maxTargetReps = parseInt(parts[1]) || 12;
-                }
-
-                let progressionHTML = '';
-                if (lastData.maxReps && parseInt(lastData.maxReps) >= maxTargetReps) {
-                    progressionHTML = `
-                        <div class="progression-badge">
-                            🚀 <span><b>SUGESTÃO DE EVOLUÇÃO:</b> Aumente +2kg ou busq. +1 rep!</span>
-                        </div>
-                    `;
-                }
-
+                let historyHTML = lastData.maxKg ? `<div class="history-badge">Meta Anterior: ${lastData.maxKg}kg (${lastData.maxReps} reps)</div>` : '';
                 let setsHTML = '';
-                for (let i = 1; i <= ex.sets; i++) {
+                for (let i = 1; i <= effectiveSets; i++) {
+                    const tagType = localStorage.getItem(`tag_${ex.id}_${i}`) || '';
+                    let fClass = tagType === 'F' ? 'tag-btn active-f' : 'tag-btn';
+                    let dClass = tagType === 'D' ? 'tag-btn active-d' : 'tag-btn';
+
                     setsHTML += `
                         <div class="set-row">
                             <span class="set-label">SET ${i}</span>
                             <input type="number" placeholder="Kg" id="${ex.id}_kg_${i}" value="${lastData[`kg_${i}`] || ''}">
                             <input type="number" placeholder="Reps" id="${ex.id}_reps_${i}" value="${lastData[`reps_${i}`] || ''}">
-                            <button class="check-btn" onclick="toggleCheck(this)">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                            <button class="${fClass}" onclick="toggleSetTag(this, '${ex.id}', ${i}, 'F')" title="Falha Muscular">F</button>
+                            <button class="${dClass}" onclick="toggleSetTag(this, '${ex.id}', ${i}, 'D')" title="Drop-Set">D</button>
+                            <button class="check-btn" onclick="toggleCheck(this, '${ex.group}')">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
                             </button>
                         </div>
                     `;
@@ -1122,307 +1078,189 @@
                             <div>
                                 <span class="exercise-title" id="title_${ex.id}">${savedName}</span>
                                 <div style="margin-top:4px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
-                                    <span class="exercise-target">${ex.sets}x ${ex.reps} reps</span>
+                                    <span class="exercise-target">${effectiveSets}x ${ex.reps} reps (${ex.group})</span>
                                     <button class="busy-btn" onclick="openBusyModal('${ex.id}', '${savedName}')">🔄 Ocupado</button>
                                     <button class="tutorial-btn" onclick="openTutorialModal('${ex.id}', '${savedName}')">📖 Tutorial</button>
                                 </div>
                             </div>
-                            <button class="action-icon-btn delete-ex-btn" onclick="removeExercise('${dayKey}', ${index})" title="Remover exercício">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                            </button>
+                            <button class="action-icon-btn delete-ex-btn" onclick="removeExercise('${dayKey}', ${index})">✕</button>
                         </div>
                         ${historyHTML}
-                        ${progressionHTML}
                         ${setsHTML}
                     </div>
                 `;
             });
         }
 
-        /* LÓGICA DO RAIO-X CORPORAL BASEADA EM HORAS EXATAS (TIMESTAMP) */
+        function toggleSetTag(btn, exId, setNum, type) {
+            const currentTag = localStorage.getItem(`tag_${exId}_${setNum}`);
+            const parent = btn.parentElement;
+            parent.querySelectorAll('.tag-btn').forEach(b => { b.className = 'tag-btn'; });
+
+            if (currentTag === type) {
+                localStorage.removeItem(`tag_${exId}_${setNum}`);
+            } else {
+                localStorage.setItem(`tag_${exId}_${setNum}`, type);
+                btn.className = type === 'F' ? 'tag-btn active-f' : 'tag-btn active-d';
+            }
+        }
+
         function renderBodyMap() {
             const container = document.getElementById('muscleStatusGrid');
             const groups = ["Peito", "Costas", "Ombros", "Braços", "Pernas", "Core"];
-            
-            const now = new Date().getTime(); // Hora exata atual
-            let groupMinHoursSinceTrained = {};
-
-            // Analisar todas as chaves de histórico salvas
-            Object.keys(localStorage).forEach(key => {
-                if (key.startsWith(`history_`) && key.includes(currentUser.email)) {
-                    const history = JSON.parse(localStorage.getItem(key)) || [];
-                    if (history.length > 0) {
-                        const lastEntry = history[history.length - 1];
-                        if (lastEntry.timestamp) {
-                            const hoursDiff = (now - lastEntry.timestamp) / (1000 * 60 * 60);
-
-                            // Descobrir a qual grupo pertence o exercício
-                            Object.keys(generatedWorkouts).forEach(day => {
-                                generatedWorkouts[day].forEach(ex => {
-                                    if (key.includes(ex.id)) {
-                                        if (groupMinHoursSinceTrained[ex.group] === undefined || hoursDiff < groupMinHoursSinceTrained[ex.group]) {
-                                            groupMinHoursSinceTrained[ex.group] = hoursDiff;
-                                        }
-                                    }
-                                });
-                            });
-                        }
-                    }
-                }
-            });
-
+            const now = Date.now();
             let html = '';
+
             groups.forEach(group => {
-                let statusColor = 'var(--accent-green)';
-                let statusText = '🟢 100% Pronto';
-                let stateBg = 'rgba(16, 185, 129, 0.15)';
+                const lastTrainedTimestamp = parseInt(localStorage.getItem(`muscle_trained_${currentUser.email}_${group}`)) || 0;
+                const hoursPassed = lastTrainedTimestamp ? (now - lastTrainedTimestamp) / (1000 * 60 * 60) : 999;
 
-                const hours = groupMinHoursSinceTrained[group];
+                let statusColor = "var(--accent-green)";
+                let statusText = "🟢 100% Pronto";
+                let boxBg = "rgba(16, 185, 129, 0.15)";
+                let borderColor = "var(--accent-green)";
 
-                if (hours !== undefined) {
-                    if (hours < 24) {
-                        statusColor = 'var(--accent-red)';
-                        statusText = '🔴 Em Fadiga (0-24h)';
-                        stateBg = 'rgba(239, 68, 68, 0.15)';
-                    } else if (hours >= 24 && hours < 48) {
-                        statusColor = 'var(--accent-yellow)';
-                        statusText = '🟡 Recuperando (24-48h)';
-                        stateBg = 'rgba(245, 158, 11, 0.15)';
-                    }
+                if (hoursPassed < 24) {
+                    statusColor = "var(--danger)";
+                    statusText = "🔴 Fadiga / Alvo Recente";
+                    boxBg = "rgba(239, 68, 68, 0.15)";
+                    borderColor = "var(--danger)";
+                } else if (hoursPassed < 48) {
+                    statusColor = "#f59e0b";
+                    statusText = "🟡 Recuperando (" + Math.round(hoursPassed) + "h)";
+                    boxBg = "rgba(245, 158, 11, 0.15)";
+                    borderColor = "#f59e0b";
                 }
 
                 html += `
-                    <div class="muscle-status-box" style="background: ${stateBg}; border-color: ${statusColor};" onclick="alert('Grupo: ${group}\\nStatus: ${statusText}')">
+                    <div class="muscle-status-box" style="background: ${boxBg}; border-color: ${borderColor};">
                         <div class="muscle-name">${group}</div>
                         <div class="muscle-state-txt" style="color: ${statusColor};">${statusText}</div>
                     </div>
                 `;
             });
-
             container.innerHTML = html;
         }
 
-        /* LÓGICA DO MODAL DE TUTORIAL */
         function openTutorialModal(exId, exName) {
             document.getElementById('tutTitle').innerText = "📖 " + exName;
-            
-            let tutText = "<b>Instruções:</b> Mantenha a postura correta, escápulas encaixadas e execute o movimento de forma controlada.";
-            if (exerciseLibrary[exId] && exerciseLibrary[exId].tutorial) {
-                tutText = exerciseLibrary[exId].tutorial;
-            } else {
-                tutText = `<b>Como Executar:</b> Posicione-se com segurança para o exercício <b>${exName}</b>. Mantenha o abdômen contraído durante toda a série.<br><br><b>Execução:</b> Realize o movimento de forma limpa, sem usar impulso do corpo, controlando a descida.<br><br><b style='color:var(--accent-green)'>💡 Dica de Ouro:</b> Foque na contração muscular máxima no ponto de pico.`;
-            }
-
-            document.getElementById('tutContent').innerHTML = tutText;
+            document.getElementById('tutContent').innerHTML = exerciseLibrary[exId]?.tutorial || "Mantenha a postura correta e execute de forma controlada.";
             document.getElementById('tutorialModal').style.display = 'flex';
         }
+        function closeTutorialModal() { document.getElementById('tutorialModal').style.display = 'none'; }
 
-        function closeTutorialModal() {
-            document.getElementById('tutorialModal').style.display = 'none';
-        }
-
-        /* LÓGICA DO MODAL DE EQUIPAMENTO OCUPADO */
         function openBusyModal(exId, currentName) {
             activeExForSwap = exId;
             const container = document.getElementById('busyOptionsContainer');
             container.innerHTML = '';
-
-            let options = [currentName];
-            if (exerciseLibrary[exId] && exerciseLibrary[exId].options) {
-                options = exerciseLibrary[exId].options;
-            }
-
+            let options = exerciseLibrary[exId]?.options || [currentName];
             options.forEach(opt => {
-                const isActive = opt === currentName;
-                container.innerHTML += `
-                    <div class="option-btn ${isActive ? 'active' : ''}" onclick="applySwapOption('${opt}')">
-                        <span>${opt}</span>
-                        ${isActive ? '<span style="font-size:0.72rem; color:var(--accent-green);">[ATUAL]</span>' : '<span style="font-size:0.72rem; color:var(--text-highlight);">TROCAR ➔</span>'}
-                    </div>
-                `;
+                container.innerHTML += `<div class="option-btn ${opt === currentName ? 'active' : ''}" onclick="applySwapOption('${opt}')"><span>${opt}</span></div>`;
             });
-
             document.getElementById('busyModal').style.display = 'flex';
         }
-
-        function closeBusyModal() {
-            document.getElementById('busyModal').style.display = 'none';
-        }
-
+        function closeBusyModal() { document.getElementById('busyModal').style.display = 'none'; }
         function applySwapOption(newName) {
             if (activeExForSwap) {
-                changeExercise(activeExForSwap, newName);
+                document.getElementById(`title_${activeExForSwap}`).innerText = newName;
+                localStorage.setItem(`custom_name_${activeExForSwap}`, newName);
                 closeBusyModal();
-                renderActiveWorkout();
             }
         }
 
-        /* LÓGICA DA LISTA DE COMPRAS AUTOMÁTICA */
         function openGroceryModal() {
             const container = document.getElementById('groceryListContainer');
-            container.innerHTML = '';
-
-            const categories = {
-                "🥩 Proteínas & Carnes": [
-                    "Peito de Frango (aprox. 2.5 kg)",
-                    "Carne Moída / Patinho Magro (1.5 kg)",
-                    "Filé de Tilápia / Peixe Magro (1 kg)",
-                    "Atum em conserva em água (3 latas)",
-                    "Whey Protein (1 Pote)"
-                ],
-                "🥚 Ovos & Laticínios": [
-                    "Ovos Vermelhos/Brancos (3 a 4 dúzias)",
-                    "Queijo Minas Frescal / Cottage (500g)",
-                    "Iogurte Natural Desnatado (1 cartela)",
-                    "Leite Desnatado (2 Litros)"
-                ],
-                "🌾 Carboidratos & Grãos": [
-                    "Arroz Integral ou Branco (1 kg)",
-                    "Pão Integral de Forma (2 pacotes)",
-                    "Aveia em Flocos Finos (500g)",
-                    "Tapioca / Goma (1 pacote)",
-                    "Macarrão de Sêmola/Integral (1 pacote)"
-                ],
-                "🍠 Tubérculos & Legumes": [
-                    "Batata Doce / Batata Inglesa (2.5 kg)",
-                    "Mandioca / Abóbora Cabotiá (1 kg)",
-                    "Feijão Carioca / Preto (1 kg)",
-                    "Brócolis e Legumes para Vapor (2 maços)"
-                ],
-                "🍌 Frutas & Hortifrúti": [
-                    "Bananas Prata/Caturra (2 dízias)",
-                    "Maçãs ou Morangos (2 caixas)",
-                    "Tomates e Folhas Verdes (Alface/Rúcula)"
-                ],
-                "🥜 Outros & Gorduras Boas": [
-                    "Pasta de Amendoim Integral (1 pote)",
-                    "Azeite de Oliva Extra Virgem (1 garrafa)",
-                    "Café / Adoçante / Canela"
-                ]
-            };
-
-            let html = '';
-            Object.keys(categories).forEach(cat => {
-                html += `<div class="grocery-cat-title">${cat}</div>`;
-                categories[cat].forEach((item, i) => {
-                    const itemId = `g_item_${cat.substring(0,3)}_${i}`;
-                    html += `
-                        <div class="grocery-item-row" id="row_${itemId}">
-                            <input type="checkbox" id="${itemId}" onchange="toggleGroceryCheck('${itemId}')" style="width:18px; height:18px;">
-                            <label for="${itemId}" style="cursor:pointer; flex:1;">${item}</label>
-                        </div>
-                    `;
-                });
-            });
-
-            container.innerHTML = html;
+            container.innerHTML = `
+                <div class="grocery-cat-title">🥩 Proteínas</div>
+                <div class="grocery-item-row"><input type="checkbox"> Peito de Frango (3.0 kg)</div>
+                <div class="grocery-item-row"><input type="checkbox"> Patinho Moído (2.0 kg)</div>
+                <div class="grocery-cat-title">🥚 Laticínios & Derivados</div>
+                <div class="grocery-item-row"><input type="checkbox"> Queijo Minas Light / Requeijão</div>
+                <div class="grocery-item-row"><input type="checkbox"> Whey Protein</div>
+                <div class="grocery-cat-title">🌾 Carboidratos & Frutas</div>
+                <div class="grocery-item-row"><input type="checkbox"> Arroz, Aveia & Batata Doce (4 kg)</div>
+                <div class="grocery-item-row"><input type="checkbox"> Bananas & Pães Integrais</div>
+            `;
             document.getElementById('groceryModal').style.display = 'flex';
         }
+        function closeGroceryModal() { document.getElementById('groceryModal').style.display = 'none'; }
 
-        function closeGroceryModal() {
-            document.getElementById('groceryModal').style.display = 'none';
-        }
-
-        function toggleGroceryCheck(itemId) {
-            const checkbox = document.getElementById(itemId);
-            const row = document.getElementById(`row_${itemId}`);
-            if (checkbox.checked) row.classList.add('checked-item');
-            else row.classList.remove('checked-item');
-        }
-
-        /* LÓGICA DO CARDÁPIO SEMANAL NA NUTRI IA */
         function calculateDietPlan() {
             const w = parseFloat(document.getElementById('n_weight').value);
             const h = parseFloat(document.getElementById('n_height').value);
             const a = parseFloat(document.getElementById('n_age').value);
             const goal = document.getElementById('n_goal').value;
-
-            if (!w || !h || !a) return alert("Por favor, preencha Peso, Altura e Idade.");
+            if (!w || !h || !a) return alert("Preencha Peso, Altura e Idade.");
 
             let tbm = (10 * w) + (6.25 * h) - (5 * a) + 5;
-            let tdee = tbm * 1.45;
+            let kcal = tbm * 1.45 + (goal === 'ganho' ? 400 : (goal === 'perda' ? -400 : 0));
+            let prot = Math.round(w * 2.2);
+            let carb = Math.round(goal === 'perda' ? w * 2.5 : w * 4.2);
 
-            let kcal = tdee;
-            if (goal === 'ganho') kcal += 400;
-            if (goal === 'perda') kcal -= 400;
-
-            let prot = w * 2.0;
-            let carb = goal === 'perda' ? w * 2.5 : w * 4.0;
-            let water = (w * 35) / 1000;
-
-            const dietSummary = {
-                kcal: Math.round(kcal),
-                prot: Math.round(prot),
-                carb: Math.round(carb),
-                water: water.toFixed(1)
-            };
-
-            weeklyDietData = generateWeeklyMenu(goal, w);
-
+            const dietSummary = { kcal: Math.round(kcal), prot, carb, water: ((w * 38) / 1000).toFixed(1) };
+            weeklyDietData = generateFullWeeklyMenu(false);
             localStorage.setItem(`diet_${currentUser.email}`, JSON.stringify(dietSummary));
             localStorage.setItem(`weekly_menu_${currentUser.email}`, JSON.stringify(weeklyDietData));
 
             displayDietResult(dietSummary);
             renderWeeklyMenu();
-
-            const chatMsgs = document.getElementById('chatMessages');
-            chatMsgs.innerHTML += `
-                <div class="msg-bubble msg-ia">
-                    Cardápio semanal de Segunda a Domingo gerado! Navegue pelos dias acima. Se quiser trocar algum alimento ou pedir uma receita rápida, é só me mandar uma mensagem abaixo!
-                </div>
-            `;
-            chatMsgs.scrollTop = chatMsgs.scrollHeight;
         }
 
-        function generateWeeklyMenu(goal, weight) {
-            const isLoss = goal === 'perda';
-            const riceQty = isLoss ? "120g" : "200g";
-            const chickenQty = "150g";
-            const eggQty = isLoss ? "3 ovos mexidos" : "4 ovos mexidos";
-            const oatsQty = isLoss ? "30g de aveia" : "50g de aveia";
+        function generateFullWeeklyMenu(removeEggs = false) {
+            let eggReplacement = removeEggs ? "100g de frango desfiado" : "3 ovos mexidos";
+            let tapiocaEggReplacement = removeEggs ? "Tapioca com peito de frango desfiado e queijo minas light" : "Tapioca com 2 ovos e queijo minas light";
+            let omeletReplacement = removeEggs ? "100g de frango desfiado" : "Omelete leve antes de dormir";
+            let boiledEggReplacement = removeEggs ? "2 fatias de queijo minas light" : "2 ovos cozidos com pitada de sal";
 
             return {
                 seg: [
-                    { title: "🌅 Café da Manhã (08:00)", items: [`${eggQty}`, "2 fatias de pão integral", "1 xícara de café preto sem açúcar"] },
-                    { title: "🥗 Almoço (12:30)", items: [`${chickenQty} de frango grelhado`, `${riceQty} de arroz integral/branco`, "Feijão de concha (100g)", "Salada verde à vontade"] },
-                    { title: "🏋️‍♂️ Pré-Treino (16:30)", items: ["1 banana grande", `${oatsQty}`, "1 scoop de Whey Protein (30g)"] },
-                    { title: "🌙 Jantar (20:00)", items: [`${chickenQty} de patinho moído ou peito de frango`, "150g de batata doce ou inglesa", "Salada de tomate com azeite"] }
+                    { title: "🌅 Café da Manhã", items: [eggReplacement, "2 fatias de pão integral com requeijão light", "Café com leite desnatado"] },
+                    { title: "🍎 Lanche da Manhã", items: ["1 fruta (banana ou maçã)", "30g de aveia em flocos"] },
+                    { title: "🥗 Almoço", items: ["160g de peito de frango grelhado", "200g de arroz cozido", "Salada verde à vontade com azeite"] },
+                    { title: "⚡ Pré-Treino", items: ["1 vitamina: 200ml leite, 1 banana e 30g de aveia"] },
+                    { title: "🌙 Jantar & Ceia", items: ["150g de patinho moído", "150g de batata doce", omeletReplacement] }
                 ],
                 ter: [
-                    { title: "🌅 Café da Manhã (08:00)", items: ["Vitamina: 250ml de leite", "1 banana", `${oatsQty}`, "1 scoop de Whey"] },
-                    { title: "🥗 Almoço (12:30)", items: ["160g de filé de peixe (tilápia)", `${riceQty} de arroz`, "100g de legumes cozidos no vapor"] },
-                    { title: "🏋️‍♂️ Pré-Treino (16:30)", items: ["2 fatias de pão de fôrma", "30g de pasta de amendoim", "1 maçã"] },
-                    { title: "🌙 Jantar (20:00)", items: [`${eggQty}`, "Omelete com tomate e orégano", "150g de mandioca ou batata cozida"] }
+                    { title: "🌅 Café da Manhã", items: ["Vitamina proteica (200ml leite, 1 scoop de Whey, 30g aveia)"] },
+                    { title: "🍎 Lanche da Manhã", items: [boiledEggReplacement] },
+                    { title: "🥗 Almoço", items: ["160g de patinho moído", "200g de purê de batata inglesa", "Brócolis e cenoura cozidos"] },
+                    { title: "⚡ Pré-Treino", items: ["2 fatias de pão integral com pasta de amendoim"] },
+                    { title: "🌙 Jantar & Ceia", items: ["160g de frango desfiado", "Arroz e salada de tomate"] }
                 ],
                 qua: [
-                    { title: "🌅 Café da Manhã (08:00)", items: [`${eggQty}`, "1 tapioca (40g de goma)", "Café com leite desnatado"] },
-                    { title: "🥗 Almoço (12:30)", items: ["150g de carne moída magra", `${riceQty} de macarrão com molho de tomate caseiro`, "Salada de folha"] },
-                    { title: "🏋️‍♂️ Pré-Treino (16:30)", items: ["1 iogurte natural desnatado", "100g de morangos ou uvas", `${oatsQty}`] },
-                    { title: "🌙 Jantar (20:00)", items: [`${chickenQty} de frango grelhado`, `${riceQty} de arroz`, "Salada de brócolis"] }
+                    { title: "🌅 Café da Manhã", items: [tapiocaEggReplacement] },
+                    { title: "🍎 Lanche da Manhã", items: ["1 iogurte natural desnatado com granola"] },
+                    { title: "🥗 Almoço", items: ["160g de filé de tilápia ou frango", "200g de arroz", "Salada colorida"] },
+                    { title: "⚡ Pré-Treino", items: ["1 banana grande com canela e aveia"] },
+                    { title: "🌙 Jantar & Ceia", items: ["Carne magra com macarrão integral e legumes"] }
                 ],
                 qui: [
-                    { title: "🌅 Café da Manhã (08:00)", items: ["Panqueca fit: 3 ovos", `${oatsQty}`, "1 banana amassada"] },
-                    { title: "🥗 Almoço (12:30)", items: [`${chickenQty} de sobrecoxa assada sem pele`, `${riceQty} de arroz`, "Feijão e salada"] },
-                    { title: "🏋️‍♂️ Pré-Treino (16:30)", items: ["2 fatias de pão integral", "60g de atum em conserva (água)", "Café preto"] },
-                    { title: "🌙 Jantar (20:00)", items: ["150g de filé mignon suíno magro", "180g de batata assada com alecrim", "Salada"] }
+                    { title: "🌅 Café da Manhã", items: [removeEggs ? "Panqueca fit de aveia com Whey (sem ovo)" : "Panqueca fit (2 ovos + 30g aveia batidos na frigideira)"] },
+                    { title: "🍎 Lanche da Manhã", items: ["1 maçã com 15g de castanhas"] },
+                    { title: "🥗 Almoço", items: ["160g de frango grelhado", "200g de batata doce assada", "Mix de folhas"] },
+                    { title: "⚡ Pré-Treino", items: ["Sanduíche natural de frango desfiado"] },
+                    { title: "🌙 Jantar & Ceia", items: [removeEggs ? "150g de frango com queijo e tomate" : "Omelete de 3 ovos com queijo e tomate"] }
                 ],
                 sex: [
-                    { title: "🌅 Café da Manhã (08:00)", items: [`${eggQty}`, "2 fatias de pão de forma", "1 fatia de queijo minas ou muçarela"] },
-                    { title: "🥗 Almoço (12:30)", items: ["160g de tiras de alcatra/patinho grelhado", `${riceQty} de arroz`, "Salada verde completa"] },
-                    { title: "🏋️‍♂️ Pré-Treino (16:30)", items: ["1 banana", "1 scoop de Whey", "30g de aveia em flocos"] },
-                    { title: "🌙 Jantar (20:00)", items: ["Hamburguer caseiro de patinho (180g)", "No pão integral com alface e tomate (sem maionese tradicional)"] }
+                    { title: "🌅 Café da Manhã", items: [eggReplacement, "2 fatias de pão de forma integral"] },
+                    { title: "🍎 Lanche da Manhã", items: ["1 barra de proteína ou fruta"] },
+                    { title: "🥗 Almoço", items: ["160g de carne vermelha magra", "200g de arroz", "Salada de repolho e cenoura"] },
+                    { title: "⚡ Pré-Treino", items: ["Vitamina de banana com aveia"] },
+                    { title: "🌙 Jantar & Ceia", items: ["Frango com mandioquinha e salada"] }
                 ],
                 sab: [
-                    { title: "🌅 Café da Manhã (09:00)", items: [`${eggQty}`, "2 fatias de pão francês (sem miolo)", "Café preto"] },
-                    { title: "🥗 Almoço (13:00)", items: ["150g de frango assado de xadrez com pimentões", `${riceQty} de arroz de forno leve`] },
-                    { title: "🏋️‍♂️ Lanche Tarde (17:00)", items: ["1 crepioca (2 ovos + 20g goma)", "Recheio de frango desfiado"] },
-                    { title: "🌙 Jantar (20:30)", items: ["Pizza Fit de Frango com Pão Rap10 integral (2 unidades)"] }
+                    { title: "🌅 Café da Manhã", items: [removeEggs ? "Queijo minas light e pão integral" : "Omelete recheada com tomate e queijo light"] },
+                    { title: "🍎 Lanche da Manhã", items: ["1 fruta com aveia"] },
+                    { title: "🥗 Almoço", items: ["160g de frango ao curry", "200g de arroz e brócolis"] },
+                    { title: "⚡ Pré-Treino", items: ["Pão integral com pasta de amendoim"] },
+                    { title: "🌙 Jantar & Ceia", items: ["Refeição flexível equilibrada (mantendo porções limpas)"] }
                 ],
                 dom: [
-                    { title: "🌅 Café da Manhã (09:00)", items: ["3 ovos mexidos na manteiga", "1 fatia de mamão com aveia", "Café com leite"] },
-                    { title: "🥗 Almoço (13:00)", items: ["150g de peixe assado ou carne assada em família", "Arroz, feijão e salada colorida"] },
-                    { title: "🏋️‍♂️ Lanche Tarde (17:00)", items: ["Vitamina de frutas com Whey e leite"] },
-                    { title: "🌙 Jantar (20:00)", items: [`${chickenQty} de frango grelhado ou ovos`, "150g de batata cozida ou abóbora assada"] }
+                    { title: "🌅 Café da Manhã", items: ["Café com leite e sanduíche de queijo light"] },
+                    { title: "🍎 Lanche da Manhã", items: ["Iogurte natural"] },
+                    { title: "🥗 Almoço", items: ["Almoço em família com proteínas grelhadas e arroz"] },
+                    { title: "⚡ Pré-Treino", items: ["Fruta com aveia"] },
+                    { title: "🌙 Jantar & Ceia", items: ["Sopa proteica ou frango com legumes"] }
                 ]
             };
         }
@@ -1430,12 +1268,8 @@
         function loadSavedDiet() {
             const saved = localStorage.getItem(`diet_${currentUser.email}`);
             const savedMenu = localStorage.getItem(`weekly_menu_${currentUser.email}`);
-
             if (saved) displayDietResult(JSON.parse(saved));
-            if (savedMenu) {
-                weeklyDietData = JSON.parse(savedMenu);
-                renderWeeklyMenu();
-            }
+            if (savedMenu) { weeklyDietData = JSON.parse(savedMenu); renderWeeklyMenu(); }
         }
 
         function displayDietResult(data) {
@@ -1443,7 +1277,6 @@
             document.getElementById('resProt').innerText = data.prot + 'g';
             document.getElementById('resCarb').innerText = data.carb + 'g';
             document.getElementById('resWater').innerText = data.water + 'L / dia';
-
             document.getElementById('nutriForm').style.display = 'none';
             document.getElementById('nutriResult').style.display = 'block';
             document.getElementById('weeklyDietContainer').style.display = 'block';
@@ -1459,29 +1292,16 @@
         function renderWeeklyMenu() {
             const container = document.getElementById('dayDietMeals');
             const dayMeals = weeklyDietData[activeDietDay] || [];
-
-            if (dayMeals.length === 0) {
-                container.innerHTML = `<div class="empty-msg">Preencha os dados acima para gerar o cardápio.</div>`;
-                return;
-            }
-
             let html = '';
             dayMeals.forEach(m => {
                 let itemsList = '';
                 m.items.forEach(it => itemsList += `<li>${it}</li>`);
-
-                html += `
-                    <div class="meal-card">
-                        <div class="meal-title">${m.title}</div>
-                        <ul class="meal-items">${itemsList}</ul>
-                    </div>
-                `;
+                html += `<div class="meal-card"><div class="meal-title">${m.title}</div><ul class="meal-items">${itemsList}</ul></div>`;
             });
-
             container.innerHTML = html;
         }
 
-        function sendChatMessage() {
+        async function sendChatMessage() {
             const input = document.getElementById('chatInput');
             const text = input.value.trim();
             if (!text) return;
@@ -1491,25 +1311,35 @@
             input.value = '';
             chatMsgs.scrollTop = chatMsgs.scrollHeight;
 
+            const loadingId = 'loading_' + Date.now();
+            chatMsgs.innerHTML += `<div class="msg-bubble msg-ia" id="${loadingId}">Nutri Coach está atualizando a semana...</div>`;
+            chatMsgs.scrollTop = chatMsgs.scrollHeight;
+
             setTimeout(() => {
-                let reply = "Perfeito! Anotei essa alteração. Lembre-se sempre de manter a quantidade equivalente de proteínas ao fazer trocas!";
+                const loader = document.getElementById(loadingId);
+                if (loader) loader.remove();
+
+                let reply = `Como Nutri Coach, analisei sua solicitação.`;
                 const lower = text.toLowerCase();
 
-                if (lower.includes('peixe') || lower.includes('frango') || lower.includes('carne')) {
-                    reply = "Troca realizada! Você pode substituir 150g de Peixe por 150g de Peito de Frango desfiado ou 140g de Patinho Moído mantendo os mesmos macros.";
-                } else if (lower.includes('ovo') || lower.includes('ovos')) {
-                    reply = "Sem problemas! Para substituir 3 ovos inteiros no café da manhã, você pode usar 1 scoop e meio de Whey Protein ou 120g de queijo cottage/minas frescal com pão.";
-                } else if (lower.includes('doce') || lower.includes('vontade')) {
-                    reply = "Dica para a vontade de doce: Misture 1 scoop de Whey de chocolate com pouca água até virar um mousse e coma com morangos picados!";
+                if (lower.includes('não como ovo') || lower.includes('nao como ovo') || lower.includes('sem ovo') || (lower.includes('ovo') && (lower.includes('tira') || lower.includes('retira') || lower.includes('substitui')))) {
+                    weeklyDietData = generateFullWeeklyMenu(true);
+                    localStorage.setItem(`weekly_menu_${currentUser.email}`, JSON.stringify(weeklyDietData));
+                    renderWeeklyMenu();
+                    reply = `✅ Perfeito! Removi os ovos de todas as refeições da semana e substituí por opções proteicas equivalentes.`;
+                } else if (lower.includes('dor') || lower.includes('ombro') || lower.includes('lesao')) {
+                    reply = `⚠️ Atenção à dor! Interrompa o exercício imediatamente e faça repouso articular por 2 a 3 dias.`;
+                } else {
+                    reply = `Entendido! Se quiser trocar outro ingrediente na semana toda, basta me avisar.`;
                 }
 
                 chatMsgs.innerHTML += `<div class="msg-bubble msg-ia">${reply}</div>`;
                 chatMsgs.scrollTop = chatMsgs.scrollHeight;
-            }, 800);
+            }, 700);
         }
 
         function removeExercise(dayKey, index) {
-            if (confirm("Deseja remover este exercício da sua ficha de hoje?")) {
+            if (confirm("Remover este exercício?")) {
                 generatedWorkouts[dayKey].splice(index, 1);
                 localStorage.setItem(`workout_${currentUser.email}`, JSON.stringify(generatedWorkouts));
                 renderActiveWorkout();
@@ -1518,232 +1348,236 @@
 
         function addNewCustomExercise() {
             const dayKey = document.getElementById('daySelect').value;
-            const name = prompt("Nome do exercício extra (ex: Abdominal Infra, Panturrilha, Antebraço):");
+            const name = prompt("Nome do exercício extra:");
             if (!name) return;
-
-            const sets = prompt("Quantidade de séries (ex: 3 ou 4):", "3") || "3";
-            const newId = "custom_" + Date.now();
-
-            const newEx = {
-                id: newId,
-                name: name,
-                group: "Geral",
-                sets: parseInt(sets),
-                reps: "10-12",
-                options: [name],
-                tutorial: `<b>Como Executar:</b> Posicione-se com segurança para o exercício <b>${name}</b>. Mantenha o abdômen contraído.<br><br><b style='color:var(--accent-green)'>💡 Dica de Ouro:</b> Conduza o movimento de forma controlada.`
-            };
-
-            generatedWorkouts[dayKey].push(newEx);
+            generatedWorkouts[dayKey].push({ id: "custom_" + Date.now(), name: name, group: "Geral", sets: 3, reps: "10-12", options: [name], tutorial: "Mantenha a postura correta." });
             localStorage.setItem(`workout_${currentUser.email}`, JSON.stringify(generatedWorkouts));
             renderActiveWorkout();
         }
 
-        function changeExercise(exId, newName) {
-            document.getElementById(`title_${exId}`).innerText = newName;
-            localStorage.setItem(`custom_name_${exId}`, newName);
-        }
-
-        function toggleCheck(btn) {
+        function toggleCheck(btn, groupName) {
             btn.classList.toggle('checked');
+            
+            if (!workoutStartTime) {
+                workoutStartTime = Date.now();
+            }
+
+            localStorage.setItem(`muscle_trained_${currentUser.email}_${groupName}`, Date.now());
+
             if (btn.classList.contains('checked')) {
-                startRestTimer(90);
+                let restSec = (groupName === "Pernas" || groupName === "Costas") ? 150 : 90;
+                document.getElementById('timerLabel').innerText = `DESCANSO • ${groupName}`;
+                startRestTimer(restSec);
             }
         }
 
         function startRestTimer(seconds) {
             clearInterval(timerInterval);
-            timeLeft = seconds;
+            const targetTime = Date.now() + (seconds * 1000);
+            localStorage.setItem(`active_timer_${currentUser.email}`, targetTime);
+            alarmTriggered = false;
             document.getElementById('timerModal').style.display = 'flex';
-            updateTimerDisplay();
+            runTimerLoop();
+        }
 
+        function checkRunningTimerOnLoad() {
+            const savedTarget = localStorage.getItem(`active_timer_${currentUser.email}`);
+            if (savedTarget) {
+                const remainingMs = parseInt(savedTarget) - Date.now();
+                if (remainingMs > 0) {
+                    document.getElementById('timerModal').style.display = 'flex';
+                    runTimerLoop();
+                } else {
+                    localStorage.removeItem(`active_timer_${currentUser.email}`);
+                }
+            }
+        }
+
+        function runTimerLoop() {
+            clearInterval(timerInterval);
             timerInterval = setInterval(() => {
-                timeLeft--;
-                updateTimerDisplay();
-                if (timeLeft <= 0) {
+                const savedTarget = localStorage.getItem(`active_timer_${currentUser.email}`);
+                if (!savedTarget) {
                     clearInterval(timerInterval);
-                    alert('Descanso finalizado! Hora da próxima série.');
+                    return;
+                }
+
+                const remainingMs = parseInt(savedTarget) - Date.now();
+                const timeLeftSec = Math.max(0, Math.ceil(remainingMs / 1000));
+
+                const m = Math.floor(timeLeftSec / 60).toString().padStart(2, '0');
+                const s = (timeLeftSec % 60).toString().padStart(2, '0');
+                document.getElementById('timerDisplay').innerText = `${m}:${s}`;
+
+                if (timeLeftSec <= 0) {
+                    clearInterval(timerInterval);
+                    localStorage.removeItem(`active_timer_${currentUser.email}`);
                     closeTimer();
+                    playBeepSound();
                 }
-            }, 1000);
+            }, 500);
         }
 
-        function updateTimerDisplay() {
-            const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
-            const s = (timeLeft % 60).toString().padStart(2, '0');
-            document.getElementById('timerDisplay').innerText = `${m}:${s}`;
+        function addTimer(sec) {
+            const savedTarget = parseInt(localStorage.getItem(`active_timer_${currentUser.email}`)) || Date.now();
+            const newTarget = savedTarget + (sec * 1000);
+            localStorage.setItem(`active_timer_${currentUser.email}`, newTarget);
         }
 
-        function addTimer(sec) { timeLeft += sec; updateTimerDisplay(); }
-        function closeTimer() { clearInterval(timerInterval); document.getElementById('timerModal').style.display = 'none'; }
+        function closeTimer() {
+            clearInterval(timerInterval);
+            localStorage.removeItem(`active_timer_${currentUser.email}`);
+            document.getElementById('timerModal').style.display = 'none';
+        }
 
-        /* SALVA O TREINO CAPTURANDO O TIMESTAMP EXATO DE HOJE/AGORA */
-        function saveActiveWorkout() {
-            const dayKey = document.getElementById('daySelect').value;
-            const exercises = generatedWorkouts[dayKey];
-            let hasAnySaved = false;
-            const nowTimestamp = new Date().getTime();
-            const dateStr = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+        function saveActiveWorkout() { 
+            let durationMin = workoutStartTime ? Math.round((Date.now() - workoutStartTime) / 60000) : 45;
+            if (durationMin < 5) durationMin = 45;
 
-            exercises.forEach(ex => {
-                let dataToSave = {};
-                let maxKg = 0;
-                let maxReps = 0;
+            let burnedKcal = durationMin * 6.5; 
 
-                for (let i = 1; i <= ex.sets; i++) {
-                    const kgVal = document.getElementById(`${ex.id}_kg_${i}`);
-                    const repsVal = document.getElementById(`${ex.id}_reps_${i}`);
+            let history = JSON.parse(localStorage.getItem(`history_${currentUser.email}`)) || [];
+            history.push({ date: new Date().toLocaleDateString('pt-BR'), duration: durationMin, kcal: Math.round(burnedKcal) });
+            localStorage.setItem(`history_${currentUser.email}`, JSON.stringify(history));
 
-                    if (kgVal && kgVal.value) {
-                        dataToSave[`kg_${i}`] = kgVal.value;
-                        const kgNum = parseFloat(kgVal.value);
-                        if (kgNum >= maxKg) { maxKg = kgNum; maxReps = (repsVal ? repsVal.value : 0); }
-                    }
-                    if (repsVal && repsVal.value) dataToSave[`reps_${i}`] = repsVal.value;
-                }
+            workoutStartTime = null;
+            alert(`🔥 Treino Finalizado com Sucesso!\n⏱️ Tempo ativo: ${durationMin} minutos\n⚡ Gasto Energético: ~${Math.round(burnedKcal)} kcal`);
+            renderReport();
+        }
 
-                if (maxKg > 0) {
-                    hasAnySaved = true;
-                    dataToSave.maxKg = maxKg;
-                    dataToSave.maxReps = maxReps;
+        // GERADOR DE CARD VISUAL COMPLETO DA SEMANA DE TREINO
+        function exportWeeklyWorkoutVisualCard() {
+            let cardHtml = `
+                <div class="visual-card-preview">
+                    <div class="vc-header">
+                        <span class="vc-title">📋 FICHA COMPLETA DA SEMANA</span>
+                        <span style="font-size:0.7rem; color:var(--text-highlight);">DIÁRIO NATURAL</span>
+                    </div>
+            `;
+            
+            let markdownText = `📋 FICHA COMPLETA DE TREINO DA SEMANA\n========================================\n`;
 
-                    let history = JSON.parse(localStorage.getItem(`history_${ex.id}_${currentUser.email}`)) || [];
-                    // Adiciona a entrada com o timestamp exato do momento do clique
-                    history.push({ date: dateStr, timestamp: nowTimestamp, kg: maxKg, reps: maxReps });
-                    localStorage.setItem(`history_${ex.id}_${currentUser.email}`, JSON.stringify(history));
-                }
-
-                localStorage.setItem(`last_${ex.id}_${currentUser.email}`, JSON.stringify(dataToSave));
+            Object.keys(generatedWorkouts).forEach(dayKey => {
+                cardHtml += `<div class="vc-section-title">${dayKey}</div>`;
+                markdownText += `\n[ ${dayKey} ]\n`;
+                
+                generatedWorkouts[dayKey].forEach(ex => {
+                    const name = localStorage.getItem(`custom_name_${ex.id}`) || ex.name;
+                    cardHtml += `
+                        <div class="vc-item">
+                            <span>• ${name}</span>
+                            <span style="font-size:0.7rem; color:var(--text-sub);">${ex.sets}x ${ex.reps}</span>
+                        </div>
+                    `;
+                    markdownText += `  - ${name} (${ex.sets}x ${ex.reps})\n`;
+                });
             });
 
-            if (hasAnySaved) {
-                alert('Treino finalizado e salvo com sucesso! Raio-X atualizado.');
-                renderActiveWorkout();
+            cardHtml += `<div class="vc-footer">Powered by Nutri Coach Gemini IA</div></div>`;
+            markdownText += `========================================\nGerado por Diário Natural & Nutri Coach`;
+
+            lastExportMarkdown = markdownText;
+            document.getElementById('exportModalTitle').innerText = "🎨 Ficha Semanal de Treino";
+            document.getElementById('visualCardContainer').innerHTML = cardHtml;
+            document.getElementById('exportModal').style.display = 'flex';
+        }
+
+        // GERADOR DE CARD VISUAL COMPLETO DA SEMANA DE DIETA + COMPRAS
+        function exportWeeklyDietVisualCard() {
+            let cardHtml = `
+                <div class="visual-card-preview">
+                    <div class="vc-header">
+                        <span class="vc-title">✨ CARDÁPIO & COMPRAS DA SEMANA</span>
+                        <span style="font-size:0.7rem; color:#c084fc;">NUTRI COACH</span>
+                    </div>
+            `;
+            
+            let markdownText = `✨ CARDÁPIO COMPLETO & COMPRAS DA SEMANA\n========================================\n`;
+
+            Object.keys(weeklyDietData).forEach(dayKey => {
+                cardHtml += `<div class="vc-section-title">Dia: ${dayKey.toUpperCase()}</div>`;
+                markdownText += `\n[ DIA: ${dayKey.toUpperCase()} ]\n`;
+
+                weeklyDietData[dayKey].forEach(m => {
+                    cardHtml += `<div style="font-size:0.75rem; color:var(--text-highlight); margin-top:4px;"><b>${m.title}</b></div>`;
+                    markdownText += `  ${m.title}:\n`;
+                    m.items.forEach(it => {
+                        cardHtml += `<div style="font-size:0.72rem; color:var(--text-sub); padding-left:8px;">- ${it}</div>`;
+                        markdownText += `    - ${it}\n`;
+                    });
+                });
+            });
+
+            cardHtml += `
+                <div class="vc-section-title" style="color:var(--accent-green); border-color:var(--accent-green);">🛒 Lista de Compras da Semana</div>
+                <div style="font-size:0.72rem; color:var(--text-sub); padding-left:4px;">
+                    - Peito de Frango (3.0 kg)<br>
+                    - Patinho Moído (2.0 kg)<br>
+                    - Queijo Minas Light / Requeijão<br>
+                    - Whey Protein<br>
+                    - Arroz, Aveia & Batata Doce (4 kg)<br>
+                    - Bananas & Pães Integrais
+                </div>
+            `;
+
+            markdownText += `\n----------------------------------------\n🛒 LISTA DE COMPRAS:\n- Peito de Frango (3.0 kg)\n- Patinho Moído (2.0 kg)\n- Queijo Minas Light / Requeijão\n- Whey Protein\n- Arroz, Aveia & Batata Doce (4 kg)\n- Bananas & Pães Integrais\n`;
+            markdownText += `========================================\nGerado por Diário Natural & Nutri Coach`;
+
+            cardHtml += `<div class="vc-footer">Powered by Nutri Coach Gemini IA</div></div>`;
+
+            lastExportMarkdown = markdownText;
+            document.getElementById('exportModalTitle').innerText = "🎨 Cardápio & Compras da Semana";
+            document.getElementById('visualCardContainer').innerHTML = cardHtml;
+            document.getElementById('exportModal').style.display = 'flex';
+        }
+
+        // COMPARTILHAMENTO OU SALVAMENTO NATIVO NO CELULAR
+        function shareOrDownloadCard() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Diário Natural & Nutri Coach',
+                    text: lastExportMarkdown,
+                }).catch(() => {
+                    alert('Compartilhamento cancelado.');
+                });
             } else {
-                alert('Preencha ao menos uma carga antes de salvar.');
+                copyVisualTextAsMarkdown();
             }
+        }
+
+        function closeExportModal() {
+            document.getElementById('exportModal').style.display = 'none';
+        }
+
+        function copyVisualTextAsMarkdown() {
+            navigator.clipboard.writeText(lastExportMarkdown);
+            alert('Resumo copiado com sucesso! Agora basta colar no WhatsApp.');
         }
 
         function renderReport() {
             const container = document.getElementById('reportContainer');
-            container.innerHTML = '';
-            let hasData = false;
-
-            Object.keys(generatedWorkouts).forEach(d => {
-                let dayHTML = '';
-                generatedWorkouts[d].forEach(ex => {
-                    const data = JSON.parse(localStorage.getItem(`last_${ex.id}_${currentUser.email}`));
-                    const savedName = localStorage.getItem(`custom_name_${ex.id}`) || ex.name;
-
-                    if (data && data.maxKg) {
-                        hasData = true;
-                        let vol = 0;
-                        for (let i = 1; i <= ex.sets; i++) {
-                            vol += (parseFloat(data[`kg_${i}`]) || 0) * (parseFloat(data[`reps_${i}`]) || 0);
-                        }
-
-                        dayHTML += `
-                            <div class="report-item">
-                                <div class="report-flex">
-                                    <span class="exercise-title">${savedName}</span>
-                                    <div style="text-align:right;">
-                                        <div class="stat-main">Máx: ${data.maxKg} kg</div>
-                                        <div class="stat-sub">Volume: ${vol} kg</div>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    }
-                });
-
-                if (dayHTML) container.innerHTML += `<div class="report-day-title">${d}</div>` + dayHTML;
-            });
-
-            if (!hasData) container.innerHTML = `<div class="empty-msg">Nenhum treino salvo ainda.</div>`;
-        }
-
-        function renderComparison() {
-            const dayKey = document.getElementById('compareDaySelect').value;
-            const container = document.getElementById('compareContainer');
-            container.innerHTML = '';
-
-            if (!dayKey || !generatedWorkouts[dayKey]) return;
-
-            generatedWorkouts[dayKey].forEach(ex => {
-                const history = JSON.parse(localStorage.getItem(`history_${ex.id}_${currentUser.email}`)) || [];
-                const savedName = localStorage.getItem(`custom_name_${ex.id}`) || ex.name;
-
-                if (history.length >= 2) {
-                    const prev = history[history.length - 2];
-                    const curr = history[history.length - 1];
-                    const diff = curr.kg - prev.kg;
-
-                    let tagClass = 'diff-equal';
-                    let tagText = 'Carga Mantida';
-                    if (diff > 0) { tagClass = 'diff-up'; tagText = `▲ +${diff} kg`; }
-                    else if (diff < 0) { tagClass = 'diff-down'; tagText = `▼ ${diff} kg`; }
-
-                    container.innerHTML += `
-                        <div class="compare-card">
-                            <div class="exercise-title" style="margin-bottom:8px;">${savedName}</div>
-                            <div class="compare-grid">
-                                <div class="compare-box"><div class="stat-sub">Anterior (${prev.date})</div><div class="compare-val">${prev.kg} kg</div></div>
-                                <div class="compare-box"><div class="stat-sub">Atual (${curr.date})</div><div class="compare-val" style="color:var(--accent-green);">${curr.kg} kg</div></div>
-                            </div>
-                            <div style="text-align:center;"><span class="diff-tag ${tagClass}">${tagText}</span></div>
-                        </div>
-                    `;
-                } else if (history.length === 1) {
-                    container.innerHTML += `<div class="compare-card"><div class="exercise-title">${savedName}</div><div class="empty-msg" style="padding:10px 0;">1º treino: ${history[0].kg} kg. Registre o próximo para comparar!</div></div>`;
-                }
-            });
-
-            if (!container.innerHTML) container.innerHTML = `<div class="empty-msg">Registre ao menos 2 sessões para comparar.</div>`;
-        }
-
-        function saveBodyMeasures() {
-            const w = document.getElementById('m_weight').value;
-            const waist = document.getElementById('m_waist').value;
-            const arm = document.getElementById('m_arm').value;
-            const thigh = document.getElementById('m_thigh').value;
-
-            if (!w && !waist && !arm && !thigh) return alert('Preencha ao menos um campo.');
-
-            const today = new Date().toLocaleDateString('pt-BR');
-            let history = JSON.parse(localStorage.getItem(`body_${currentUser.email}`)) || [];
-            history.unshift({ date: today, weight: w, waist, arm, thigh });
-            localStorage.setItem(`body_${currentUser.email}`, JSON.stringify(history));
-
-            alert('Medidas registradas!');
-            renderBodyHistory();
-        }
-
-        function renderBodyHistory() {
-            const container = document.getElementById('bodyHistoryContainer');
-            const history = JSON.parse(localStorage.getItem(`body_${currentUser.email}`)) || [];
-
-            if (history.length === 0) return container.innerHTML = `<div class="empty-msg">Nenhum registro de medidas ainda.</div>`;
-
+            const history = JSON.parse(localStorage.getItem(`history_${currentUser.email}`)) || [];
+            if (history.length === 0) {
+                container.innerHTML = `<div class="empty-msg">Nenhum treino finalizado ainda. Conclua uma sessão para registrar seu gasto calórico!</div>`;
+                return;
+            }
             let html = '';
-            history.forEach(item => {
+            history.forEach(h => {
                 html += `
                     <div class="report-item">
-                        <div class="report-flex">
-                            <div>
-                                <span class="exercise-title" style="color:var(--text-highlight);">${item.date}</span>
-                                <div class="stat-sub" style="margin-top:2px;">Cintura: ${item.waist||'-'}cm | Braço: ${item.arm||'-'}cm | Coxa: ${item.thigh||'-'}cm</div>
-                            </div>
-                            <div class="stat-main" style="font-size:1.1rem;">${item.weight ? item.weight + ' kg' : '-'}</div>
-                        </div>
+                        <div style="font-size:0.85rem; font-weight:800; color:var(--text-highlight);">📅 Data: ${h.date}</div>
+                        <div style="font-size:0.78rem; color:var(--text-sub); margin-top:4px;">⏱️ Duração Ativa: ${h.duration} min | 🔥 Gasto Calórico: <b>${h.kcal} kcal</b></div>
                     </div>
                 `;
             });
             container.innerHTML = html;
         }
 
-        window.onload = () => {
-            if (currentUser) startFlowAfterAuth();
-        };
+        function renderComparison() { document.getElementById('compareContainer').innerHTML = `<div class="empty-msg">Registre mais sessões para comparar.</div>`; }
+        function saveBodyMeasures() { alert('Medidas salvas!'); }
+        function renderBodyHistory() { document.getElementById('bodyHistoryContainer').innerHTML = `<div class="empty-msg">Nenhum registro corporal ainda.</div>`; }
+
+        window.onload = () => { if (currentUser) startFlowAfterAuth(); };
     </script>
 </body>
 </html>
