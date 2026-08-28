@@ -52,7 +52,14 @@
         .brand-subtitle { font-size: 0.65rem; color: var(--text-highlight); font-weight: 600; text-transform: uppercase; }
         .header-actions { display: flex; align-items: center; gap: 6px; }
         .brand-badge { font-size: 0.68rem; font-weight: 700; padding: 4px 8px; border-radius: 20px; background: rgba(16, 185, 129, 0.2); color: var(--accent-green); border: 1px solid rgba(16, 185, 129, 0.3); cursor: pointer; text-transform: uppercase; }
-        .theme-btn, .help-btn, .focus-btn { background: var(--bg-input); border: 1px solid var(--border-card); color: var(--text-sub); border-radius: 20px; padding: 4px 10px; font-weight: 700; font-size: 0.68rem; cursor: pointer; }
+        .theme-btn, .help-btn, .focus-btn, .widget-toggle-btn { background: var(--bg-input); border: 1px solid var(--border-card); color: var(--text-sub); border-radius: 20px; padding: 4px 10px; font-weight: 700; font-size: 0.68rem; cursor: pointer; }
+
+        /* WIDGET / MINI DASHBOARD DE BLOQUEIO / ACADEMIA */
+        .widget-lockscreen-card { background: linear-gradient(145deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%); border: 2px solid var(--accent-primary); border-radius: 20px; padding: 18px; margin-bottom: 16px; box-shadow: 0 12px 35px rgba(0,0,0,0.7); backdrop-filter: blur(16px); display: none; }
+        .widget-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 10px; margin-bottom: 12px; }
+        .widget-timer-box { background: var(--bg-input); border: 1px solid var(--border-card); border-radius: 14px; padding: 12px; text-align: center; margin-bottom: 12px; }
+        .widget-quick-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+        .widget-stat-box { background: var(--bg-input); border: 1px solid var(--border-card); border-radius: 12px; padding: 10px; text-align: center; }
 
         .workout-control-card { background: rgba(30, 41, 59, 0.9); backdrop-filter: blur(12px); border: 1px solid var(--border-card); border-radius: 16px; padding: 16px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 12px; }
         .control-row { display: flex; justify-content: space-between; align-items: center; }
@@ -203,12 +210,49 @@
                 </div>
             </div>
             <div class="header-actions">
+                <button class="widget-toggle-btn" onclick="toggleWidgetMode()" title="Modo Widget / Tela de Bloqueio">📱 WIDGET</button>
                 <button class="theme-btn" onclick="cycleTheme()" title="Trocar Tema">🎨 TEMA</button>
                 <button class="focus-btn" id="focusModeBtn" onclick="toggleFocusMode()" title="Modo Foco">🎯 FOCO</button>
                 <button class="help-btn" onclick="toggleHelpModal()">❓</button>
                 <div class="brand-badge" id="badgeStatus" onclick="handleBadgeClick()">CONECTAR</div>
             </div>
         </header>
+
+        <!-- WIDGET / MINI DASHBOARD DE TELA DE BLOQUEIO / ACADEMIA -->
+        <div id="widgetLockscreenView" class="widget-lockscreen-card">
+            <div class="widget-header">
+                <div>
+                    <span style="font-size: 0.7rem; color: var(--text-highlight); text-transform: uppercase; font-weight: 800;">📱 MINI WIDGET DE ACADEMIA</span>
+                    <div id="widgetActiveDayTitle" style="font-size: 1rem; font-weight: 800; color: #f8fafc;">Treino do Dia</div>
+                </div>
+                <button class="timer-btn" onclick="toggleWidgetMode()">Expandir App ➔</button>
+            </div>
+
+            <div class="widget-timer-box">
+                <span style="font-size: 0.7rem; color: var(--text-sub); display: block;">CRONÔMETRO DE DESCANSO ATIVO</span>
+                <span id="widgetTimerDisplay" class="timer-display" style="font-size: 1.6rem;">00:00</span>
+            </div>
+
+            <div class="widget-quick-stats">
+                <div class="widget-stat-box">
+                    <span style="font-size: 0.65rem; color: var(--text-sub); display: block;">TEMPO DE TREINO</span>
+                    <span id="widgetStopwatchDisplay" style="font-size: 0.95rem; font-weight: 800; color: var(--text-highlight);">00:00:00</span>
+                </div>
+                <div class="widget-stat-box">
+                    <span style="font-size: 0.65rem; color: var(--text-sub); display: block;">SÉRIES CONCLUÍDAS</span>
+                    <span id="widgetCompletedSetsCount" style="font-size: 0.95rem; font-weight: 800; color: var(--accent-green);">0 / 0</span>
+                </div>
+            </div>
+
+            <div style="background: var(--bg-input); border: 1px solid var(--border-card); border-radius: 12px; padding: 12px; margin-bottom: 12px;">
+                <span style="font-size: 0.68rem; color: var(--text-sub); display: block; text-transform: uppercase;">Próximo Exercício Pendente</span>
+                <div id="widgetNextExerciseName" style="font-size: 0.9rem; font-weight: 800; color: var(--text-title); margin-top: 2px;">Nenhum exercício iniciado</div>
+            </div>
+
+            <button class="btn-primary" style="background: linear-gradient(135deg, var(--accent-green) 0%, #059669 100%); margin: 0; height: 44px;" onclick="addTimer(30)">
+                +30s DE DESCANSO RÁPIDO
+            </button>
+        </div>
 
         <!-- CRONÔMETRO DE DESCANSO -->
         <div id="timerModal" class="timer-modal" style="display: none;">
@@ -611,7 +655,7 @@
         </div>
     </div>
 
-    <!-- MENU DE AJUDA TOTALMENTE ATUALIZADO COM TODAS AS FUNCIONALIDADES -->
+    <!-- MENU DE AJUDA COMPLETO E ATUALIZADO -->
     <div id="helpModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 3000; align-items: center; justify-content: center; padding: 16px;">
         <div class="card-box" style="max-width: 440px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
@@ -620,17 +664,17 @@
             </div>
 
             <div style="font-size: 0.85rem; line-height: 1.6; color: var(--text-sub);">
-                <b style="color: var(--text-title); display: block; margin-top: 4px;">🎨 Modo Escuro & Cores Dinâmicas por Objetivo:</b>
-                O app ajusta automaticamente a identidade visual com base na sua escolha de objetivo (Verde para Hipertrofia, Azul para Força e Laranja para Emagrecimento). O botão 🎨 TEMA no topo permite alternar manualmente a qualquer momento.<br><br>
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">📱 Tela de Bloqueio (Media Session):</b>
+                Quando iniciar o treino, a aplicação assume uma sessão de multimédia integrada ao sistema. Assim, o cronômetro, tempo de treino e controlos aparecem diretamente na tela de bloqueio e na central de notificações do telemóvel!<br><br>
+
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">🎨 Cores Dinâmicas por Objetivo & Temas:</b>
+                O app ajusta automaticamente a identidade visual com base na sua escolha de objetivo (Verde para Hipertrofia, Azul para Força e Laranja para Emagrecimento). O botão 🎨 TEMA no topo permite alternar manualmente.<br><br>
 
                 <b style="color: var(--text-title); display: block; margin-top: 4px;">🔥 Frequência, Streak & Gráficos:</b>
-                Na aba <b>Relatório</b>, o calendário exibe seus dias de treino concluídos sincronizados em tempo real com a data do sistema. O gráfico de progressão exibe a evolução de carga dos seus exercícios principais.<br><br>
-
-                <b style="color: var(--text-title); display: block; margin-top: 4px;">🔔 Notificações Inteligentes de Descanso:</b>
-                Quando o cronômetro de descanso encerra, o app emite um bip sonoro, vibra e dispara uma notificação push flutuante para avisar que o descanso acabou.<br><br>
+                Na aba <b>Relatório</b>, o calendário exibe seus dias de treino concluídos sincronizados em tempo real com a data do sistema, acompanhado do gráfico de progressão de carga.<br><br>
 
                 <b style="color: var(--text-title); display: block; margin-top: 4px;">🗑️ Hard Reset do Dia (Zerar Treino):</b>
-                Caso precise reiniciar o treino do dia, o botão de limpar apaga todas as cargas preenchidas, marcações de falha (`F`), drop-sets (`D`), checks, timer de descanso, além de remover do relatório as calorias e o status do Raio-X daquela data.<br><br>
+                O botão de limpar apaga todas as cargas preenchidas, marcações de falha (`F`), drop-sets (`D`), checks, timer de descanso, além de remover do relatório as calorias e o status do Raio-X daquela data.<br><br>
 
                 <b style="color: var(--text-title); display: block; margin-top: 4px;">🍏 Nutri Coach (Inteligência Artificial):</b>
                 Fotografe seu prato ou escaneie códigos de barras para calcular macros e calorias em segundos.<br><br>
@@ -684,6 +728,7 @@
 
         let lastExportMarkdown = "";
         let isFocusModeActive = false;
+        let isWidgetModeActive = false;
         let activeExForSwap = null;
 
         const themes = {
@@ -753,6 +798,34 @@
             } catch (e) {}
         }
 
+        // INTEGRAÇÃO DA MEDIA SESSION PARA TELA DE BLOQUEIO
+        function updateMediaSessionMetadata(titleText, artistText, albumText) {
+            if ('mediaSession' in navigator) {
+                try {
+                    navigator.mediaSession.metadata = new MediaMetadata({
+                        title: titleText || 'Treino em Andamento',
+                        artist: artistText || 'Diário Natural & Nutri Coach',
+                        album: albumText || 'Sessão de Academia Ativa',
+                        artwork: [
+                            { src: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=96', sizes: '96x96', type: 'image/png' },
+                            { src: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=512', sizes: '512x512', type: 'image/png' }
+                        ]
+                    });
+
+                    navigator.mediaSession.setActionHandler('play', function() {
+                        // Ação ao retomar o treino ou timer
+                    });
+                    navigator.mediaSession.setActionHandler('pause', function() {
+                        // Ação ao pausar
+                    });
+                    navigator.mediaSession.setActionHandler('nexttrack', function() {
+                        // Ação ao clicar em avançar na tela de bloqueio (+30s de descanso)
+                        addTimer(30);
+                    });
+                } catch(e) {}
+            }
+        }
+
         const exerciseLibrary = {
             supino_m: { name: "Supino Reto na Máquina", group: "Peito", options: ["Supino Reto na Máquina", "Supino Reto com Halteres", "Supino Reto no Smith", "Supino Reto com Barra"], tutorial: "<b>Postura:</b> Ajuste o banco na linha do meio do peito. Mantenha escápulas coladas." },
             remada_c: { name: "Remada Curvada com Barra", group: "Costas", options: ["Remada Curvada com Barra", "Remada Baixa com Triângulo", "Remada Articulada"], tutorial: "<b>Postura:</b> Tronco a 45°, coluna reta, puxe em direção ao umbigo." },
@@ -774,6 +847,58 @@
             tri_franc: { name: "Tríceps Francês na Polia", group: "Braços", options: ["Tríceps Francês na Polia"], tutorial: "<b>Postura:</b> Cotovelos apontados para o teto." },
             ab_infra: { name: "Elevação de Pernas (Infra)", group: "Core", options: ["Elevação de Pernas (Infra)"], tutorial: "<b>Postura:</b> Eleve as pernas e empurre o quadril para cima no topo." }
         };
+
+        function toggleWidgetMode() {
+            isWidgetModeActive = !isWidgetModeActive;
+            const widgetEl = document.getElementById('widgetLockscreenView');
+            const workoutView = document.getElementById('workoutView');
+            const nutriView = document.getElementById('nutriView');
+            const reportView = document.getElementById('reportView');
+            const compareView = document.getElementById('compareView');
+            const bodyView = document.getElementById('bodyView');
+            const nav = document.getElementById('bottomNav');
+
+            if (isWidgetModeActive) {
+                widgetEl.style.display = 'block';
+                if(workoutView) workoutView.style.display = 'none';
+                if(nutriView) nutriView.style.display = 'none';
+                if(reportView) reportView.style.display = 'none';
+                if(compareView) compareView.style.display = 'none';
+                if(bodyView) bodyView.style.display = 'none';
+                if(nav) nav.style.display = 'none';
+                updateWidgetStats();
+            } else {
+                widgetEl.style.display = 'none';
+                switchTab('workout');
+                if(nav) nav.style.display = 'flex';
+            }
+        }
+
+        function updateWidgetStats() {
+            const dayKey = document.getElementById('daySelect').value;
+            document.getElementById('widgetActiveDayTitle').innerText = dayKey;
+
+            const exercises = generatedWorkouts[dayKey] || [];
+            let totalSets = 0;
+            let completedSets = 0;
+            let nextExName = "Nenhum exercício concluído ainda";
+
+            exercises.forEach(ex => {
+                const savedName = localStorage.getItem(`custom_name_${ex.id}`) || ex.name;
+                for(let i=1; i<=ex.sets; i++) {
+                    totalSets++;
+                    const isChecked = localStorage.getItem(`check_${currentUser.email}_${dayKey}_${ex.id}_${i}`) === 'true';
+                    if(isChecked) {
+                        completedSets++;
+                    } else if(nextExName === "Nenhum exercício concluído ainda") {
+                        nextExName = `${savedName} (Set ${i})`;
+                    }
+                }
+            });
+
+            document.getElementById('widgetCompletedSetsCount').innerText = `${completedSets} / ${totalSets}`;
+            document.getElementById('widgetNextExerciseName').innerText = nextExName;
+        }
 
         function promptStartSession() {
             if (isWorkoutRunning) return;
@@ -803,6 +928,7 @@
             btn.style.borderColor = "var(--accent-green)";
             btn.style.cursor = "default";
 
+            updateMediaSessionMetadata("Treino Ativo", "Ficha: " + document.getElementById('daySelect').value, "Tempo: 00:00");
             runGlobalStopwatch();
 
             if (withWarmup) {
@@ -852,8 +978,15 @@
                 const hrs = Math.floor(elapsedSec / 3600).toString().padStart(2, '0');
                 const mins = Math.floor((elapsedSec % 3600) / 60).toString().padStart(2, '0');
                 const secs = (elapsedSec % 60).toString().padStart(2, '0');
+                const timeFormatted = `${hrs}:${mins}:${secs}`;
+
                 const el = document.getElementById('globalStopwatch');
-                if(el) el.innerText = `${hrs}:${mins}:${secs}`;
+                const widgetEl = document.getElementById('widgetStopwatchDisplay');
+                if(el) el.innerText = timeFormatted;
+                if(widgetEl) widgetEl.innerText = timeFormatted;
+
+                // Atualiza o tempo na tela de bloqueio via Media Session periodicamente
+                updateMediaSessionMetadata("Treino Ativo", "Ficha: " + document.getElementById('daySelect').value, `Tempo Corrido: ${timeFormatted}`);
             }, 1000);
         }
 
@@ -868,6 +1001,7 @@
                 btn.innerText = "⚡ TREINO ATIVO...";
                 btn.style.background = "rgba(16, 185, 129, 0.3)";
                 btn.style.borderColor = "var(--accent-green)";
+                updateMediaSessionMetadata("Treino Ativo", "Ficha em andamento", "Sessão Ativa");
                 runGlobalStopwatch();
 
                 const wasInWarmup = localStorage.getItem(`is_warmup_phase_${currentUser.email}`);
@@ -1100,6 +1234,7 @@
         }
 
         function switchTab(tab) {
+            if(isWidgetModeActive) return;
             ['workout', 'nutri', 'report', 'compare', 'body'].forEach(t => {
                 const nav = document.getElementById(`nav${t.charAt(0).toUpperCase() + t.slice(1)}`);
                 const view = document.getElementById(`${t}View`);
@@ -1450,14 +1585,12 @@
             renderActiveWorkout();
         }
 
-        // HARD RESET TOTAL DO DIA (VINCULADO À DATA REAL)
         function clearCurrentDayWorkout() {
             const dayKey = document.getElementById('daySelect').value;
             const todayDateStr = new Date().toLocaleDateString('pt-BR');
 
             if (confirm(`⚠️ HARD RESET: Deseja apagar TUDO do treino de ${dayKey} referente a hoje (${todayDateStr})?\n\nIsso removerá:\n- Cargas, repetições, falhas (F) e drop-sets (D)\n- Marcações de check (✓) e timer de descanso ativo\n- Histórico de calorias e treinos do dia na aba Relatório\n- Status de fadiga do Raio-X corporal\n- Presença no Calendário (Streak) e Gráfico`)) {
                 
-                // 1. Limpa cargas, reps, tags (F/D), checks e timer de descanso do dia
                 if (generatedWorkouts[dayKey]) {
                     generatedWorkouts[dayKey].forEach(ex => {
                         localStorage.removeItem(`muscle_trained_${currentUser.email}_${ex.group}`);
@@ -1471,7 +1604,6 @@
                 }
                 closeTimer();
 
-                // 2. Remove o registro do histórico da data de hoje (para zerar Streak, calorias e gráficos do dia)
                 let history = JSON.parse(localStorage.getItem(`history_${currentUser.email}`)) || [];
                 history = history.filter(h => h.date !== todayDateStr);
                 localStorage.setItem(`history_${currentUser.email}`, JSON.stringify(history));
@@ -1651,6 +1783,7 @@
                 document.getElementById('timerLabel').innerText = `DESCANSO • ${groupName}`;
                 startRestTimer(restSec);
             }
+            updateWidgetStats();
         }
 
         function startRestTimer(seconds) {
@@ -1684,7 +1817,13 @@
                 const timeLeftSec = Math.max(0, Math.ceil(remainingMs / 1000));
                 const m = Math.floor(timeLeftSec / 60).toString().padStart(2, '0');
                 const s = (timeLeftSec % 60).toString().padStart(2, '0');
+                
                 document.getElementById('timerDisplay').innerText = `${m}:${s}`;
+                const widgetTimer = document.getElementById('widgetTimerDisplay');
+                if(widgetTimer) widgetTimer.innerText = `${m}:${s}`;
+
+                // Atualiza a mídia na tela de bloqueio com o tempo de descanso atual
+                updateMediaSessionMetadata("⏰ Descanso Ativo", `Falta: ${m}:${s}`, "Modo Descanso Academia");
 
                 if (timeLeftSec <= 0) {
                     clearInterval(timerInterval);
@@ -1705,6 +1844,9 @@
             clearInterval(timerInterval);
             localStorage.removeItem(`active_timer_${currentUser.email}`);
             document.getElementById('timerModal').style.display = 'none';
+            const widgetTimer = document.getElementById('widgetTimerDisplay');
+            if(widgetTimer) widgetTimer.innerText = "00:00";
+            if(isWorkoutRunning) updateMediaSessionMetadata("Treino Ativo", "Sessão Ativa", "Treinando");
         }
 
         function saveActiveWorkout() { 
@@ -1742,7 +1884,6 @@
             }
 
             let history = JSON.parse(localStorage.getItem(`history_${currentUser.email}`)) || [];
-            // Remove duplicata do dia se já existia e insere o atualizado
             history = history.filter(h => h.date !== todayDateStr);
             history.push({ date: todayDateStr, duration: durationMin, kcal: Math.round(burnedKcal), maxWeight: maxWeightToday || 40 });
             localStorage.setItem(`history_${currentUser.email}`, JSON.stringify(history));
@@ -1750,6 +1891,8 @@
             localStorage.removeItem(`workout_start_${currentUser.email}`);
             isWorkoutRunning = false;
             globalStartTime = null;
+            if ('mediaSession' in navigator) navigator.mediaSession.metadata = null;
+
             document.getElementById('globalStopwatch').innerText = "00:00:00";
             document.getElementById('workoutStatusLabel').innerText = "⏸️ Treino Parado";
             document.getElementById('workoutStatusLabel').style.color = "var(--text-sub)";
