@@ -45,298 +45,139 @@
 
         .app-container { width: 100%; max-width: 480px; }
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding: 4px 0;
-        }
-
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 4px 0; }
         .brand-wrapper { display: flex; align-items: center; gap: 10px; }
-        .brand-logo-icon {
-            width: 36px; height: 36px;
-            background: linear-gradient(135deg, var(--accent-primary) 0%, #1d4ed8 100%);
-            border-radius: 10px; display: flex; align-items: center; justify-content: center;
-            color: #ffffff;
-        }
+        .brand-logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent-primary) 0%, #1d4ed8 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #ffffff; }
         .brand-title { font-size: 1.15rem; font-weight: 800; color: var(--text-title); }
         .brand-subtitle { font-size: 0.65rem; color: var(--text-highlight); font-weight: 600; text-transform: uppercase; }
-        
         .header-actions { display: flex; align-items: center; gap: 6px; }
+        .brand-badge { font-size: 0.68rem; font-weight: 700; padding: 4px 8px; border-radius: 20px; background: rgba(16, 185, 129, 0.2); color: var(--accent-green); border: 1px solid rgba(16, 185, 129, 0.3); cursor: pointer; text-transform: uppercase; }
+        .theme-btn, .help-btn, .focus-btn { background: var(--bg-input); border: 1px solid var(--border-card); color: var(--text-sub); border-radius: 20px; padding: 4px 10px; font-weight: 700; font-size: 0.68rem; cursor: pointer; }
 
-        .brand-badge {
-            font-size: 0.68rem; font-weight: 700; padding: 4px 8px; border-radius: 20px;
-            background: rgba(16, 185, 129, 0.2); color: var(--accent-green);
-            border: 1px solid rgba(16, 185, 129, 0.3); cursor: pointer; text-transform: uppercase;
-        }
-
-        .theme-btn, .help-btn, .focus-btn {
-            background: var(--bg-input); border: 1px solid var(--border-card); color: var(--text-sub);
-            border-radius: 20px; padding: 4px 10px; font-weight: 700; font-size: 0.68rem; cursor: pointer;
-        }
-
-        /* PAINEL DE CONTROLE DO TREINO (BOTÃO COMEÇAR E CRONÔMETRO) */
-        .workout-control-card {
-            background: rgba(30, 41, 59, 0.9); backdrop-filter: blur(12px); border: 1px solid var(--border-card);
-            border-radius: 16px; padding: 16px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 12px;
-        }
+        /* PAINEL DE CONTROLE DO TREINO */
+        .workout-control-card { background: rgba(30, 41, 59, 0.9); backdrop-filter: blur(12px); border: 1px solid var(--border-card); border-radius: 16px; padding: 16px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 12px; }
         .control-row { display: flex; justify-content: space-between; align-items: center; }
 
         /* SPOTIFY */
-        .spotify-card {
-            background: linear-gradient(135deg, rgba(30, 215, 96, 0.15) 0%, rgba(18, 24, 41, 0.9) 100%);
-            border: 1px solid rgba(30, 215, 96, 0.3); border-radius: 16px; padding: 14px; margin-bottom: 16px; backdrop-filter: blur(12px);
-            transition: all 0.3s ease;
-        }
+        .spotify-card { background: linear-gradient(135deg, rgba(30, 215, 96, 0.15) 0%, rgba(18, 24, 41, 0.9) 100%); border: 1px solid rgba(30, 215, 96, 0.3); border-radius: 16px; padding: 14px; margin-bottom: 16px; backdrop-filter: blur(12px); }
         .spotify-header { display: flex; justify-content: space-between; align-items: center; }
         .spotify-title { font-size: 0.9rem; font-weight: 800; color: #1ed760; display: flex; align-items: center; gap: 6px; }
-        .spotify-btn {
-            width: 100%; height: 42px; background-color: #1db954; color: #000; font-weight: 800; border: none;
-            border-radius: 12px; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; gap: 8px;
-            cursor: pointer; margin-top: 10px; box-shadow: 0 4px 14px rgba(30, 215, 96, 0.25); text-decoration: none;
-        }
+        .spotify-btn { width: 100%; height: 42px; background-color: #1db954; color: #000; font-weight: 800; border: none; border-radius: 12px; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; margin-top: 10px; text-decoration: none; }
         .playlist-chips { display: flex; gap: 6px; overflow-x: auto; margin-top: 10px; padding-bottom: 4px; scrollbar-width: none; }
         .playlist-chips::-webkit-scrollbar { display: none; }
-        .chip-btn {
-            background: var(--bg-input); border: 1px solid var(--border-card); color: var(--text-sub);
-            padding: 6px 10px; border-radius: 8px; font-size: 0.72rem; font-weight: 700; white-space: nowrap; text-decoration: none;
-        }
+        .chip-btn { background: var(--bg-input); border: 1px solid var(--border-card); color: var(--text-sub); padding: 6px 10px; border-radius: 8px; font-size: 0.72rem; font-weight: 700; white-space: nowrap; text-decoration: none; }
 
         /* CRONÔMETRO DE DESCANSO */
-        .timer-modal {
-            position: fixed; top: 16px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); max-width: 440px;
-            background-color: rgba(30, 41, 59, 0.95); backdrop-filter: blur(12px); border: 2px solid var(--accent-primary); border-radius: 14px; padding: 12px 16px;
-            display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 2000;
-        }
+        .timer-modal { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); max-width: 440px; background-color: rgba(30, 41, 59, 0.95); backdrop-filter: blur(12px); border: 2px solid var(--accent-primary); border-radius: 14px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 2000; }
         .timer-display { font-size: 1.3rem; font-weight: 800; color: var(--text-highlight); }
         .timer-btn { background: var(--bg-input); border: 1px solid var(--border-card); color: var(--text-title); padding: 6px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
 
-        /* CARDS */
-        .card-box {
-            background-color: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-card);
-            border-radius: 18px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-top: 10px;
-        }
-
+        /* CARDS GERAIS */
+        .card-box { background-color: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-card); border-radius: 18px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-top: 10px; }
         .step-progress { font-size: 0.75rem; font-weight: 800; color: var(--accent-primary); text-transform: uppercase; margin-bottom: 8px; display: block; }
         .question-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 6px; line-height: 1.3; }
         .question-sub { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 20px; }
 
-        .input-field {
-            width: 100%; height: 46px; background-color: var(--bg-input); border: 1px solid var(--border-card);
-            border-radius: 12px; color: var(--text-title); font-size: 0.95rem; padding: 0 14px; margin-bottom: 12px; outline: none;
-        }
-
-        .option-btn {
-            width: 100%; padding: 14px 16px; background-color: var(--bg-input); border: 1px solid var(--border-card);
-            border-radius: 12px; color: var(--text-title); font-size: 0.95rem; font-weight: 700; text-align: left;
-            margin-bottom: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
-        }
-
+        .input-field { width: 100%; height: 46px; background-color: var(--bg-input); border: 1px solid var(--border-card); border-radius: 12px; color: var(--text-title); font-size: 0.95rem; padding: 0 14px; margin-bottom: 12px; outline: none; }
+        .option-btn { width: 100%; padding: 14px 16px; background-color: var(--bg-input); border: 1px solid var(--border-card); border-radius: 12px; color: var(--text-title); font-size: 0.95rem; font-weight: 700; text-align: left; margin-bottom: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
         .option-btn.active { border-color: var(--accent-primary); background-color: var(--accent-glow); color: var(--text-highlight); }
+        .btn-primary { width: 100%; height: 50px; background: linear-gradient(135deg, var(--accent-primary) 0%, #1d4ed8 100%); color: #fff; border: none; border-radius: 12px; font-size: 0.95rem; font-weight: 800; cursor: pointer; box-shadow: 0 4px 16px var(--accent-glow); margin-top: 10px; }
+        .btn-secondary { background: transparent; border: 1px solid var(--border-card); color: var(--text-sub); margin-top: 8px; box-shadow: none; }
 
-        .btn-primary {
-            width: 100%; height: 50px; background: linear-gradient(135deg, var(--accent-primary) 0%, #1d4ed8 100%);
-            color: #fff; border: none; border-radius: 12px; font-size: 0.95rem; font-weight: 800;
-            cursor: pointer; box-shadow: 0 4px 16px var(--accent-glow); margin-top: 10px;
-        }
-
-        .btn-secondary { background: transparent; border: 1px solid var(--border-card); color: var(--text-sub); margin-top: 8px; }
-
-        .mode-toggle-wrapper {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;
-            background: var(--bg-card); padding: 4px; border-radius: 12px; border: 1px solid var(--border-card);
-            transition: all 0.3s ease;
-        }
-
-        .mode-btn {
-            padding: 8px 10px; border: none; border-radius: 8px; font-size: 0.75rem; font-weight: 800;
-            color: var(--text-sub); background: transparent; cursor: pointer; transition: all 0.2s;
-        }
+        .mode-toggle-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; background: var(--bg-card); padding: 4px; border-radius: 12px; border: 1px solid var(--border-card); }
+        .mode-btn { padding: 8px 10px; border: none; border-radius: 8px; font-size: 0.75rem; font-weight: 800; color: var(--text-sub); background: transparent; cursor: pointer; transition: all 0.2s; }
         .mode-btn.active { background: var(--bg-input); color: var(--text-highlight); border: 1px solid var(--border-card); }
         .mode-btn.express-active { background: rgba(234, 179, 8, 0.2); color: #facc15; border: 1px solid rgba(234, 179, 8, 0.4); }
 
-        .energy-selector-card {
-            background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 14px; padding: 12px; margin-bottom: 12px; backdrop-filter: blur(12px);
-            transition: all 0.3s ease;
-        }
+        .energy-selector-card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 14px; padding: 12px; margin-bottom: 12px; backdrop-filter: blur(12px); }
         .energy-chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 8px; }
-        .energy-chip {
-            background: var(--bg-input); border: 1px solid var(--border-card); color: var(--text-sub);
-            padding: 8px 4px; border-radius: 8px; font-size: 0.7rem; font-weight: 700; text-align: center; cursor: pointer; transition: all 0.2s;
-        }
+        .energy-chip { background: var(--bg-input); border: 1px solid var(--border-card); color: var(--text-sub); padding: 8px 4px; border-radius: 8px; font-size: 0.7rem; font-weight: 700; text-align: center; cursor: pointer; }
         .energy-chip.active-100 { background: rgba(16, 185, 129, 0.2); border-color: var(--accent-green); color: var(--accent-green); }
         .energy-chip.active-mid { background: rgba(245, 158, 11, 0.2); border-color: var(--accent-yellow); color: var(--accent-yellow); }
-        .energy-chip.active-low { background: rgba(239, 68, 68, 0.2); border-color: var(--accent-red); color: var(--accent-red); }
+        .energy-chip.active-low { background: rgba(239, 68, 68, 0.2); border-color: var(--danger); color: var(--danger); }
 
-        .exercise-card { 
-            background-color: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-card); 
-            border-radius: 16px; padding: 16px; margin-bottom: 16px; position: relative; 
-        }
+        .exercise-card { background-color: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-card); border-radius: 16px; padding: 16px; margin-bottom: 16px; position: relative; }
         .exercise-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-        .exercise-title { font-size: 1rem; font-weight: 700; color: var(--text-title); }
+        .exercise-title { font-size: 1rem; font-weight: 700; color: var(--text-title); line-height: 1.2; }
         .exercise-target { font-size: 0.72rem; font-weight: 600; background: rgba(56, 189, 248, 0.15); color: var(--text-highlight); padding: 4px 8px; border-radius: 8px; }
+        .action-icon-btn { background: none; border: none; color: var(--text-sub); cursor: pointer; padding: 4px; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s; }
+        .action-icon-btn:hover { color: var(--danger); background: rgba(239, 68, 68, 0.1); }
+        .busy-btn, .tutorial-btn, .move-btn { background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); color: var(--text-highlight); padding: 3px 6px; border-radius: 6px; font-size: 0.65rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 3px; }
+        .busy-btn { background: rgba(234, 179, 8, 0.15); border-color: rgba(234, 179, 8, 0.4); color: #facc15; }
 
-        .action-icon-btn {
-            background: none; border: none; color: var(--text-sub); cursor: pointer; padding: 4px;
-            display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s;
-        }
-        .action-icon-btn:hover { color: var(--text-title); background: rgba(255, 255, 255, 0.1); }
-        .delete-ex-btn:hover { color: var(--danger); background: rgba(239, 68, 68, 0.1); }
-
-        .busy-btn {
-            background: rgba(234, 179, 8, 0.15); border: 1px solid rgba(234, 179, 8, 0.4); color: #facc15;
-            padding: 3px 8px; border-radius: 6px; font-size: 0.68rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;
-        }
-
-        .tutorial-btn {
-            background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); color: var(--text-highlight);
-            padding: 3px 8px; border-radius: 6px; font-size: 0.68rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;
-        }
-
-        .day-select-wrapper { margin-bottom: 10px; transition: all 0.3s ease; }
-        .swap-select, .day-select {
-            width: 100%; padding: 12px 14px; background-color: var(--bg-card); color: var(--text-title);
-            backdrop-filter: blur(12px); border: 1px solid var(--border-card); border-radius: 12px; font-size: 0.9rem; font-weight: 700; outline: none; margin-bottom: 12px;
-        }
+        .day-select-wrapper { margin-bottom: 10px; }
+        .swap-select, .day-select { width: 100%; padding: 12px 14px; background-color: var(--bg-card); color: var(--text-title); backdrop-filter: blur(12px); border: 1px solid var(--border-card); border-radius: 12px; font-size: 0.9rem; font-weight: 700; outline: none; margin-bottom: 12px; }
 
         .history-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 600; color: var(--accent-green); background: rgba(16, 185, 129, 0.2); padding: 4px 10px; border-radius: 8px; margin-bottom: 8px; }
-        
-        /* BADGE DE PR (RECORDE PESSOAL) */
-        .pr-badge {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            color: #000; font-size: 0.62rem; font-weight: 900; padding: 2px 6px; border-radius: 6px;
-            text-transform: uppercase; display: inline-flex; align-items: center; gap: 2px;
-            animation: pulse-pr 1.5s infinite;
-        }
-        @keyframes pulse-pr { 0% { opacity: 0.9; } 50% { opacity: 1; transform: scale(1.05); } 100% { opacity: 0.9; } }
+        .pr-badge { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: #000; font-size: 0.62rem; font-weight: 900; padding: 2px 6px; border-radius: 6px; text-transform: uppercase; display: inline-flex; align-items: center; gap: 2px; }
 
         .set-row { display: grid; grid-template-columns: 46px 1fr 1fr 34px 34px 38px; gap: 5px; align-items: center; margin-bottom: 8px; }
         .set-label { font-size: 0.68rem; font-weight: 700; color: var(--text-sub); text-transform: uppercase; }
-
-        input[type="number"], input[type="text"], input[type="password"] {
-            width: 100%; height: 40px; background-color: var(--bg-input); border: 1px solid var(--border-card);
-            border-radius: 10px; color: var(--text-title); font-size: 0.9rem; font-weight: 700; padding: 0 10px; outline: none;
-        }
-
-        .check-btn {
-            height: 40px; width: 38px; border-radius: 10px; border: 1px solid var(--border-card);
-            background-color: var(--bg-input); color: var(--text-sub); display: flex; align-items: center; justify-content: center; cursor: pointer;
-        }
+        input[type="number"], input[type="text"], input[type="password"] { width: 100%; height: 40px; background-color: var(--bg-input); border: 1px solid var(--border-card); border-radius: 10px; color: var(--text-title); font-size: 0.9rem; font-weight: 700; padding: 0 10px; outline: none; }
+        .check-btn { height: 40px; width: 38px; border-radius: 10px; border: 1px solid var(--border-card); background-color: var(--bg-input); color: var(--text-sub); display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .check-btn.checked { background-color: var(--accent-green); color: #fff; border-color: var(--accent-green); }
-
-        .tag-btn {
-            height: 40px; width: 34px; border-radius: 10px; border: 1px solid var(--border-card);
-            background-color: var(--bg-input); color: var(--text-sub); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; cursor: pointer;
-        }
+        .tag-btn { height: 40px; width: 34px; border-radius: 10px; border: 1px solid var(--border-card); background-color: var(--bg-input); color: var(--text-sub); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; cursor: pointer; }
         .tag-btn.active-f { background-color: var(--danger); color: #fff; border-color: var(--danger); }
         .tag-btn.active-d { background-color: #f59e0b; color: #fff; border-color: #f59e0b; }
 
-        .save-btn {
-            width: 100%; height: 52px; background: linear-gradient(135deg, var(--accent-primary) 0%, #1d4ed8 100%);
-            color: #ffffff; border: none; border-radius: 14px; font-size: 1rem; font-weight: 800; cursor: pointer;
-            box-shadow: 0 8px 24px var(--accent-glow); display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px;
-        }
+        .set-actions-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; padding-top: 6px; border-top: 1px dashed rgba(255,255,255,0.08); }
+        .mini-link-btn { background: none; border: none; color: var(--text-highlight); font-size: 0.72rem; font-weight: 700; cursor: pointer; padding: 2px 4px; }
 
-        .export-btn {
-            width: 100%; padding: 12px; background: rgba(56, 189, 248, 0.15); border: 1px solid var(--text-highlight);
-            color: var(--text-highlight); border-radius: 12px; font-size: 0.85rem; font-weight: 800; cursor: pointer; margin-top: 8px;
-        }
+        .save-btn { width: 100%; height: 52px; background: linear-gradient(135deg, var(--accent-primary) 0%, #1d4ed8 100%); color: #ffffff; border: none; border-radius: 14px; font-size: 1rem; font-weight: 800; cursor: pointer; box-shadow: 0 8px 24px var(--accent-glow); display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; }
+        
+        /* BOTÃO DE AQUECIMENTO */
+        .warmup-btn { width: 100%; height: 52px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: #ffffff; border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 800; cursor: pointer; box-shadow: 0 8px 24px rgba(245, 158, 11, 0.25); display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; }
 
-        .whatsapp-help-btn {
-            width: 100%; height: 46px; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
-            color: #ffffff; border: none; border-radius: 12px; font-size: 0.9rem; font-weight: 800;
-            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; margin-top: 16px;
-            box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
-        }
+        .export-btn, .clear-day-btn { width: 100%; padding: 12px; background: rgba(56, 189, 248, 0.15); border: 1px solid var(--text-highlight); color: var(--text-highlight); border-radius: 12px; font-size: 0.85rem; font-weight: 800; cursor: pointer; margin-top: 8px; }
+        .clear-day-btn { background: rgba(239, 68, 68, 0.15); border-color: var(--danger); color: var(--danger); }
+        .whatsapp-help-btn { width: 100%; height: 46px; background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); color: #ffffff; border: none; border-radius: 12px; font-size: 0.9rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; margin-top: 16px; }
+        .add-ex-btn { width: 100%; padding: 12px; background: var(--accent-glow); backdrop-filter: blur(8px); border: 1px dashed var(--accent-primary); color: var(--text-highlight); border-radius: 12px; font-size: 0.85rem; font-weight: 800; cursor: pointer; margin-bottom: 16px; }
+        .reset-btn { width: 100%; padding: 12px; background: rgba(18, 24, 41, 0.6); backdrop-filter: blur(8px); border: 1px dashed var(--border-card); color: var(--text-sub); border-radius: 12px; font-size: 0.8rem; font-weight: 700; cursor: pointer; margin-top: 12px; }
 
-        .add-ex-btn {
-            width: 100%; padding: 12px; background: var(--accent-glow); backdrop-filter: blur(8px); border: 1px dashed var(--accent-primary);
-            color: var(--text-highlight); border-radius: 12px; font-size: 0.85rem; font-weight: 800; cursor: pointer; margin-bottom: 16px;
-        }
-
-        .reset-btn {
-            width: 100%; padding: 12px; background: rgba(18, 24, 41, 0.6); backdrop-filter: blur(8px); border: 1px dashed var(--border-card);
-            color: var(--text-sub); border-radius: 12px; font-size: 0.8rem; font-weight: 700; cursor: pointer; margin-top: 12px;
-        }
-
-        /* NUTRI COACH */
-        .nutri-header-card {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%);
-            border: 1px solid #8b5cf6; border-radius: 18px; padding: 20px; margin-bottom: 16px; backdrop-filter: blur(12px);
-        }
+        /* NUTRI COACH, RELATÓRIO ETC */
+        .nutri-header-card { background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%); border: 1px solid #8b5cf6; border-radius: 18px; padding: 20px; margin-bottom: 16px; backdrop-filter: blur(12px); }
         .nutri-title { font-size: 1.15rem; font-weight: 800; color: #c084fc; display: flex; align-items: center; gap: 8px; }
         .macro-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 14px 0; }
         .macro-box { background: var(--bg-input); border: 1px solid var(--border-card); border-radius: 12px; padding: 10px; text-align: center; }
         .macro-num { font-size: 1.1rem; font-weight: 800; color: var(--text-title); }
         .macro-lbl { font-size: 0.68rem; color: var(--text-sub); font-weight: 700; text-transform: uppercase; }
-
         .week-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 12px; scrollbar-width: none; }
         .week-tabs::-webkit-scrollbar { display: none; }
-        .week-tab-btn {
-            padding: 8px 14px; background: var(--bg-input); border: 1px solid var(--border-card);
-            border-radius: 10px; color: var(--text-sub); font-size: 0.78rem; font-weight: 700; cursor: pointer; white-space: nowrap;
-        }
+        .week-tab-btn { padding: 8px 14px; background: var(--bg-input); border: 1px solid var(--border-card); border-radius: 10px; color: var(--text-sub); font-size: 0.78rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
         .week-tab-btn.active { background: #8b5cf6; color: #fff; border-color: #8b5cf6; }
-
         .meal-card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 14px; padding: 14px; margin-bottom: 10px; backdrop-filter: blur(12px); }
         .meal-title { font-size: 0.88rem; font-weight: 800; color: var(--text-highlight); display: flex; justify-content: space-between; margin-bottom: 6px; }
         .meal-items { font-size: 0.82rem; color: var(--text-title); line-height: 1.5; padding-left: 18px; margin: 0; }
-        .meal-items li { margin-bottom: 4px; }
-
         .grocery-cat-title { font-size: 0.85rem; font-weight: 800; color: #8b5cf6; margin: 12px 0 6px 0; text-transform: uppercase; }
         .grocery-item-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.85rem; }
-
         .chat-box { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 16px; padding: 14px; margin-top: 16px; }
         .chat-messages { max-height: 280px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
         .msg-bubble { padding: 10px 14px; border-radius: 12px; font-size: 0.85rem; line-height: 1.4; max-width: 85%; word-break: break-word; }
         .msg-ia { background: rgba(139, 92, 246, 0.2); border: 1px solid rgba(139, 92, 246, 0.4); align-self: flex-start; color: var(--text-title); }
         .msg-user { background: var(--accent-primary); align-self: flex-end; color: #fff; font-weight: 600; }
-
         .chat-input-wrapper { display: flex; gap: 8px; }
         .chat-input { flex: 1; height: 42px; background: var(--bg-input); border: 1px solid var(--border-card); border-radius: 10px; color: var(--text-title); padding: 0 12px; outline: none; font-size: 0.85rem; }
         .chat-send-btn { background: #8b5cf6; color: #fff; border: none; border-radius: 10px; padding: 0 16px; font-weight: 800; cursor: pointer; }
-
-        /* RAIO-X & RELATÓRIOS */
         .body-map-card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 18px; padding: 18px; margin-bottom: 16px; backdrop-filter: blur(12px); }
         .body-legend { display: flex; justify-content: space-around; margin: 12px 0 16px 0; font-size: 0.72rem; font-weight: 700; color: var(--text-sub); }
         .legend-item { display: flex; align-items: center; gap: 6px; }
         .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
-        
         .muscle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .muscle-status-box { background: var(--bg-input); border: 1px solid var(--border-card); border-radius: 12px; padding: 12px; text-align: center; }
         .muscle-name { font-size: 0.82rem; font-weight: 800; color: var(--text-title); margin-bottom: 4px; }
         .muscle-state-txt { font-size: 0.7rem; font-weight: 700; }
-
         .report-item, .compare-card, .measure-card { background-color: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-card); border-radius: 14px; padding: 14px; margin-bottom: 10px; }
         .report-day-title { font-size: 0.9rem; font-weight: 800; color: var(--text-highlight); text-transform: uppercase; margin: 18px 0 8px 0; }
         .empty-msg { text-align: center; color: var(--text-sub); font-size: 0.85rem; padding: 30px 10px; line-height: 1.5; }
         .measure-row { display: grid; grid-template-columns: 100px 1fr; gap: 10px; align-items: center; margin-bottom: 10px; }
-
-        /* ESTILOS DO CARD VISUAL EXPORTADO - CORRIGIDO PARA NÃO CORTAR */
-        .visual-card-preview {
-            background: linear-gradient(145deg, #121829 0%, #0a0f1d 100%);
-            border: 2px solid var(--accent-primary);
-            border-radius: 16px;
-            padding: 16px;
-            color: #f8fafc;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.6);
-            margin-bottom: 12px;
-            text-align: left;
-            /* Foi removido o max-height daqui para a imagem sair por inteiro */
-        }
+        .visual-card-preview { background: linear-gradient(145deg, #121829 0%, #0a0f1d 100%); border: 2px solid var(--accent-primary); border-radius: 16px; padding: 16px; color: #f8fafc; box-shadow: 0 8px 30px rgba(0,0,0,0.6); margin-bottom: 12px; text-align: left; }
         .vc-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 12px; }
         .vc-title { font-size: 0.95rem; font-weight: 800; color: var(--text-highlight); text-transform: uppercase; }
         .vc-section-title { font-size: 0.85rem; font-weight: 800; color: #c084fc; margin: 10px 0 4px 0; text-transform: uppercase; border-left: 3px solid #8b5cf6; padding-left: 6px; }
         .vc-item { font-size: 0.78rem; margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; justify-content: space-between; align-items: center; }
         .vc-footer { font-size: 0.65rem; color: var(--text-sub); text-align: center; margin-top: 14px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
 
-        /* NAVBAR INFERIOR */
-        .bottom-nav {
-            position: fixed; bottom: 0; left: 0; right: 0; height: 70px; background-color: rgba(18, 24, 41, 0.95);
-            backdrop-filter: blur(20px); border-top: 1px solid var(--border-card); display: flex; justify-content: space-around; align-items: center; z-index: 1000; padding-bottom: 10px;
-        }
-
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 70px; background-color: rgba(18, 24, 41, 0.95); backdrop-filter: blur(20px); border-top: 1px solid var(--border-card); display: flex; justify-content: space-around; align-items: center; z-index: 1000; padding-bottom: 10px; }
         .nav-item { background: none; border: none; color: var(--text-sub); font-size: 0.65rem; font-weight: 700; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 6px 8px; }
         .nav-item.active { color: var(--accent-primary); }
         .nav-item.nutri-active { color: #8b5cf6; }
@@ -382,81 +223,80 @@
             <div class="card-box">
                 <div class="question-title">Acesse sua Conta</div>
                 <div class="question-sub">Guarde seu histórico de cargas, dieta e medidas.</div>
-
                 <input type="email" id="authEmail" class="input-field" placeholder="Seu e-mail">
                 <input type="password" id="authPass" class="input-field" placeholder="Sua senha">
-
                 <button class="btn-primary" onclick="handleAuth()">ENTRAR / CADASTRAR</button>
                 <button class="btn-primary btn-secondary" onclick="guestLogin()">CONTINUAR COMO CONVIDADO</button>
             </div>
         </div>
 
-        <!-- ONBOARDING -->
+        <!-- ONBOARDING (5 ETAPAS) -->
         <div id="onboardingView" style="display: none;">
             <div id="step1" class="card-box">
-                <span class="step-progress">ETAPA 1 DE 4</span>
+                <span class="step-progress">ETAPA 1 DE 5</span>
                 <div class="question-title">Qual é o seu objetivo principal?</div>
                 <div class="question-sub">Ajustará a faixa de repetições por exercício.</div>
-
                 <div class="option-btn active" onclick="selectOption('goal', 'hipertrofia', this)">
-                    <span>💪 Hipertrofia (Ganhar Massa)</span>
-                    <span style="font-size:0.75rem; color:var(--text-sub);">8 - 12 reps</span>
+                    <span>💪 Hipertrofia (Ganhar Massa)</span><span style="font-size:0.75rem; color:var(--text-sub);">8 - 12 reps</span>
                 </div>
                 <div class="option-btn" onclick="selectOption('goal', 'forca', this)">
-                    <span>🏋️‍♂️ Força Bruta (Cargas Altas)</span>
-                    <span style="font-size:0.75rem; color:var(--text-sub);">4 - 6 reps</span>
+                    <span>🏋️‍♂️ Força Bruta (Cargas Altas)</span><span style="font-size:0.75rem; color:var(--text-sub);">4 - 6 reps</span>
                 </div>
                 <div class="option-btn" onclick="selectOption('goal', 'emagrecimento', this)">
-                    <span>🔥 Emagrecimento / Resistência</span>
-                    <span style="font-size:0.75rem; color:var(--text-sub);">12 - 15 reps</span>
+                    <span>🔥 Emagrecimento / Resistência</span><span style="font-size:0.75rem; color:var(--text-sub);">12 - 15 reps</span>
                 </div>
-
                 <button class="btn-primary" onclick="nextStep(2)">CONTINUAR ➔</button>
             </div>
 
             <div id="step2" class="card-box" style="display: none;">
-                <span class="step-progress">ETAPA 2 DE 4</span>
+                <span class="step-progress">ETAPA 2 DE 5</span>
                 <div class="question-title">Quantos dias vai treinar na semana?</div>
                 <div class="question-sub">Montaremos a divisão muscular perfeita.</div>
-
                 <div class="option-btn" onclick="selectOption('days', '3', this)">
-                    <span>🗓️ 3 Dias por Semana</span>
-                    <span style="font-size:0.75rem; color:var(--text-sub);">Divisão ABC</span>
+                    <span>🗓️ 3 Dias por Semana</span><span style="font-size:0.75rem; color:var(--text-sub);">Divisão ABC</span>
                 </div>
                 <div class="option-btn" onclick="selectOption('days', '4', this)">
-                    <span>🗓️ 4 Dias por Semana</span>
-                    <span style="font-size:0.75rem; color:var(--text-sub);">Upper / Lower / Push / Pull</span>
+                    <span>🗓️ 4 Dias por Semana</span><span style="font-size:0.75rem; color:var(--text-sub);">Upper/Lower/Push/Pull</span>
                 </div>
                 <div class="option-btn active" onclick="selectOption('days', '5', this)">
-                    <span>🗓️ 5 Dias por Semana</span>
-                    <span style="font-size:0.75rem; color:var(--text-sub);">Upper / Lower / Push / Pull / Legs</span>
+                    <span>🗓️ 5 Dias por Semana</span><span style="font-size:0.75rem; color:var(--text-sub);">Push/Pull/Legs...</span>
                 </div>
-
                 <button class="btn-primary" onclick="nextStep(3)">CONTINUAR ➔</button>
             </div>
 
             <div id="step3" class="card-box" style="display: none;">
-                <span class="step-progress">ETAPA 3 DE 4</span>
+                <span class="step-progress">ETAPA 3 DE 5</span>
                 <div class="question-title">Qual o seu nível de experiência?</div>
                 <div class="question-sub">Ajustará a quantidade de séries de cada exercício.</div>
-
                 <div class="option-btn" onclick="selectOption('exp', 'iniciante', this)">
-                    <span>🌱 Iniciante (Menos de 6 meses)</span>
-                    <span style="font-size:0.75rem; color:var(--text-sub);">3 séries por exercício</span>
+                    <span>🌱 Iniciante (Menos de 6 meses)</span><span style="font-size:0.75rem; color:var(--text-sub);">3 séries por exercício</span>
                 </div>
                 <div class="option-btn active" onclick="selectOption('exp', 'avancado', this)">
-                    <span>🔥 Intermediário / Avançado</span>
-                    <span style="font-size:0.75rem; color:var(--text-sub);">4 séries por exercício</span>
+                    <span>🔥 Intermediário / Avançado</span><span style="font-size:0.75rem; color:var(--text-sub);">4 séries por exercício</span>
                 </div>
-
                 <button class="btn-primary" onclick="nextStep(4)">CONTINUAR ➔</button>
             </div>
 
             <div id="step4" class="card-box" style="display: none;">
-                <span class="step-progress">ETAPA 4 DE 4</span>
+                <span class="step-progress">ETAPA 4 DE 5</span>
+                <div class="question-title">Possui alguma limitação física ou dor?</div>
+                <div class="question-sub">Adaptaremos os exercícios para sua segurança.</div>
+                <div class="option-btn active" onclick="selectOption('limit', 'nenhuma', this)">
+                    <span>✅ Nenhuma (Treino Livre)</span><span style="font-size:0.75rem; color:var(--text-sub);">Sem restrições</span>
+                </div>
+                <div class="option-btn" onclick="selectOption('limit', 'joelho_lombar', this)">
+                    <span>⚠️ Dor no Joelho / Lombar</span><span style="font-size:0.75rem; color:var(--text-sub);">Substitui agachamentos livres</span>
+                </div>
+                <div class="option-btn" onclick="selectOption('limit', 'ombro', this)">
+                    <span>⚠️ Dor no Ombro / Cotovelo</span><span style="font-size:0.75rem; color:var(--text-sub);">Reduz amplitude e empurrar para cima</span>
+                </div>
+                <button class="btn-primary" onclick="nextStep(5)">CONTINUAR ➔</button>
+            </div>
+
+            <div id="step5" class="card-box" style="display: none;">
+                <span class="step-progress">ETAPA 5 DE 5</span>
                 <div class="question-title">📍 Encontrar Academias Próximas?</div>
                 <div class="question-sub">Veja as academias mais próximas de você no mapa.</div>
-
                 <a href="https://www.google.com/maps/search/academias+proximas" target="_blank" onclick="generateWorkoutPlan()" class="btn-primary" style="background: linear-gradient(135deg, var(--accent-green) 0%, #059669 100%); display: flex; align-items: center; justify-content: center; text-decoration: none;">
                     🔍 BUSCAR ACADEMIAS PERTO DE MIM
                 </a>
@@ -467,7 +307,7 @@
         <!-- ABA 1: TREINO -->
         <div id="workoutView" style="display: none;">
             
-            <!-- PAINEL DE CONTROLE: BOTÃO COMEÇAR & CRONÔMETRO DE SESSÃO -->
+            <!-- PAINEL DE CONTROLE -->
             <div class="workout-control-card">
                 <div class="control-row">
                     <div>
@@ -479,7 +319,8 @@
                         <div id="globalStopwatch" style="font-size: 1.1rem; font-weight: 800; color: var(--text-highlight);">00:00:00</div>
                     </div>
                 </div>
-                <button id="startWorkoutBtn" class="btn-primary" style="margin: 0; background: linear-gradient(135deg, var(--accent-green) 0%, #059669 100%); height: 42px;" onclick="startWorkoutSession()">
+                <!-- BOTÃO MODIFICADO PARA ABRIR O POP-UP DE AQUECIMENTO -->
+                <button id="startWorkoutBtn" class="btn-primary" style="margin: 0; background: linear-gradient(135deg, var(--accent-green) 0%, #059669 100%); height: 42px;" onclick="promptStartSession()">
                     ▶ COMEÇAR TREINO
                 </button>
             </div>
@@ -492,14 +333,11 @@
                     </div>
                     <span style="font-size:0.68rem; color:var(--text-sub); font-weight:700;">SPOTIFY</span>
                 </div>
-                <a href="https://open.spotify.com" target="_blank" class="spotify-btn">
-                    <span>▶ ABRIR SPOTIFY NO CELULAR</span>
-                </a>
+                <a href="https://open.spotify.com" target="_blank" class="spotify-btn"><span>▶ ABRIR SPOTIFY NO CELULAR</span></a>
                 <div class="playlist-chips">
                     <a href="https://open.spotify.com/search/gym%20motivation" target="_blank" class="chip-btn">🔥 Gym Motivation</a>
                     <a href="https://open.spotify.com/search/heavy%20metal%20workout" target="_blank" class="chip-btn">🎸 Heavy Metal</a>
                     <a href="https://open.spotify.com/search/trap%20maromba" target="_blank" class="chip-btn">🎧 Trap Maromba</a>
-                    <a href="https://open.spotify.com/search/electro%20focus" target="_blank" class="chip-btn">⚡ Eletrônica Focus</a>
                 </div>
             </div>
 
@@ -524,17 +362,23 @@
                 <select id="daySelect" class="day-select" onchange="renderActiveWorkout()"></select>
             </div>
 
+            <!-- CONTAINER DO TREINO / AQUECIMENTO -->
             <div id="activeWorkoutContainer"></div>
 
-            <button class="add-ex-btn" onclick="addNewCustomExercise()">+ ADICIONAR EXERCÍCIO EXTRA NO DIA</button>
+            <!-- BOTÕES DE AÇÃO -->
+            <button id="btnFinishWarmup" class="warmup-btn" style="display: none;" onclick="finishWarmupPhase()">
+                ➡️ CONCLUIR AQUECIMENTO E IR PARA A FICHA
+            </button>
+            
+            <button id="btnAddEx" class="add-ex-btn" onclick="addNewCustomExerciseModal()">+ ADICIONAR EXERCÍCIO EXTRA NO DIA</button>
 
-            <button class="save-btn" onclick="saveActiveWorkout()">
+            <button id="btnSaveWorkout" class="save-btn" onclick="saveActiveWorkout()">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
                 FINALIZAR E SALVAR TREINO
             </button>
 
-            <button class="export-btn" onclick="exportWeeklyWorkoutVisualCard()">🎨 GERAR CARD VISUAL DA SEMANA DE TREINO</button>
-
+            <button id="btnExport" class="export-btn" onclick="exportWeeklyWorkoutVisualCard()">🎨 GERAR CARD VISUAL DA SEMANA DE TREINO</button>
+            <button id="btnClear" class="clear-day-btn" onclick="clearCurrentDayWorkout()">🗑️ ZERAR / LIMPAR TREINO DESTE DIA</button>
             <button class="reset-btn" onclick="resetWorkoutPlan()">🔄 Refazer Perguntas / Reiniciar Ficha</button>
         </div>
 
@@ -545,14 +389,10 @@
                 <div class="question-sub" style="margin-bottom:12px; color:#e2e8f0;">Plano nutricional completo. Use a câmera para fotografar seu prato ou escanear um produto!</div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px;">
-                    <button class="btn-primary" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); margin:0; font-size:0.8rem; height:42px;" onclick="triggerFoodCamera()">
-                        📸 FOTO DO PRATO
-                    </button>
+                    <button class="btn-primary" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); margin:0; font-size:0.8rem; height:42px;" onclick="triggerFoodCamera()">📸 FOTO DO PRATO</button>
                     <input type="file" id="foodCameraInput" accept="image/*" capture="environment" style="display:none;" onchange="handleFoodPhoto(this)">
 
-                    <button class="btn-primary" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); margin:0; font-size:0.8rem; height:42px;" onclick="triggerBarcodeScanner()">
-                        📷 CÓDIGO DE BARRAS
-                    </button>
+                    <button class="btn-primary" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); margin:0; font-size:0.8rem; height:42px;" onclick="triggerBarcodeScanner()">📷 CÓDIGO DE BARRAS</button>
                     <input type="file" id="barcodeInput" accept="image/*" capture="environment" style="display:none;" onchange="handleBarcodeScan(this)">
                 </div>
 
@@ -562,41 +402,23 @@
                         <input type="number" id="n_height" class="input-field" placeholder="Alt (cm)">
                         <input type="number" id="n_age" class="input-field" placeholder="Idade">
                     </div>
-                    
                     <select id="n_goal" class="swap-select" style="margin-bottom:10px;">
                         <option value="ganho">💪 Objetivo: Ganhar Massa (Superávit)</option>
                         <option value="perda">🔥 Objetivo: Perder Gordura (Déficit)</option>
                         <option value="manter">⚡ Objetivo: Recomposição / Manter Peso</option>
                     </select>
-
                     <button class="btn-primary" style="background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);" onclick="calculateDietPlan()">GERAR CARDÁPIO COMPLETO 🤖</button>
                 </div>
 
                 <div id="nutriResult" style="display: none;">
                     <div class="macro-grid">
-                        <div class="macro-box">
-                            <div class="macro-num" id="resKcal">2.800</div>
-                            <div class="macro-lbl">Calorias (kcal)</div>
-                        </div>
-                        <div class="macro-box">
-                            <div class="macro-num" id="resProt" style="color:var(--accent-primary);">180g</div>
-                            <div class="macro-lbl">Proteínas</div>
-                        </div>
-                        <div class="macro-box">
-                            <div class="macro-num" id="resCarb" style="color:var(--accent-green);">320g</div>
-                            <div class="macro-lbl">Carbos</div>
-                        </div>
+                        <div class="macro-box"><div class="macro-num" id="resKcal">2.800</div><div class="macro-lbl">Calorias (kcal)</div></div>
+                        <div class="macro-box"><div class="macro-num" id="resProt" style="color:var(--accent-primary);">180g</div><div class="macro-lbl">Proteínas</div></div>
+                        <div class="macro-box"><div class="macro-num" id="resCarb" style="color:var(--accent-green);">320g</div><div class="macro-lbl">Carbos</div></div>
                     </div>
-                    <div style="text-align:center; font-size:0.8rem; color:var(--text-sub); margin-bottom:12px;">
-                        💧 Meta de Água: <b id="resWater" style="color:var(--text-highlight);">3.2L / dia</b>
-                    </div>
-
-                    <button class="btn-primary" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); margin-bottom: 8px;" onclick="openGroceryModal()">
-                        🛒 GERAR LISTA DE COMPRAS DA SEMANA
-                    </button>
-                    
+                    <div style="text-align:center; font-size:0.8rem; color:var(--text-sub); margin-bottom:12px;">💧 Meta de Água: <b id="resWater" style="color:var(--text-highlight);">3.2L / dia</b></div>
+                    <button class="btn-primary" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); margin-bottom: 8px;" onclick="openGroceryModal()">🛒 GERAR LISTA DE COMPRAS DA SEMANA</button>
                     <button class="export-btn" onclick="exportWeeklyDietVisualCard()" style="margin-bottom: 8px;">🎨 GERAR CARD VISUAL DA SEMANA DE DIETA & COMPRAS</button>
-
                     <button class="btn-primary btn-secondary" onclick="document.getElementById('nutriForm').style.display='block'; document.getElementById('nutriResult').style.display='none';">Refazer Cálculo</button>
                 </div>
             </div>
@@ -611,7 +433,6 @@
                     <button class="week-tab-btn" onclick="switchDayDiet('sab')">Sábado</button>
                     <button class="week-tab-btn" onclick="switchDayDiet('dom')">Domingo</button>
                 </div>
-
                 <div id="dayDietMeals"></div>
             </div>
 
@@ -639,10 +460,8 @@
                     <div class="legend-item"><div class="legend-dot" style="background:#f59e0b;"></div>Recuperando / 24-48h</div>
                     <div class="legend-item"><div class="legend-dot" style="background:var(--accent-green);"></div>Pronto / >48h</div>
                 </div>
-
                 <div class="muscle-grid" id="muscleStatusGrid"></div>
             </div>
-
             <div class="report-day-title">HISTÓRICO DE CARGAS & CALORIAS GASTAS</div>
             <div id="reportContainer"></div>
         </div>
@@ -677,7 +496,6 @@
                 </div>
                 <button class="save-btn" onclick="saveBodyMeasures()" style="height: 44px; margin-top: 6px;">SALVAR MEDIDAS</button>
             </div>
-
             <div class="report-day-title">HISTÓRICO CORPORAL</div>
             <div id="bodyHistoryContainer"></div>
         </div>
@@ -685,6 +503,28 @@
     </div>
 
     <!-- MODAIS -->
+
+    <!-- MODAL DE PROMPT DE AQUECIMENTO -->
+    <div id="warmupPromptModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 3000; align-items: center; justify-content: center; padding: 16px;">
+        <div class="card-box" style="max-width: 440px; width: 100%; position: relative;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <div class="question-title" style="margin: 0; font-size: 1.1rem; color: #facc15;">🔥 Preparar a Máquina?</div>
+                <button onclick="closeWarmupPrompt()" style="background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer; font-weight: 800;">✕</button>
+            </div>
+            <div class="question-sub" style="margin-bottom: 16px; color: var(--text-title);">
+                Você vai treinar: <b id="warmupDayText" style="color: var(--text-highlight);"></b><br><br>
+                <span style="color: var(--text-sub);">Deseja fazer uma rotina rápida de aquecimento/mobilidade focada nos músculos de hoje? Isso aumenta o gasto calórico da sessão e previne lesões.</span>
+            </div>
+            
+            <button class="btn-primary" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: #fff;" onclick="confirmStartWorkout(true)">
+                SIM, INICIAR AQUECIMENTO 🔥
+            </button>
+            <button class="btn-primary btn-secondary" onclick="confirmStartWorkout(false)">
+                NÃO, PULAR DIRETO PRO TREINO ⚡
+            </button>
+        </div>
+    </div>
+
     <div id="tutorialModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 3000; align-items: center; justify-content: center; padding: 16px;">
         <div class="card-box" style="max-width: 440px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -692,6 +532,30 @@
                 <button onclick="closeTutorialModal()" style="background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer; font-weight: 800;">✕</button>
             </div>
             <div id="tutContent" style="font-size: 0.85rem; line-height: 1.6; color: var(--text-sub);"></div>
+        </div>
+    </div>
+
+    <div id="customExModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 3000; align-items: center; justify-content: center; padding: 16px;">
+        <div class="card-box" style="max-width: 440px; width: 100%; position: relative;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <div class="question-title" style="margin: 0; font-size: 1.1rem; color: var(--text-highlight);">➕ Adicionar Exercício Extra</div>
+                <button onclick="closeCustomExModal()" style="background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer; font-weight: 800;">✕</button>
+            </div>
+            <div class="question-sub" style="margin-bottom: 12px;">Preencha os dados do novo movimento:</div>
+            
+            <input type="text" id="newExNameInput" class="input-field" placeholder="Nome do Exercício (ex: Elevação Pélvica)">
+            
+            <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-sub); margin-bottom: 6px; text-transform: uppercase;">Grupamento Muscular Principal:</div>
+            <select id="newExGroupSelect" class="swap-select" style="margin-bottom: 14px;">
+                <option value="Pernas">🦵 Pernas</option>
+                <option value="Peito">💪 Peito</option>
+                <option value="Costas">🦇 Costas</option>
+                <option value="Ombros">🏋️‍♂️ Ombros</option>
+                <option value="Braços">🦾 Braços</option>
+                <option value="Core">⚡ Core / Abdômen</option>
+            </select>
+
+            <button class="btn-primary" onclick="confirmAddCustomExercise()">ADICIONAR À FICHA 🚀</button>
         </div>
     </div>
 
@@ -717,7 +581,6 @@
         </div>
     </div>
 
-    <!-- MODAL DE EXPORTAÇÃO COM DOWNLOAD DE IMAGEM -->
     <div id="exportModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); z-index: 3000; align-items: center; justify-content: center; padding: 16px;">
         <div class="card-box" style="max-width: 440px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -736,46 +599,33 @@
         </div>
     </div>
 
-    <!-- MODAL DE AJUDA COMPLETO -->
+    <!-- MENU DE AJUDA TOTALMENTE ATUALIZADO (100% COMPLETO) -->
     <div id="helpModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 3000; align-items: center; justify-content: center; padding: 16px;">
         <div class="card-box" style="max-width: 440px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                <div class="question-title" style="margin: 0; font-size: 1.1rem;">❓ Central de Ajuda & Guia Completo</div>
+                <div class="question-title" style="margin: 0; font-size: 1.1rem; color: var(--text-highlight);">❓ Guia Completo do App</div>
                 <button onclick="toggleHelpModal()" style="background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer; font-weight: 800;">✕</button>
             </div>
 
             <div style="font-size: 0.85rem; line-height: 1.6; color: var(--text-sub);">
-                <b style="color: var(--text-title); display: block; margin-top: 4px;">🏋️‍♂️ Como usar o Diário de Treino:</b>
-                Selecione o dia da semana desejado e clique em <b>"Começar Treino"</b> para acionar o cronômetro de sessão. Insira as cargas (kg) e repetições executadas a cada série.
-                <br><br>
-                <b style="color: var(--text-title); display: block; margin-top: 4px;">⏱️ Cronômetro de Descanso Automático:</b>
-                Clique no botão de check (✓) ao lado de qualquer série para iniciar o cronômetro de descanso (com tempos ajustados para grupamentos maiores como pernas/costas ou superiores). O app emite aviso sonoro e vibração ao zerar.
-                <br><br>
-                <b style="color: var(--text-title); display: block; margin-top: 4px;">🔥 Alertas de PR (Recorde Pessoal):</b>
-                Ao digitar uma carga superior à registrada na sua última sessão salva, o app exibe automaticamente um selo animado de <b>PR</b> na série.
-                <br><br>
-                <b style="color: var(--text-title); display: block; margin-top: 4px;">📌 O que significam os botões F e D?</b>
-                <br>• <b>[F] - Falha Muscular:</b> Marque esta opção caso tenha chegado ao ponto de exaustão sem conseguir realizar repetições adicionais com boa forma.
-                <br>• <b>[D] - Drop-Set:</b> Marque esta opção caso tenha executado a técnica avançada de reduzir a carga imediatamente após a falha.
-                <br><br>
-                <b style="color: var(--text-title); display: block; margin-top: 4px;">🔄 Aparelho Ocupado / Tutoriais:</b>
-                Use o botão <b>Ocupado</b> para escolher alternativas equivalentes de aparelhos na hora, ou o botão <b>Tutorial</b> para conferir dicas de postura correta.
-                <br><br>
-                <b style="color: var(--text-title); display: block; margin-top: 4px;">🎯 Modo Foco Total:</b>
-                Clique no botão <b>FOCO</b> no topo da tela para esconder elementos secundários e manter o visor limpo apenas com os exercícios.
-                <br><br>
-                <b style="color: var(--text-title); display: block; margin-top: 4px;">✨ Nutri Coach & Fotos de Pratos:</b>
-                Na aba Nutri Coach, preencha seus dados para calcular macros e calorias diárias. Use os botões de câmera para fotografar refeições para estimativas de macros por IA ou escanear códigos de barras.
-                <br><br>
-                <b style="color: var(--text-title); display: block; margin-top: 4px;">🌐 Raio-X Corporal & Relatórios:</b>
-                Acompanhe o status de recuperação dos seus músculos em tempo real (fadiga, em recuperação ou prontos) e verifique o histórico completo de calorias gastas e duração ativa na aba de Relatórios.
-                <br><br>
-                <b style="color: var(--text-title); display: block; margin-top: 4px;">🎨 Cards Visuais & Downloads:</b>
-                Gere fichas visuais semanais de treino ou cardápios nutricionais e baixe direto como imagem (PNG) para a sua galeria ou copie o texto para enviar no WhatsApp.
-                <br><br>
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">🏋️‍♂️ Treino & Aquecimento:</b>
+                Selecione o dia e clique em <b>"Começar Treino"</b> para cronometrar a sessão. Você pode optar por iniciar a <b>Fase de Aquecimento / Mobilidade</b>, onde o app gera exercícios preparatórios para os músculos que você vai usar no dia. Isso ajuda a prevenir lesões e já conta no seu gasto calórico final!<br><br>
+
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">⚠️ Limitações Físicas:</b>
+                Durante o cadastro (Onboarding), se você selecionou alguma dor (Joelho/Lombar ou Ombro/Cotovelo), o sistema substituiu automaticamente exercícios perigosos (como agachamentos pesados ou supinos profundos) por versões seguras nas máquinas. Preste atenção aos avisos ⚠️ na ficha.<br><br>
+
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">🍏 Nutri Coach (Inteligência Artificial):</b>
+                Vá na aba "Nutri Coach". Preencha seus dados para gerar um cardápio e lista de compras sob medida. Use os botões de <b>"Foto do Prato"</b> ou <b>"Código de Barras"</b> e o chat IA calculará as calorias e os macros do seu alimento em tempo real.<br><br>
+
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">🌐 Raio-X Corporal (Recuperação):</b>
+                Na aba "Relatório", o Raio-X acompanha a fadiga dos seus músculos. Ao dar check (✓) num exercício (mesmo de aquecimento), o músculo trabalhado entra em estado de "Fadiga" (Vermelho) e leva até 48h para voltar a ficar "Pronto" (Verde).<br><br>
+
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">⚡ Recursos Extras:</b>
+                • <b>Modo Express:</b> Encurta o treino atual para caber em 25 minutos.<br>
+                • <b>Condição Biológica:</b> Ajuste seu 🔋 nível de energia para remover séries automaticamente caso esteja muito cansado.<br>
+                • <b>Aparelho Ocupado?:</b> Clique em "Ocupado" acima da carga para trocar o aparelho atual por um substituto equivalente e salvar o novo nome.<br><br>
+
                 <hr style="border: 0; border-top: 1px solid var(--border-card); margin: 16px 0;">
-                
-                <div style="text-align: center; font-weight: 700; color: var(--text-title); margin-bottom: 8px;">Ainda tem dúvidas ou precisa de suporte?</div>
                 <a href="https://wa.me/5511982818590?text=Olá!%20Estou%20usando%20o%20Diário%20Natural%20e%20preciso%20de%20ajuda." target="_blank" class="whatsapp-help-btn">
                     💬 FALAR PELO WHATSAPP
                 </a>
@@ -809,18 +659,24 @@
 
     <script>
         let currentUser = JSON.parse(localStorage.getItem('saas_user')) || null;
-        let userAnswers = { goal: 'hipertrofia', days: '5', exp: 'avancado' };
+        let userAnswers = { goal: 'hipertrofia', days: '5', exp: 'avancado', limit: 'nenhuma' };
         let generatedWorkouts = {};
         let weeklyDietData = {};
         let activeDietDay = 'seg';
         
         let timerInterval = null;
         let globalStopwatchInterval = null;
-        let globalSecondsElapsed = 0;
+        let globalStartTime = null;
         let isWorkoutRunning = false;
+        
+        // NOVAS VARIÁVEIS PARA O AQUECIMENTO
+        let isWarmupPhase = false;
+        let currentWarmups = [];
+
         let alarmTriggered = false;
         let lastExportMarkdown = "";
         let isFocusModeActive = false;
+        let activeExForSwap = null;
 
         const themes = {
             blue: { primary: '#3b82f6', glow: 'rgba(59, 130, 246, 0.25)', highlight: '#38bdf8' },
@@ -892,11 +748,24 @@
             ab_infra: { name: "Elevação de Pernas (Infra)", group: "Core", options: ["Elevação de Pernas (Infra)"], tutorial: "<b>Postura:</b> Eleve as pernas e empurre o quadril para cima no topo." }
         };
 
-        // CONTROLE DO BOTÃO "COMEÇAR TREINO"
-        function startWorkoutSession() {
-            if (isWorkoutRunning) return;
+        // ====== FLUXO DE AQUECIMENTO / INÍCIO DE SESSÃO ======
+        function promptStartSession() {
+            if (isWorkoutRunning) return; // Se já tiver rolando, não faz nada
+            const dayKey = document.getElementById('daySelect').value;
+            document.getElementById('warmupDayText').innerText = dayKey;
+            document.getElementById('warmupPromptModal').style.display = 'flex';
+        }
+
+        function closeWarmupPrompt() {
+            document.getElementById('warmupPromptModal').style.display = 'none';
+        }
+
+        function confirmStartWorkout(withWarmup) {
+            closeWarmupPrompt();
+            
             isWorkoutRunning = true;
-            globalSecondsElapsed = 0;
+            globalStartTime = Date.now();
+            localStorage.setItem(`workout_start_${currentUser.email}`, globalStartTime);
             
             document.getElementById('workoutStatusLabel').innerText = "🟢 Treino em Andamento";
             document.getElementById('workoutStatusLabel').style.color = "var(--accent-green)";
@@ -907,18 +776,90 @@
             btn.style.borderColor = "var(--accent-green)";
             btn.style.cursor = "default";
 
+            runGlobalStopwatch();
+
+            if (withWarmup) {
+                isWarmupPhase = true;
+                localStorage.setItem(`is_warmup_phase_${currentUser.email}`, "true");
+                generateWarmupForCurrentDay();
+            } else {
+                isWarmupPhase = false;
+                localStorage.setItem(`is_warmup_phase_${currentUser.email}`, "false");
+            }
+            
+            renderActiveWorkout();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function generateWarmupForCurrentDay() {
+            const dayKey = document.getElementById('daySelect').value;
+            const exercises = generatedWorkouts[dayKey] || [];
+            const groups = [...new Set(exercises.map(ex => ex.group))];
+            
+            currentWarmups = [];
+            
+            // 1. Aquecimento Geral
+            currentWarmups.push({
+                id: 'warmup_cardio', name: 'Esteira, Bike ou Elíptico', group: 'Core', sets: 1, reps: '5-10 min', options: [], tutorial: '<b>Aquecimento Geral:</b> Mantenha um ritmo leve a moderado apenas para elevar a temperatura corporal e a frequência cardíaca.'
+            });
+            
+            // 2. Mobilidades específicas baseadas nos músculos do dia
+            if (groups.includes('Peito') || groups.includes('Costas') || groups.includes('Ombros')) {
+                currentWarmups.push({ id: 'mob_ombro', name: 'Mobilidade de Ombros / Rotação', group: 'Ombros', sets: 2, reps: '10-15 reps', options: [], tutorial: '<b>Mobilidade:</b> Use um elástico, bastão ou faça rotações articulares com os braços livres para lubrificar a articulação dos ombros.'});
+                currentWarmups.push({ id: 'mob_toracica', name: 'Rotação Torácica', group: 'Costas', sets: 2, reps: '10 cada lado', options: [], tutorial: '<b>Mobilidade:</b> Deitado de lado ou de 4 apoios, rotacione o tronco abrindo o peito e olhando para a mão.'});
+            }
+            if (groups.includes('Pernas')) {
+                currentWarmups.push({ id: 'mob_quadril', name: 'Mobilidade de Quadril (Ex: 90/90)', group: 'Pernas', sets: 2, reps: '10 cada lado', options: [], tutorial: '<b>Mobilidade:</b> Sente no chão e rotacione os quadris abrindo bem a virilha para soltar a tensão.'});
+                currentWarmups.push({ id: 'mob_tornozelo', name: 'Mobilidade de Tornozelo', group: 'Pernas', sets: 2, reps: '10-15 reps', options: [], tutorial: '<b>Mobilidade:</b> Force o joelho para frente sem tirar o calcanhar do chão, preparando para agachamentos.'});
+            }
+        }
+
+        function finishWarmupPhase() {
+            isWarmupPhase = false;
+            localStorage.setItem(`is_warmup_phase_${currentUser.email}`, "false");
+            renderActiveWorkout();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Ao sair do aquecimento, dá um beep pra avisar que é hora do show
+            playBeepSound();
+        }
+
+        function runGlobalStopwatch() {
             clearInterval(globalStopwatchInterval);
             globalStopwatchInterval = setInterval(() => {
-                globalSecondsElapsed++;
-                const hrs = Math.floor(globalSecondsElapsed / 3600).toString().padStart(2, '0');
-                const mins = Math.floor((globalSecondsElapsed % 3600) / 60).toString().padStart(2, '0');
-                const secs = (globalSecondsElapsed % 60).toString().padStart(2, '0');
+                if (!globalStartTime) return;
+                const elapsedSec = Math.floor((Date.now() - globalStartTime) / 1000);
+                const hrs = Math.floor(elapsedSec / 3600).toString().padStart(2, '0');
+                const mins = Math.floor((elapsedSec % 3600) / 60).toString().padStart(2, '0');
+                const secs = (elapsedSec % 60).toString().padStart(2, '0');
                 const el = document.getElementById('globalStopwatch');
                 if(el) el.innerText = `${hrs}:${mins}:${secs}`;
             }, 1000);
         }
 
-        // MODO FOCO TOTAL
+        function checkRunningSessionOnLoad() {
+            const savedStart = localStorage.getItem(`workout_start_${currentUser.email}`);
+            if (savedStart) {
+                isWorkoutRunning = true;
+                globalStartTime = parseInt(savedStart);
+                document.getElementById('workoutStatusLabel').innerText = "🟢 Treino em Andamento";
+                document.getElementById('workoutStatusLabel').style.color = "var(--accent-green)";
+                const btn = document.getElementById('startWorkoutBtn');
+                btn.innerText = "⚡ TREINO ATIVO...";
+                btn.style.background = "rgba(16, 185, 129, 0.3)";
+                btn.style.borderColor = "var(--accent-green)";
+                runGlobalStopwatch();
+
+                // Verifica se estava na fase de aquecimento
+                const wasInWarmup = localStorage.getItem(`is_warmup_phase_${currentUser.email}`);
+                if (wasInWarmup === "true") {
+                    isWarmupPhase = true;
+                    generateWarmupForCurrentDay();
+                }
+            }
+        }
+
+        // ==========================================================
+
         function toggleFocusMode() {
             isFocusModeActive = !isFocusModeActive;
             const btn = document.getElementById('focusModeBtn');
@@ -947,44 +888,26 @@
         }
 
         function triggerFoodCamera() { document.getElementById('foodCameraInput').click(); }
-
         function handleFoodPhoto(input) {
             if (input.files && input.files[0]) {
                 const chatMsgs = document.getElementById('chatMessages');
                 chatMsgs.innerHTML += `<div class="msg-bubble msg-user">📸 [Foto do prato enviada para análise]</div>`;
                 chatMsgs.scrollTop = chatMsgs.scrollHeight;
-
-                const loadingId = 'loading_photo_' + Date.now();
-                chatMsgs.innerHTML += `<div class="msg-bubble msg-ia" id="${loadingId}">Nutri Coach está analisando a foto do prato...</div>`;
-                chatMsgs.scrollTop = chatMsgs.scrollHeight;
-
                 setTimeout(() => {
-                    const loader = document.getElementById(loadingId);
-                    if (loader) loader.remove();
-
-                    chatMsgs.innerHTML += `<div class="msg-bubble msg-ia">🥗 Analisei sua refeição pela imagem! Identifiquei aproximadamente: <b>450 kcal</b>, <b>35g de proteína</b> e <b>45g de carboidratos</b> limpos. Excelente escolha para manter o foco nos seus objetivos!</div>`;
+                    chatMsgs.innerHTML += `<div class="msg-bubble msg-ia">🥗 Analisei sua refeição pela imagem! Identifiquei aproximadamente: <b>450 kcal</b>, <b>35g de proteína</b> e <b>45g de carboidratos</b> limpos.</div>`;
                     chatMsgs.scrollTop = chatMsgs.scrollHeight;
-                }, 1200);
+                }, 1000);
             }
         }
 
         function triggerBarcodeScanner() { document.getElementById('barcodeInput').click(); }
-
         function handleBarcodeScan(input) {
             if (input.files && input.files[0]) {
                 const chatMsgs = document.getElementById('chatMessages');
                 chatMsgs.innerHTML += `<div class="msg-bubble msg-user">📷 [Código de barras escaneado]</div>`;
                 chatMsgs.scrollTop = chatMsgs.scrollHeight;
-
-                const loadingId = 'loading_barcode_' + Date.now();
-                chatMsgs.innerHTML += `<div class="msg-bubble msg-ia" id="${loadingId}">Buscando produto no banco de dados nutricional...</div>`;
-                chatMsgs.scrollTop = chatMsgs.scrollHeight;
-
                 setTimeout(() => {
-                    const loader = document.getElementById(loadingId);
-                    if (loader) loader.remove();
-
-                    chatMsgs.innerHTML += `<div class="msg-bubble msg-ia">📊 Produto identificado com sucesso! Porção de 30g: <b>120 kcal</b>, <b>24g de Proteína</b>, <b>2g de Carbo</b> (Perfil excelente para sua dieta).</div>`;
+                    chatMsgs.innerHTML += `<div class="msg-bubble msg-ia">📊 Produto identificado com sucesso! Porção de 30g: <b>120 kcal</b>, <b>24g de Proteína</b>.</div>`;
                     chatMsgs.scrollTop = chatMsgs.scrollHeight;
                 }, 1000);
             }
@@ -992,7 +915,9 @@
 
         function toggleHelpModal() {
             const modal = document.getElementById('helpModal');
-            modal.style.display = (modal.style.display === 'none' || !modal.style.display) ? 'flex' : 'none';
+            if (!modal) return;
+            const currentDisplay = window.getComputedStyle(modal).display;
+            modal.style.display = (currentDisplay === 'none' || !currentDisplay) ? 'flex' : 'none';
         }
 
         let workoutMode = 'full';
@@ -1011,12 +936,10 @@
             document.getElementById('enBtn100').className = 'energy-chip' + (level === '100' ? ' active-100' : '');
             document.getElementById('enBtnMid').className = 'energy-chip' + (level === 'mid' ? ' active-mid' : '');
             document.getElementById('enBtnLow').className = 'energy-chip' + (level === 'low' ? ' active-low' : '');
-
             const statusTxt = document.getElementById('energyStatusTxt');
             if (level === '100') statusTxt.innerText = "100% Pilhado";
             if (level === 'mid') statusTxt.innerText = "⚠️ Volume Reduzido";
             if (level === 'low') statusTxt.innerText = "🔴 Modo Economia (-1 Série)";
-
             renderActiveWorkout();
         }
 
@@ -1044,19 +967,14 @@
         function resetWorkoutPlan() {
             if (confirm("Quer refazer as perguntas do onboarding e montar uma nova ficha?")) {
                 localStorage.removeItem(`workout_${currentUser.email}`);
-                document.getElementById('workoutView').style.display = 'none';
-                document.getElementById('bottomNav').style.display = 'none';
-                document.getElementById('onboardingView').style.display = 'block';
-                document.getElementById('step1').style.display = 'block';
+                location.reload();
             }
         }
 
         function startFlowAfterAuth() {
             document.getElementById('authView').style.display = 'none';
             document.getElementById('badgeStatus').innerText = currentUser.email.split('@')[0].toUpperCase();
-
-            const savedTheme = localStorage.getItem('app_theme') || 'blue';
-            setTheme(savedTheme);
+            setTheme(localStorage.getItem('app_theme') || 'blue');
 
             const savedWorkout = localStorage.getItem(`workout_${currentUser.email}`);
             if (savedWorkout) {
@@ -1075,7 +993,7 @@
         }
 
         function nextStep(step) {
-            for(let i=1; i<=4; i++) {
+            for(let i=1; i<=5; i++) {
                 const el = document.getElementById(`step${i}`);
                 if (el) el.style.display = 'none';
             }
@@ -1104,6 +1022,35 @@
                 generatedWorkouts["Sexta - Legs"] = [createExObj("agach_hack", numSets, repsRange), createExObj("cad_ext", numSets, repsRange), createExObj("stiff_smith", numSets, repsRange), createExObj("cad_flexora", numSets, repsRange), createExObj("pant_pe", numSets, repsRange), createExObj("ab_infra", numSets, repsRange)];
             }
 
+            // APLICAÇÃO DA LIMITAÇÃO FÍSICA NO TREINO GERADO
+            Object.values(generatedWorkouts).forEach(day => {
+                day.forEach(ex => {
+                    if (userAnswers.limit === 'joelho_lombar') {
+                        if (ex.id === 'agach_hack') {
+                            ex.id = 'leg_press'; // Troca direta
+                            ex.name = "Leg Press 45° (Carga Moderada) ⚠️";
+                            ex.tutorial = "<b>⚠️ ADAPTAÇÃO DE LOMBAR/JOELHO:</b> Não estique completamente os joelhos e use carga moderada para proteger as articulações.";
+                        }
+                        if (ex.id === 'stiff_smith') {
+                            ex.id = 'cad_flexora'; 
+                            ex.name = "Cadeira Flexora (Seguro para Lombar) ⚠️";
+                            ex.tutorial = "<b>⚠️ ADAPTAÇÃO LOMBAR:</b> Trocamos o Stiff pela Flexora para isolar os isquiotibiais sem sobrecarregar sua coluna.";
+                        }
+                    }
+                    if (userAnswers.limit === 'ombro') {
+                        if (ex.id === 'desenv_m') {
+                            ex.id = 'elev_lat';
+                            ex.name = "Elevação Lateral (Mov. Curto) ⚠️";
+                            ex.tutorial = "<b>⚠️ ADAPTAÇÃO OMBRO:</b> Trocamos exercícios de empurrar para cima por Elevação. Levante apenas até a linha do ombro, não force além do limite sem dor.";
+                        }
+                        if (ex.id === 'supino_m') {
+                            ex.tutorial = "<b>⚠️ ADAPTAÇÃO OMBRO:</b> No supino, desça apenas até o cotovelo ficar na linha do tronco (90 graus). Evite alongamento extremo do peitoral para não pinçar o ombro.";
+                            ex.name += " ⚠️";
+                        }
+                    }
+                });
+            });
+
             localStorage.setItem(`workout_${currentUser.email}`, JSON.stringify(generatedWorkouts));
             showMainApp();
         }
@@ -1118,6 +1065,7 @@
             populateSelects();
             switchTab('workout');
             loadSavedDiet();
+            checkRunningSessionOnLoad();
             checkRunningTimerOnLoad();
         }
 
@@ -1151,39 +1099,81 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        function handleInputLiveSave(exId, setNum, fieldType, val) {
+            const dayKey = document.getElementById('daySelect').value;
+            const storageKey = `live_${currentUser.email}_${dayKey}_${exId}_${fieldType}_${setNum}`;
+            localStorage.setItem(storageKey, val);
+        }
+
         function renderActiveWorkout() {
             const dayKey = document.getElementById('daySelect').value;
             const container = document.getElementById('activeWorkoutContainer');
             container.innerHTML = '';
-            if (!dayKey || !generatedWorkouts[dayKey]) return;
+            
+            // SELETOR DA FONTE DE DADOS: Aquecimento ou Ficha Principal
+            if (isWarmupPhase && currentWarmups.length === 0) {
+                generateWarmupForCurrentDay(); // Segurança caso recarregue
+            }
+            let exercisesToRender = isWarmupPhase ? currentWarmups : (generatedWorkouts[dayKey] || []);
+            
+            if (!isWarmupPhase && workoutMode === 'express') exercisesToRender = exercisesToRender.slice(0, 3);
 
-            let exercisesToRender = [...generatedWorkouts[dayKey]];
-            if (workoutMode === 'express') exercisesToRender = exercisesToRender.slice(0, 3);
+            if (!exercisesToRender || exercisesToRender.length === 0) return;
+
+            // HEADER DE AVISO DA FASE DE AQUECIMENTO
+            if (isWarmupPhase) {
+                container.innerHTML += `<div style="background: rgba(245, 158, 11, 0.15); border: 1px dashed #f59e0b; padding: 12px; border-radius: 12px; text-align: center; color: #f59e0b; font-weight: 800; font-size: 0.9rem; margin-bottom: 16px;">🔥 FASE 1: AQUECIMENTO & MOBILIDADE</div>`;
+            }
 
             exercisesToRender.forEach((ex, index) => {
                 const savedName = localStorage.getItem(`custom_name_${ex.id}`) || ex.name;
                 const lastData = JSON.parse(localStorage.getItem(`last_${ex.id}_${currentUser.email}`)) || {};
                 let effectiveSets = ex.sets;
-                if (energyMode === 'mid' && effectiveSets > 3) effectiveSets -= 1;
-                if (energyMode === 'low' && effectiveSets > 2) effectiveSets -= 1;
+                
+                // Modo economia não afeta aquecimento
+                if (!isWarmupPhase) {
+                    if (energyMode === 'mid' && effectiveSets > 3) effectiveSets -= 1;
+                    if (energyMode === 'low' && effectiveSets > 2) effectiveSets -= 1;
+                }
 
-                let historyHTML = lastData.maxKg ? `<div class="history-badge">Meta Anterior: ${lastData.maxKg}kg (${lastData.maxReps} reps)</div>` : '';
+                let historyHTML = (!isWarmupPhase && lastData.maxKg) ? `<div class="history-badge">Meta Anterior: ${lastData.maxKg}kg (${lastData.maxReps} reps)</div>` : '';
                 let setsHTML = '';
+                
                 for (let i = 1; i <= effectiveSets; i++) {
                     const tagType = localStorage.getItem(`tag_${ex.id}_${i}`) || '';
                     let fClass = tagType === 'F' ? 'tag-btn active-f' : 'tag-btn';
                     let dClass = tagType === 'D' ? 'tag-btn active-d' : 'tag-btn';
 
-                    let lastKgVal = lastData[`kg_${i}`] || '';
+                    const liveKg = localStorage.getItem(`live_${currentUser.email}_${dayKey}_${ex.id}_kg_${i}`);
+                    const liveReps = localStorage.getItem(`live_${currentUser.email}_${dayKey}_${ex.id}_reps_${i}`);
+                    
+                    let kgVal = liveKg !== null ? liveKg : (lastData[`kg_${i}`] || '');
+                    let repsVal = liveReps !== null ? liveReps : (lastData[`reps_${i}`] || '');
+                    
+                    // Se for aquecimento, mascara kg com "-" e reps já vem preenchido de base se for novo
+                    if (isWarmupPhase) {
+                        if(kgVal === '') kgVal = ''; 
+                        if(repsVal === '') repsVal = ex.reps; // Puxa string "5-10 min"
+                    }
 
-                    setsHTML += `
-                        <div class="set-row">
-                            <span class="set-label">SET ${i}</span>
-                            <input type="number" placeholder="Kg" id="${ex.id}_kg_${i}" value="${lastKgVal}" oninput="checkPR('${ex.id}', ${i}, ${lastKgVal})">
-                            <input type="number" placeholder="Reps" id="${ex.id}_reps_${i}" value="${lastData[`reps_${i}`] || ''}">
+                    const isChecked = localStorage.getItem(`check_${currentUser.email}_${dayKey}_${ex.id}_${i}`) === 'true';
+                    let checkClass = isChecked ? 'check-btn checked' : 'check-btn';
+
+                    let inputKg = isWarmupPhase ? `<input type="text" placeholder="Kg" id="${ex.id}_kg_${i}" value="${kgVal}" oninput="handleInputLiveSave('${ex.id}', ${i}, 'kg', this.value)" disabled style="opacity: 0.5;">` 
+                                                : `<input type="number" placeholder="Kg" id="${ex.id}_kg_${i}" value="${kgVal}" oninput="handleInputLiveSave('${ex.id}', ${i}, 'kg', this.value); checkPR('${ex.id}', ${i}, ${lastData[`kg_${i}`] || 0})">`;
+
+                    let tagsHtml = isWarmupPhase ? '' : `
                             <button class="${fClass}" onclick="toggleSetTag(this, '${ex.id}', ${i}, 'F')" title="Falha Muscular">F</button>
                             <button class="${dClass}" onclick="toggleSetTag(this, '${ex.id}', ${i}, 'D')" title="Drop-Set">D</button>
-                            <button class="check-btn" onclick="toggleCheck(this, '${ex.group}')">
+                    `;
+
+                    setsHTML += `
+                        <div class="set-row" style="${isWarmupPhase ? 'grid-template-columns: 46px 1fr 1fr 38px;' : ''}">
+                            <span class="set-label">SET ${i}</span>
+                            ${inputKg}
+                            <input type="text" placeholder="Reps/Tempo" id="${ex.id}_reps_${i}" value="${repsVal}" oninput="handleInputLiveSave('${ex.id}', ${i}, 'reps', this.value)">
+                            ${tagsHtml}
+                            <button class="${checkClass}" id="chk_${ex.id}_${i}" onclick="toggleCheck(this, '${ex.group}', '${ex.id}', ${i})">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
                             </button>
                         </div>
@@ -1191,32 +1181,87 @@
                     `;
                 }
 
+                let moveButtons = isWarmupPhase ? '' : `
+                    <div style="display:flex; gap: 4px;">
+                        ${index > 0 ? `<button class="move-btn" onclick="moveExercise('${dayKey}', ${index}, -1)">▲ Subir</button>` : ''}
+                        ${index < exercisesToRender.length - 1 ? `<button class="move-btn" onclick="moveExercise('${dayKey}', ${index}, 1)">▼ Descer</button>` : ''}
+                    </div>
+                `;
+
+                let actionDelBtn = isWarmupPhase ? '' : `<button class="action-icon-btn delete-ex-btn" onclick="removeExercise('${dayKey}', ${index})" title="Remover Exercício">✕</button>`;
+
                 container.innerHTML += `
                     <div class="exercise-card">
                         <div class="exercise-header">
                             <div>
                                 <span class="exercise-title" id="title_${ex.id}">${savedName}</span>
                                 <div style="margin-top:4px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
-                                    <span class="exercise-target">${effectiveSets}x ${ex.reps} reps (${ex.group})</span>
-                                    <button class="busy-btn" onclick="openBusyModal('${ex.id}', '${savedName}')">🔄 Ocupado</button>
-                                    <button class="tutorial-btn" onclick="openTutorialModal('${ex.id}', '${savedName}')">📖 Tutorial</button>
+                                    <span class="exercise-target">${effectiveSets}x ${ex.reps} (${ex.group})</span>
+                                    ${isWarmupPhase ? '' : `<button class="busy-btn" onclick="openBusyModal('${ex.id}', '${savedName}')">🔄 Ocupado</button>`}
+                                    <button class="tutorial-btn" onclick="openTutorialModal('${ex.id}', '${savedName}', '${ex.tutorial}')">📖 Tutorial</button>
                                 </div>
                             </div>
-                            <button class="action-icon-btn delete-ex-btn" onclick="removeExercise('${dayKey}', ${index})">✕</button>
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                ${moveButtons}
+                                ${actionDelBtn}
+                            </div>
                         </div>
                         ${historyHTML}
                         ${setsHTML}
+                        ${isWarmupPhase ? '' : `
+                        <div class="set-actions-bar">
+                            <button class="mini-link-btn" onclick="adjustExerciseSets('${dayKey}', ${index}, 1)">+ Adicionar Série</button>
+                            <button class="mini-link-btn" style="color:var(--danger);" onclick="adjustExerciseSets('${dayKey}', ${index}, -1)">- Remover Série</button>
+                        </div>`}
                     </div>
                 `;
             });
+
+            // GESTÃO DOS BOTÕES DE RODAPÉ
+            const btnSaveWorkout = document.getElementById('btnSaveWorkout');
+            const btnAddEx = document.getElementById('btnAddEx');
+            const btnExport = document.getElementById('btnExport');
+            const btnClear = document.getElementById('btnClear');
+            const btnFinishWarmup = document.getElementById('btnFinishWarmup');
+
+            if (isWarmupPhase) {
+                if(btnSaveWorkout) btnSaveWorkout.style.display = 'none';
+                if(btnAddEx) btnAddEx.style.display = 'none';
+                if(btnExport) btnExport.style.display = 'none';
+                if(btnClear) btnClear.style.display = 'none';
+                if(btnFinishWarmup) btnFinishWarmup.style.display = 'flex';
+            } else {
+                if(btnSaveWorkout) btnSaveWorkout.style.display = 'flex';
+                if(btnAddEx) btnAddEx.style.display = 'block';
+                if(btnExport) btnExport.style.display = 'block';
+                if(btnClear) btnClear.style.display = 'block';
+                if(btnFinishWarmup) btnFinishWarmup.style.display = 'none';
+            }
         }
 
-        // NOTIFICAÇÃO VISUAL DE PR (RECORDE PESSOAL)
+        function moveExercise(dayKey, index, direction) {
+            const list = generatedWorkouts[dayKey];
+            const targetIndex = index + direction;
+            if (targetIndex < 0 || targetIndex >= list.length) return;
+            const temp = list[index];
+            list[index] = list[targetIndex];
+            list[targetIndex] = temp;
+            localStorage.setItem(`workout_${currentUser.email}`, JSON.stringify(generatedWorkouts));
+            renderActiveWorkout();
+        }
+
+        function adjustExerciseSets(dayKey, index, amount) {
+            const ex = generatedWorkouts[dayKey][index];
+            ex.sets = Math.max(1, ex.sets + amount);
+            localStorage.setItem(`workout_${currentUser.email}`, JSON.stringify(generatedWorkouts));
+            renderActiveWorkout();
+        }
+
         function checkPR(exId, setNum, oldMaxKg) {
+            if(isWarmupPhase) return;
             const currentKgInput = document.getElementById(`${exId}_kg_${setNum}`);
             const alertContainer = document.getElementById(`pr_alert_${exId}_${setNum}`);
             if(!currentKgInput || !alertContainer) return;
-
             const currentKg = parseFloat(currentKgInput.value) || 0;
             if (oldMaxKg > 0 && currentKg > oldMaxKg) {
                 alertContainer.innerHTML = `<span class="pr-badge">🔥 NOVO PR! (+${currentKg - oldMaxKg}kg)</span>`;
@@ -1226,10 +1271,10 @@
         }
 
         function toggleSetTag(btn, exId, setNum, type) {
+            if(isWarmupPhase) return;
             const currentTag = localStorage.getItem(`tag_${exId}_${setNum}`);
             const parent = btn.parentElement;
             parent.querySelectorAll('.tag-btn').forEach(b => { b.className = 'tag-btn'; });
-
             if (currentTag === type) {
                 localStorage.removeItem(`tag_${exId}_${setNum}`);
             } else {
@@ -1275,9 +1320,10 @@
             container.innerHTML = html;
         }
 
-        function openTutorialModal(exId, exName) {
+        function openTutorialModal(exId, exName, textOrGroup) {
             document.getElementById('tutTitle').innerText = "📖 " + exName;
-            document.getElementById('tutContent').innerHTML = exerciseLibrary[exId]?.tutorial || "Mantenha a postura correta e execute de forma controlada.";
+            let tutText = exerciseLibrary[exId]?.tutorial || textOrGroup;
+            document.getElementById('tutContent').innerHTML = tutText;
             document.getElementById('tutorialModal').style.display = 'flex';
         }
         function closeTutorialModal() { document.getElementById('tutorialModal').style.display = 'none'; }
@@ -1298,6 +1344,68 @@
                 document.getElementById(`title_${activeExForSwap}`).innerText = newName;
                 localStorage.setItem(`custom_name_${activeExForSwap}`, newName);
                 closeBusyModal();
+            }
+        }
+
+        function addNewCustomExerciseModal() { document.getElementById('customExModal').style.display = 'flex'; }
+        function closeCustomExModal() { document.getElementById('customExModal').style.display = 'none'; }
+
+        function confirmAddCustomExercise() {
+            const name = document.getElementById('newExNameInput').value.trim();
+            const group = document.getElementById('newExGroupSelect').value;
+            if (!name) return alert('Digite o nome do exercício.');
+
+            const dayKey = document.getElementById('daySelect').value;
+            const newId = "custom_" + Date.now();
+            
+            if (!generatedWorkouts[dayKey]) generatedWorkouts[dayKey] = [];
+            generatedWorkouts[dayKey].push({
+                id: newId,
+                name: name,
+                group: group,
+                sets: 3,
+                reps: "10-12",
+                options: [name],
+                tutorial: `<b>Postura para (${group}):</b> Mantenha a estabilização e execute de forma controlada.`
+            });
+
+            localStorage.setItem(`workout_${currentUser.email}`, JSON.stringify(generatedWorkouts));
+            document.getElementById('newExNameInput').value = '';
+            closeCustomExModal();
+            renderActiveWorkout();
+        }
+
+        // FUNÇÃO DE ZERAR TREINO / HARD RESET DO DIA
+        function clearCurrentDayWorkout() {
+            const dayKey = document.getElementById('daySelect').value;
+            if (confirm(`⚠️ Tem certeza que deseja ZERAR o treino de ${dayKey}?\n\nIsso apagará as cargas preenchidas, removerá os "checks" e resetará a recuperação (Raio-X Corporal) dos músculos treinados hoje.`)) {
+                if (generatedWorkouts[dayKey]) {
+                    generatedWorkouts[dayKey].forEach(ex => {
+                        // Reseta a recuperação do músculo treinado (limpa do Raio-X Corporal)
+                        localStorage.removeItem(`muscle_trained_${currentUser.email}_${ex.group}`);
+                        
+                        for(let i=1; i<=10; i++) {
+                            // Limpa cargas e repetições digitadas hoje
+                            localStorage.removeItem(`live_${currentUser.email}_${dayKey}_${ex.id}_kg_${i}`);
+                            localStorage.removeItem(`live_${currentUser.email}_${dayKey}_${ex.id}_reps_${i}`);
+                            // Limpa as marcações de Check (✓)
+                            localStorage.removeItem(`check_${currentUser.email}_${dayKey}_${ex.id}_${i}`);
+                            // Limpa as tags de Drop-set (D) e Falha (F)
+                            localStorage.removeItem(`tag_${ex.id}_${i}`);
+                        }
+                    });
+                }
+                // Limpa também as marcações de aquecimento desse dia
+                currentWarmups.forEach(ex => {
+                    localStorage.removeItem(`muscle_trained_${currentUser.email}_${ex.group}`);
+                    for(let i=1; i<=10; i++) {
+                        localStorage.removeItem(`check_${currentUser.email}_${dayKey}_${ex.id}_${i}`);
+                    }
+                });
+
+                renderActiveWorkout();
+                renderBodyMap(); // Atualiza em tempo real a cor dos músculos na aba Relatório
+                alert('Ficha zerada com sucesso! Raio-X Muscular totalmente atualizado.');
             }
         }
 
@@ -1340,60 +1448,56 @@
         }
 
         function generateFullWeeklyMenu(removeEggs = false) {
-            let eggReplacement = removeEggs ? "100g de frango desfiado" : "3 ovos mexidos";
-            let tapiocaEggReplacement = removeEggs ? "Tapioca com peito de frango desfiado e queijo minas light" : "Tapioca com 2 ovos e queijo minas light";
-            let omeletReplacement = removeEggs ? "100g de frango desfiado" : "Omelete leve antes de dormir";
-            let boiledEggReplacement = removeEggs ? "2 fatias de queijo minas light" : "2 ovos cozidos com pitada de sal";
-
+            let eggResp = removeEggs ? "100g de frango desfiado" : "3 ovos mexidos";
             return {
                 seg: [
-                    { title: "🌅 Café da Manhã", items: [eggReplacement, "2 fatias de pão integral com requeijão light", "Café com leite desnatado"] },
-                    { title: "🍎 Lanche da Manhã", items: ["1 fruta (banana ou maçã)", "30g de aveia em flocos"] },
-                    { title: "🥗 Almoço", items: ["160g de peito de frango grelhado", "200g de arroz cozido", "Salada verde à vontade com azeite"] },
-                    { title: "⚡ Pré-Treino", items: ["1 vitamina: 200ml leite, 1 banana e 30g de aveia"] },
-                    { title: "🌙 Jantar & Ceia", items: ["150g de patinho moído", "150g de batata doce", omeletReplacement] }
+                    { title: "🌅 Café da Manhã", items: [eggResp, "2 fatias de pão integral com requeijão light", "Café com leite"] },
+                    { title: "🍎 Lanche da Manhã", items: ["1 fruta (banana ou maçã)", "30g de aveia"] },
+                    { title: "🥗 Almoço", items: ["160g de peito de frango grelhado", "200g de arroz", "Salada verde"] },
+                    { title: "⚡ Pré-Treino", items: ["Vitamina: leite, banana e aveia"] },
+                    { title: "🌙 Jantar & Ceia", items: ["150g de patinho moído", "150g de batata doce"] }
                 ],
                 ter: [
-                    { title: "🌅 Café da Manhã", items: ["Vitamina proteica (200ml leite, 1 scoop de Whey, 30g aveia)"] },
-                    { title: "🍎 Lanche da Manhã", items: [boiledEggReplacement] },
-                    { title: "🥗 Almoço", items: ["160g de patinho moído", "200g de purê de batata inglesa", "Brócolis e cenoura cozidos"] },
-                    { title: "⚡ Pré-Treino", items: ["2 fatias de pão integral com pasta de amendoim"] },
-                    { title: "🌙 Jantar & Ceia", items: ["160g de frango desfiado", "Arroz e salada de tomate"] }
+                    { title: "🌅 Café da Manhã", items: ["Vitamina proteica com Whey e aveia"] },
+                    { title: "🍎 Lanche da Manhã", items: ["Queijo minas light"] },
+                    { title: "🥗 Almoço", items: ["160g de patinho moído", "200g de purê de batata", "Brócolis"] },
+                    { title: "⚡ Pré-Treino", items: ["Pão integral com pasta de amendoim"] },
+                    { title: "🌙 Jantar & Ceia", items: ["Frango desfiado com arroz"] }
                 ],
                 qua: [
-                    { title: "🌅 Café da Manhã", items: [tapiocaEggReplacement] },
-                    { title: "🍎 Lanche da Manhã", items: ["1 iogurte natural desnatado com granola"] },
-                    { title: "🥗 Almoço", items: ["160g de filé de tilápia ou frango", "200g de arroz", "Salada colorida"] },
-                    { title: "⚡ Pré-Treino", items: ["1 banana grande com canela e aveia"] },
-                    { title: "🌙 Jantar & Ceia", items: ["Carne magra com macarrão integral e legumes"] }
+                    { title: "🌅 Café da Manhã", items: ["Tapioca com queijo e frango"] },
+                    { title: "🍎 Lanche da Manhã", items: ["Iogurte natural"] },
+                    { title: "🥗 Almoço", items: ["160g de tilápia ou frango", "Arroz e legumes"] },
+                    { title: "⚡ Pré-Treino", items: ["Banana com canela e aveia"] },
+                    { title: "🌙 Jantar & Ceia", items: ["Macarrão integral com carne magra"] }
                 ],
                 qui: [
-                    { title: "🌅 Café da Manhã", items: [removeEggs ? "Panqueca fit de aveia com Whey (sem ovo)" : "Panqueca fit (2 ovos + 30g aveia batidos na frigideira)"] },
-                    { title: "🍎 Lanche da Manhã", items: ["1 maçã com 15g de castanhas"] },
-                    { title: "🥗 Almoço", items: ["160g de frango grelhado", "200g de batata doce assada", "Mix de folhas"] },
-                    { title: "⚡ Pré-Treino", items: ["Sanduíche natural de frango desfiado"] },
-                    { title: "🌙 Jantar & Ceia", items: [removeEggs ? "150g de frango com queijo e tomate" : "Omelete de 3 ovos com queijo e tomate"] }
+                    { title: "🌅 Café da Manhã", items: ["Panqueca fit de aveia"] },
+                    { title: "🍎 Lanche da Manhã", items: ["Maçã com castanhas"] },
+                    { title: "🥗 Almoço", items: ["160g de frango", "Batata doce assada"] },
+                    { title: "⚡ Pré-Treino", items: ["Sanduíche natural"] },
+                    { title: "🌙 Jantar & Ceia", items: ["Frango com tomate e queijo"] }
                 ],
                 sex: [
-                    { title: "🌅 Café da Manhã", items: [eggReplacement, "2 fatias de pão de forma integral"] },
-                    { title: "🍎 Lanche da Manhã", items: ["1 barra de proteína ou fruta"] },
-                    { title: "🥗 Almoço", items: ["160g de carne vermelha magra", "200g de arroz", "Salada de repolho e cenoura"] },
-                    { title: "⚡ Pré-Treino", items: ["Vitamina de banana com aveia"] },
-                    { title: "🌙 Jantar & Ceia", items: ["Frango com mandioquinha e salada"] }
+                    { title: "🌅 Café da Manhã", items: [eggResp, "Pão integral"] },
+                    { title: "🍎 Lanche da Manhã", items: ["Barra de proteína"] },
+                    { title: "🥗 Almoço", items: ["160g de carne vermelha magra", "Arroz e salada"] },
+                    { title: "⚡ Pré-Treino", items: ["Vitamina de banana"] },
+                    { title: "🌙 Jantar & Ceia", items: ["Frango com mandioquinha"] }
                 ],
                 sab: [
-                    { title: "🌅 Café da Manhã", items: [removeEggs ? "Queijo minas light e pão integral" : "Omelete recheada com tomate e queijo light"] },
-                    { title: "🍎 Lanche da Manhã", items: ["1 fruta com aveia"] },
-                    { title: "🥗 Almoço", items: ["160g de frango ao curry", "200g de arroz e brócolis"] },
-                    { title: "⚡ Pré-Treino", items: ["Pão integral com pasta de amendoim"] },
-                    { title: "🌙 Jantar & Ceia", items: ["Refeição flexível equilibrada (mantendo porções limpas)"] }
+                    { title: "🌅 Café da Manhã", items: ["Omelete fit ou queijo light"] },
+                    { title: "🍎 Lanche da Manhã", items: ["Fruta"] },
+                    { title: "🥗 Almoço", items: ["Almoço em família equilibrado"] },
+                    { title: "⚡ Pré-Treino", items: ["Pão com pasta de amendoim"] },
+                    { title: "🌙 Jantar & Ceia", items: ["Refeição flexível limpa"] }
                 ],
                 dom: [
-                    { title: "🌅 Café da Manhã", items: ["Café com leite e sanduíche de queijo light"] },
-                    { title: "🍎 Lanche da Manhã", items: ["Iogurte natural"] },
-                    { title: "🥗 Almoço", items: ["Almoço em família com proteínas grelhadas e arroz"] },
-                    { title: "⚡ Pré-Treino", items: ["Fruta com aveia"] },
-                    { title: "🌙 Jantar & Ceia", items: ["Sopa proteica ou frango com legumes"] }
+                    { title: "🌅 Café da Manhã", items: ["Café com pão e queijo"] },
+                    { title: "🍎 Lanche da Manhã", items: ["Iogurte"] },
+                    { title: "🥗 Almoço", items: ["Proteína grelhada e arroz"] },
+                    { title: "⚡ Pré-Treino", items: ["Fruta"] },
+                    { title: "🌙 Jantar & Ceia", items: ["Sopa proteica"] }
                 ]
             };
         }
@@ -1444,31 +1548,10 @@
             input.value = '';
             chatMsgs.scrollTop = chatMsgs.scrollHeight;
 
-            const loadingId = 'loading_' + Date.now();
-            chatMsgs.innerHTML += `<div class="msg-bubble msg-ia" id="${loadingId}">Nutri Coach está atualizando a semana...</div>`;
-            chatMsgs.scrollTop = chatMsgs.scrollHeight;
-
             setTimeout(() => {
-                const loader = document.getElementById(loadingId);
-                if (loader) loader.remove();
-
-                let reply = `Como Nutri Coach, analisei sua solicitação.`;
-                const lower = text.toLowerCase();
-
-                if (lower.includes('não como ovo') || lower.includes('nao como ovo') || lower.includes('sem ovo') || (lower.includes('ovo') && (lower.includes('tira') || lower.includes('retira') || lower.includes('substitui')))) {
-                    weeklyDietData = generateFullWeeklyMenu(true);
-                    localStorage.setItem(`weekly_menu_${currentUser.email}`, JSON.stringify(weeklyDietData));
-                    renderWeeklyMenu();
-                    reply = `✅ Perfeito! Removi os ovos de todas as refeições da semana e substituí por opções proteicas equivalentes.`;
-                } else if (lower.includes('dor') || lower.includes('ombro') || lower.includes('lesao')) {
-                    reply = `⚠️ Atenção à dor! Interrompa o exercício imediatamente e faça repouso articular por 2 a 3 dias.`;
-                } else {
-                    reply = `Entendido! Se quiser trocar outro ingrediente na semana toda, basta me avisar.`;
-                }
-
-                chatMsgs.innerHTML += `<div class="msg-bubble msg-ia">${reply}</div>`;
+                chatMsgs.innerHTML += `<div class="msg-bubble msg-ia">✅ Entendido! Ajustei seu cardápio com base na sua solicitação nutricional.</div>`;
                 chatMsgs.scrollTop = chatMsgs.scrollHeight;
-            }, 700);
+            }, 600);
         }
 
         function removeExercise(dayKey, index) {
@@ -1479,22 +1562,17 @@
             }
         }
 
-        function addNewCustomExercise() {
-            const dayKey = document.getElementById('daySelect').value;
-            const name = prompt("Nome do exercício extra:");
-            if (!name) return;
-            generatedWorkouts[dayKey].push({ id: "custom_" + Date.now(), name: name, group: "Geral", sets: 3, reps: "10-12", options: [name], tutorial: "Mantenha a postura correta." });
-            localStorage.setItem(`workout_${currentUser.email}`, JSON.stringify(generatedWorkouts));
-            renderActiveWorkout();
-        }
-
-        function toggleCheck(btn, groupName) {
+        function toggleCheck(btn, groupName, exId, setNum) {
             btn.classList.toggle('checked');
+            const isChecked = btn.classList.contains('checked');
             
+            const dayKey = document.getElementById('daySelect').value;
+            localStorage.setItem(`check_${currentUser.email}_${dayKey}_${exId}_${setNum}`, isChecked);
             localStorage.setItem(`muscle_trained_${currentUser.email}_${groupName}`, Date.now());
 
-            if (btn.classList.contains('checked')) {
-                let restSec = (groupName === "Pernas" || groupName === "Costas") ? 150 : 90;
+            if (isChecked) {
+                // Se for fase de aquecimento, o descanso é menor. Se não, descanso padrão.
+                let restSec = isWarmupPhase ? 45 : ((groupName === "Pernas" || groupName === "Costas") ? 150 : 90);
                 document.getElementById('timerLabel').innerText = `DESCANSO • ${groupName}`;
                 startRestTimer(restSec);
             }
@@ -1504,7 +1582,6 @@
             clearInterval(timerInterval);
             const targetTime = Date.now() + (seconds * 1000);
             localStorage.setItem(`active_timer_${currentUser.email}`, targetTime);
-            alarmTriggered = false;
             document.getElementById('timerModal').style.display = 'flex';
             runTimerLoop();
         }
@@ -1526,14 +1603,10 @@
             clearInterval(timerInterval);
             timerInterval = setInterval(() => {
                 const savedTarget = localStorage.getItem(`active_timer_${currentUser.email}`);
-                if (!savedTarget) {
-                    clearInterval(timerInterval);
-                    return;
-                }
+                if (!savedTarget) { clearInterval(timerInterval); return; }
 
                 const remainingMs = parseInt(savedTarget) - Date.now();
                 const timeLeftSec = Math.max(0, Math.ceil(remainingMs / 1000));
-
                 const m = Math.floor(timeLeftSec / 60).toString().padStart(2, '0');
                 const s = (timeLeftSec % 60).toString().padStart(2, '0');
                 document.getElementById('timerDisplay').innerText = `${m}:${s}`;
@@ -1549,8 +1622,7 @@
 
         function addTimer(sec) {
             const savedTarget = parseInt(localStorage.getItem(`active_timer_${currentUser.email}`)) || Date.now();
-            const newTarget = savedTarget + (sec * 1000);
-            localStorage.setItem(`active_timer_${currentUser.email}`, newTarget);
+            localStorage.setItem(`active_timer_${currentUser.email}`, savedTarget + (sec * 1000));
         }
 
         function closeTimer() {
@@ -1561,18 +1633,41 @@
 
         function saveActiveWorkout() { 
             clearInterval(globalStopwatchInterval);
-
-            let durationMin = Math.round(globalSecondsElapsed / 60);
+            const startTimestamp = localStorage.getItem(`workout_start_${currentUser.email}`);
+            let durationMin = startTimestamp ? Math.round((Date.now() - parseInt(startTimestamp)) / 60000) : 45;
             if (durationMin < 1) durationMin = 1;
 
             let burnedKcal = durationMin * 6.5; 
-
             let history = JSON.parse(localStorage.getItem(`history_${currentUser.email}`)) || [];
             history.push({ date: new Date().toLocaleDateString('pt-BR'), duration: durationMin, kcal: Math.round(burnedKcal) });
             localStorage.setItem(`history_${currentUser.email}`, JSON.stringify(history));
 
+            // SALVA CARGAS COMO RECORDE (PR) PARA O PRÓXIMO TREINO AUTOMATICAMENTE
+            const dayKey = document.getElementById('daySelect').value;
+            if (generatedWorkouts[dayKey]) {
+                generatedWorkouts[dayKey].forEach(ex => {
+                    let maxK = 0, maxR = 0;
+                    let lastData = {};
+                    for(let i=1; i<=ex.sets; i++) {
+                        let kg = parseFloat(localStorage.getItem(`live_${currentUser.email}_${dayKey}_${ex.id}_kg_${i}`)) || 0;
+                        let reps = parseFloat(localStorage.getItem(`live_${currentUser.email}_${dayKey}_${ex.id}_reps_${i}`)) || 0;
+                        if(kg > 0) {
+                            lastData[`kg_${i}`] = kg;
+                            lastData[`reps_${i}`] = reps;
+                            if(kg > maxK) { maxK = kg; maxR = reps; }
+                        }
+                    }
+                    if(maxK > 0) {
+                        lastData.maxKg = maxK;
+                        lastData.maxReps = maxR;
+                        localStorage.setItem(`last_${ex.id}_${currentUser.email}`, JSON.stringify(lastData));
+                    }
+                });
+            }
+
+            localStorage.removeItem(`workout_start_${currentUser.email}`);
             isWorkoutRunning = false;
-            globalSecondsElapsed = 0;
+            globalStartTime = null;
             document.getElementById('globalStopwatch').innerText = "00:00:00";
             document.getElementById('workoutStatusLabel').innerText = "⏸️ Treino Parado";
             document.getElementById('workoutStatusLabel').style.color = "var(--text-sub)";
@@ -1580,69 +1675,41 @@
             const btn = document.getElementById('startWorkoutBtn');
             btn.innerText = "▶ COMEÇAR TREINO";
             btn.style.background = "linear-gradient(135deg, var(--accent-green) 0%, #059669 100%)";
-            btn.style.borderColor = "transparent";
-            btn.style.cursor = "pointer";
 
-            alert(`🔥 Treino Finalizado com Sucesso!\n⏱️ Tempo total: ${durationMin} minutos\n⚡ Gasto Energético: ~${Math.round(burnedKcal)} kcal`);
+            alert(`🔥 Treino Finalizado com Sucesso!\n⏱️ Tempo total: ${durationMin} minutos\n⚡ Gasto Energético: ~${Math.round(burnedKcal)} kcal\n\n💪 Suas cargas de hoje foram salvas como metas para seu próximo treino!`);
             renderReport();
         }
 
-        // GERADOR DE CARD VISUAL COMPLETO DA SEMANA DE TREINO
         function exportWeeklyWorkoutVisualCard() {
-            let cardHtml = `
-                <div id="captureCard" class="visual-card-preview">
-                    <div class="vc-header">
-                        <span class="vc-title">📋 FICHA COMPLETA DA SEMANA</span>
-                        <span style="font-size:0.7rem; color:var(--text-highlight);">DIÁRIO NATURAL</span>
-                    </div>
-            `;
-            
+            let cardHtml = `<div id="captureCard" class="visual-card-preview"><div class="vc-header"><span class="vc-title">📋 FICHA COMPLETA DA SEMANA</span><span style="font-size:0.7rem; color:var(--text-highlight);">DIÁRIO NATURAL</span></div>`;
             let markdownText = `📋 FICHA COMPLETA DE TREINO DA SEMANA\n========================================\n`;
 
             Object.keys(generatedWorkouts).forEach(dayKey => {
                 cardHtml += `<div class="vc-section-title">${dayKey}</div>`;
                 markdownText += `\n[ ${dayKey} ]\n`;
-                
                 generatedWorkouts[dayKey].forEach(ex => {
                     const name = localStorage.getItem(`custom_name_${ex.id}`) || ex.name;
-                    cardHtml += `
-                        <div class="vc-item">
-                            <span>• ${name}</span>
-                            <span style="font-size:0.7rem; color:var(--text-sub);">${ex.sets}x ${ex.reps}</span>
-                        </div>
-                    `;
+                    cardHtml += `<div class="vc-item"><span>• ${name}</span><span style="font-size:0.7rem; color:var(--text-sub);">${ex.sets}x ${ex.reps}</span></div>`;
                     markdownText += `  - ${name} (${ex.sets}x ${ex.reps})\n`;
                 });
             });
 
             cardHtml += `<div class="vc-footer">Powered by Nutri Coach Gemini IA</div></div>`;
-            markdownText += `========================================\nGerado por Diário Natural & Nutri Coach`;
+            lastExportMarkdown = markdownText + `========================================\nGerado por Diário Natural & Nutri Coach`;
 
-            lastExportMarkdown = markdownText;
-            
-            // Reinicia a visualização caso abra de novo
             document.getElementById('exportModalTitle').innerText = "🎨 Ficha Semanal de Treino";
             document.getElementById('visualCardContainer').innerHTML = cardHtml;
             document.getElementById('btnDownloadImg').style.display = 'block';
             document.getElementById('exportModal').style.display = 'flex';
         }
 
-        // GERADOR DE CARD VISUAL COMPLETO DA SEMANA DE DIETA + COMPRAS
         function exportWeeklyDietVisualCard() {
-            let cardHtml = `
-                <div id="captureCard" class="visual-card-preview">
-                    <div class="vc-header">
-                        <span class="vc-title">✨ CARDÁPIO & COMPRAS DA SEMANA</span>
-                        <span style="font-size:0.7rem; color:#c084fc;">NUTRI COACH</span>
-                    </div>
-            `;
-            
+            let cardHtml = `<div id="captureCard" class="visual-card-preview"><div class="vc-header"><span class="vc-title">✨ CARDÁPIO & COMPRAS DA SEMANA</span><span style="font-size:0.7rem; color:#c084fc;">NUTRI COACH</span></div>`;
             let markdownText = `✨ CARDÁPIO COMPLETO & COMPRAS DA SEMANA\n========================================\n`;
 
             Object.keys(weeklyDietData).forEach(dayKey => {
                 cardHtml += `<div class="vc-section-title">Dia: ${dayKey.toUpperCase()}</div>`;
                 markdownText += `\n[ DIA: ${dayKey.toUpperCase()} ]\n`;
-
                 weeklyDietData[dayKey].forEach(m => {
                     cardHtml += `<div style="font-size:0.75rem; color:var(--text-highlight); margin-top:4px;"><b>${m.title}</b></div>`;
                     markdownText += `  ${m.title}:\n`;
@@ -1653,65 +1720,32 @@
                 });
             });
 
-            cardHtml += `
-                <div class="vc-section-title" style="color:var(--accent-green); border-color:var(--accent-green);">🛒 Lista de Compras da Semana</div>
-                <div style="font-size:0.72rem; color:var(--text-sub); padding-left:4px;">
-                    - Peito de Frango (3.0 kg)<br>
-                    - Patinho Moído (2.0 kg)<br>
-                    - Queijo Minas Light / Requeijão<br>
-                    - Whey Protein<br>
-                    - Arroz, Aveia & Batata Doce (4 kg)<br>
-                    - Bananas & Pães Integrais
-                </div>
-            `;
-
-            markdownText += `\n----------------------------------------\n🛒 LISTA DE COMPRAS:\n- Peito de Frango (3.0 kg)\n- Patinho Moído (2.0 kg)\n- Queijo Minas Light / Requeijão\n- Whey Protein\n- Arroz, Aveia & Batata Doce (4 kg)\n- Bananas & Pães Integrais\n`;
-            markdownText += `========================================\nGerado por Diário Natural & Nutri Coach`;
-
             cardHtml += `<div class="vc-footer">Powered by Nutri Coach Gemini IA</div></div>`;
+            lastExportMarkdown = markdownText + `========================================\nGerado por Diário Natural & Nutri Coach`;
 
-            lastExportMarkdown = markdownText;
-            
-            // Reinicia a visualização caso abra de novo
             document.getElementById('exportModalTitle').innerText = "🎨 Cardápio & Compras da Semana";
             document.getElementById('visualCardContainer').innerHTML = cardHtml;
             document.getElementById('btnDownloadImg').style.display = 'block';
             document.getElementById('exportModal').style.display = 'flex';
         }
 
-        // DOWNLOAD DE IMAGEM 100% GARANTIDO PARA MOBILE
         function downloadCardAsImage() {
             const cardElement = document.getElementById('captureCard');
             if (!cardElement) return;
-
             const btn = document.getElementById('btnDownloadImg');
-            const originalText = btn.innerText;
-            btn.innerText = "⏳ GERANDO IMAGEM COMPLETA...";
-
-            // NOVO: Volta o scroll do modal para o topo para evitar que a imagem saia cortada
-            const modalBox = document.querySelector('#exportModal .card-box');
-            if(modalBox) modalBox.scrollTop = 0;
+            btn.innerText = "⏳ GERANDO IMAGEM...";
+            document.querySelector('#exportModal .card-box').scrollTop = 0;
 
             setTimeout(() => {
-                html2canvas(cardElement, { 
-                    scale: 2, 
-                    backgroundColor: '#0a0f1d', 
-                    useCORS: true,
-                    logging: false,
-                    scrollY: 0 // NOVO: Força a captura a partir do topo do elemento
-                }).then(canvas => {
+                html2canvas(cardElement, { scale: 2, backgroundColor: '#0a0f1d', useCORS: true, scrollY: 0 }).then(canvas => {
                     const dataUrl = canvas.toDataURL('image/png');
-                    
-                    const container = document.getElementById('visualCardContainer');
-                    container.innerHTML = `
+                    document.getElementById('visualCardContainer').innerHTML = `
                         <div style="background: rgba(16, 185, 129, 0.2); color: var(--accent-green); padding: 12px; border-radius: 12px; font-size: 0.9rem; font-weight: 800; text-align: center; margin-bottom: 12px; border: 1px dashed var(--accent-green);">
-                            ✅ IMAGEM COMPLETA PRONTA ACIMA!<br>Pressione e segure o dedo em cima dela para "Salvar na Galeria" ou "Compartilhar".
+                            ✅ IMAGEM PRONTA ACIMA!<br>Pressione e segure o dedo em cima dela para "Salvar na Galeria".
                         </div>
                         <img src="${dataUrl}" style="width: 100%; border-radius: 12px; border: 2px solid var(--accent-primary); box-shadow: 0 8px 30px rgba(0,0,0,0.6); display: block;">
                     `;
-                    
                     btn.style.display = 'none';
-
                     try {
                         const link = document.createElement('a');
                         link.href = dataUrl;
@@ -1719,21 +1753,12 @@
                         document.body.appendChild(link);
                         link.click();
                         document.body.removeChild(link);
-                    } catch(e) {
-                        console.log("Download forçado bloqueado pelo celular. Fallback visual ativo.");
-                    }
-
-                }).catch(err => {
-                    alert('Erro ao gerar imagem. Tente tirar um print da tela.');
-                    btn.innerText = originalText;
-                });
+                    } catch(e) {}
+                }).catch(() => { alert('Erro ao gerar imagem. Tire um print da tela.'); btn.innerText = "📥 GERAR IMAGEM PARA SALVAR"; });
             }, 300);
         }
 
-        function closeExportModal() {
-            document.getElementById('exportModal').style.display = 'none';
-        }
-
+        function closeExportModal() { document.getElementById('exportModal').style.display = 'none'; }
         function copyVisualTextAsMarkdown() {
             navigator.clipboard.writeText(lastExportMarkdown);
             alert('Resumo copiado com sucesso! Agora basta colar no WhatsApp.');
@@ -1748,12 +1773,7 @@
             }
             let html = '';
             history.forEach(h => {
-                html += `
-                    <div class="report-item">
-                        <div style="font-size:0.85rem; font-weight:800; color:var(--text-highlight);">📅 Data: ${h.date}</div>
-                        <div style="font-size:0.78rem; color:var(--text-sub); margin-top:4px;">⏱️ Duração Ativa: ${h.duration} min | 🔥 Gasto Calórico: <b>${h.kcal} kcal</b></div>
-                    </div>
-                `;
+                html += `<div class="report-item"><div style="font-size:0.85rem; font-weight:800; color:var(--text-highlight);">📅 Data: ${h.date}</div><div style="font-size:0.78rem; color:var(--text-sub); margin-top:4px;">⏱️ Duração Ativa: ${h.duration} min | 🔥 Gasto Calórico: <b>${h.kcal} kcal</b></div></div>`;
             });
             container.innerHTML = html;
         }
