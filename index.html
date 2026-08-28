@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Diário de Cargas Natural & Nutri Coach</title>
+    <!-- MANIFEST PWA INLINE (FUNCIONAMENTO OFFLINE COM APENAS 1 ARQUIVO) -->
+    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22Di%C3%A1rio%20de%20Cargas%20Natural%22%2C%22short_name%22%3A%22Di%C3%A1rio%20Natural%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230a0f1d%22%2C%22theme_color%22%3A%22%233b82f6%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fimages.unsplash.com%2Fphoto-1534438327276-14e5300c3a48%3Fauto%3Dformat%26fit%3Dcrop%26q%3D80%26w%3D192%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%2C%7B%22src%22%3A%22https%3A%2F%2Fimages.unsplash.com%2Fphoto-1534438327276-14e5300c3a48%3Fauto%3Dformat%26fit%3Dcrop%26q%3D80%26w%3D512%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
+    <meta name="theme-color" content="#0a0f1d">
     <!-- BIBLIOTECA PARA GERAR DOWNLOAD DA IMAGEM REAL -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
@@ -664,8 +667,8 @@
             </div>
 
             <div style="font-size: 0.85rem; line-height: 1.6; color: var(--text-sub);">
-                <b style="color: var(--text-title); display: block; margin-top: 4px;">📱 Tela de Bloqueio & Notificações Ativas:</b>
-                Com o fluxo de mídia em segundo plano, o cronômetro, o tempo de treino e os controlos aparecem diretamente na tela de bloqueio e na central de notificações do telemóvel.<br><br>
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">📱 Tela de Bloqueio & Modo Offline:</b>
+                Com suporte a PWA e manifesto embutido, o app funciona perfeitamente sem internet na academia. O fluxo de mídia mantém o cronômetro e os controlos na tela de bloqueio.<br><br>
 
                 <b style="color: var(--text-title); display: block; margin-top: 4px;">🎨 Cores Dinâmicas por Objetivo & Temas:</b>
                 O app ajusta automaticamente a identidade visual com base na sua escolha de objetivo (Verde para Hipertrofia, Azul para Força e Laranja para Emagrecimento). O botão 🎨 TEMA no topo permite alternar manualmente.<br><br>
@@ -1344,7 +1347,7 @@
                     `;
                 }
 
-                let moveButtons = isWarmupPhase ? '' : `
+                let moveBenefits = isWarmupPhase ? '' : `
                     <div style="display:flex; gap: 4px;">
                         ${index > 0 ? `<button class="move-btn" onclick="moveExercise('${dayKey}', ${index}, -1)">▲ Subir</button>` : ''}
                         ${index < exercisesToRender.length - 1 ? `<button class="move-btn" onclick="moveExercise('${dayKey}', ${index}, 1)">▼ Descer</button>` : ''}
@@ -1365,7 +1368,7 @@
                                 </div>
                             </div>
                             <div style="display:flex; align-items:center; gap:6px;">
-                                ${moveButtons}
+                                ${moveBenefits}
                                 ${actionDelBtn}
                             </div>
                         </div>
