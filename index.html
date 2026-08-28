@@ -664,8 +664,8 @@
             </div>
 
             <div style="font-size: 0.85rem; line-height: 1.6; color: var(--text-sub);">
-                <b style="color: var(--text-title); display: block; margin-top: 4px;">📱 Tela de Bloqueio (Media Session):</b>
-                Quando iniciar o treino, a aplicação assume uma sessão de multimédia integrada ao sistema. Assim, o cronômetro, tempo de treino e controlos aparecem diretamente na tela de bloqueio e na central de notificações do telemóvel!<br><br>
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">📱 Tela de Bloqueio & Notificações Ativas:</b>
+                Com o fluxo de mídia em segundo plano, o cronômetro, o tempo de treino e os controlos aparecem diretamente na tela de bloqueio e na central de notificações do telemóvel.<br><br>
 
                 <b style="color: var(--text-title); display: block; margin-top: 4px;">🎨 Cores Dinâmicas por Objetivo & Temas:</b>
                 O app ajusta automaticamente a identidade visual com base na sua escolha de objetivo (Verde para Hipertrofia, Azul para Força e Laranja para Emagrecimento). O botão 🎨 TEMA no topo permite alternar manualmente.<br><br>
@@ -730,6 +730,24 @@
         let isFocusModeActive = false;
         let isWidgetModeActive = false;
         let activeExForSwap = null;
+
+        // Áudio silencioso para forçar a Media Session na tela de bloqueio
+        let silentAudio = null;
+
+        function initSilentAudioStream() {
+            if (!silentAudio) {
+                silentAudio = new Audio("data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=");
+                silentAudio.loop = true;
+            }
+            silentAudio.play().catch(e => console.log("Áudio silencioso aguardando interação:", e));
+        }
+
+        function stopSilentAudioStream() {
+            if (silentAudio) {
+                silentAudio.pause();
+                silentAudio.currentTime = 0;
+            }
+        }
 
         const themes = {
             blue: { primary: '#3b82f6', glow: 'rgba(59, 130, 246, 0.25)', highlight: '#38bdf8' },
@@ -798,7 +816,6 @@
             } catch (e) {}
         }
 
-        // INTEGRAÇÃO DA MEDIA SESSION PARA TELA DE BLOQUEIO
         function updateMediaSessionMetadata(titleText, artistText, albumText) {
             if ('mediaSession' in navigator) {
                 try {
@@ -812,14 +829,9 @@
                         ]
                     });
 
-                    navigator.mediaSession.setActionHandler('play', function() {
-                        // Ação ao retomar o treino ou timer
-                    });
-                    navigator.mediaSession.setActionHandler('pause', function() {
-                        // Ação ao pausar
-                    });
+                    navigator.mediaSession.setActionHandler('play', function() {});
+                    navigator.mediaSession.setActionHandler('pause', function() {});
                     navigator.mediaSession.setActionHandler('nexttrack', function() {
-                        // Ação ao clicar em avançar na tela de bloqueio (+30s de descanso)
                         addTimer(30);
                     });
                 } catch(e) {}
@@ -928,6 +940,7 @@
             btn.style.borderColor = "var(--accent-green)";
             btn.style.cursor = "default";
 
+            initSilentAudioStream();
             updateMediaSessionMetadata("Treino Ativo", "Ficha: " + document.getElementById('daySelect').value, "Tempo: 00:00");
             runGlobalStopwatch();
 
@@ -985,7 +998,6 @@
                 if(el) el.innerText = timeFormatted;
                 if(widgetEl) widgetEl.innerText = timeFormatted;
 
-                // Atualiza o tempo na tela de bloqueio via Media Session periodicamente
                 updateMediaSessionMetadata("Treino Ativo", "Ficha: " + document.getElementById('daySelect').value, `Tempo Corrido: ${timeFormatted}`);
             }, 1000);
         }
@@ -1001,6 +1013,7 @@
                 btn.innerText = "⚡ TREINO ATIVO...";
                 btn.style.background = "rgba(16, 185, 129, 0.3)";
                 btn.style.borderColor = "var(--accent-green)";
+                initSilentAudioStream();
                 updateMediaSessionMetadata("Treino Ativo", "Ficha em andamento", "Sessão Ativa");
                 runGlobalStopwatch();
 
@@ -1822,7 +1835,6 @@
                 const widgetTimer = document.getElementById('widgetTimerDisplay');
                 if(widgetTimer) widgetTimer.innerText = `${m}:${s}`;
 
-                // Atualiza a mídia na tela de bloqueio com o tempo de descanso atual
                 updateMediaSessionMetadata("⏰ Descanso Ativo", `Falta: ${m}:${s}`, "Modo Descanso Academia");
 
                 if (timeLeftSec <= 0) {
@@ -1891,6 +1903,7 @@
             localStorage.removeItem(`workout_start_${currentUser.email}`);
             isWorkoutRunning = false;
             globalStartTime = null;
+            stopSilentAudioStream();
             if ('mediaSession' in navigator) navigator.mediaSession.metadata = null;
 
             document.getElementById('globalStopwatch').innerText = "00:00:00";
