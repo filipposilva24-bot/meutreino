@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Diário de Cargas Natural & Nutri Coach</title>
     <!-- MANIFEST PWA COM LOGO PROFISSIONAL INLINE -->
-    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22Di%C3%A1rio%20de%20Cargas%20Natural%22%2C%22short_name%22%3A%22Di%C3%A1rio%20Natural%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230a0f1d%22%2C%22theme_color%22%3A%22%233b82f6%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%3Butf8%2C%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27512%27%20height%3D%27512%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27%233b82f6%27%20stroke-width%3D%272.2%27%3E%3Cpath%20d%3D%27M12%202a10%2010%200%201%200%2010%2010A10%2010%200%200%200%2012%202zm1%2015h-2v-2h2zm0-4h-2V7h2z%27%2F%3E%3C%2Fsvg%3E%22%2C%22sizes%22%3A%22192x192%20512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
+    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22Di%C3%A1rio%20de%20Cargas%20Natural%22%2C%22short_name%22%3A%22Di%C3%A1rio%20Natural%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230a0f1d%22%2C%22theme_color%22%3A%22%233b82f6%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Fxml%3Butf8%2C%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27512%27%20height%3D%27512%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27%233b82f6%27%20stroke-width%3D%272.2%27%3E%3Cpath%20d%3D%27M12%202a10%2010%200%201%200%2010%2010A10%2010%200%200%200%2012%202zm1%2015h-2v-2h2zm0-4h-2V7h2z%27%2F%3E%3C%2Fsvg%3E%22%2C%22sizes%22%3A%22192x192%20512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
     <meta name="theme-color" content="#0a0f1d">
     <!-- BIBLIOTECA PARA GERAR DOWNLOAD DA IMAGEM REAL -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -217,6 +217,8 @@
                 <button class="theme-btn" onclick="cycleTheme()" title="Trocar Tema">🎨 TEMA</button>
                 <button class="focus-btn" id="focusModeBtn" onclick="toggleFocusMode()" title="Modo Foco">🎯 FOCO</button>
                 <button class="help-btn" onclick="toggleHelpModal()">❓</button>
+                <!-- Botão de Solicitação de Permissão Push do Firebase -->
+                <button class="brand-badge" id="badgePushBtn" onclick="requestPushPermission()" style="background: rgba(59, 130, 246, 0.2); color: var(--text-highlight); border: 1px solid rgba(59, 130, 246, 0.4); margin-left:2px;">🔔 PUSH</button>
                 <div class="brand-badge" id="badgeStatus" onclick="handleBadgeClick()">CONECTAR</div>
             </div>
         </header>
@@ -742,6 +744,43 @@
         </button>
     </nav>
 
+    <!-- FIREBASE SDK & LÓGICA DE PERMISSÃO PUSH -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+        import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-messaging.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA_oYOr2t7LoRqOKuPLuQxWfd_4lDi3Jec",
+            authDomain: "diario-natural-push.firebaseapp.com",
+            projectId: "diario-natural-push",
+            storageBucket: "diario-natural-push.firebasestorage.app",
+            messagingSenderId: "629001525446",
+            appId: "1:629001525446:web:24fe67c300957c36979fc7",
+            measurementId: "G-7MDYWKZLYT"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const messaging = getMessaging(app);
+
+        window.requestPushPermission = async function() {
+            try {
+                const permission = await Notification.requestPermission();
+                if (permission === 'granted') {
+                    document.getElementById('badgePushBtn').innerText = "🔔 PUSH ATIVO";
+                    const currentToken = await getToken(messaging, { vapidKey: "SUA_CHAVE_VAPID_PUBLICA_AQUI" });
+                    if (currentToken) {
+                        console.log("Token FCM obtido:", currentToken);
+                        alert("🔔 Notificações Push configuradas com sucesso!");
+                    }
+                } else {
+                    alert("Permissão de notificação negada pelo navegador.");
+                }
+            } catch (err) {
+                console.error("Erro ao solicitar permissão de push:", err);
+            }
+        }
+    </script>
+
     <script>
         let currentUser = JSON.parse(localStorage.getItem('saas_user')) || null;
         let userAnswers = { goal: 'hipertrofia', days: '5', exp: 'avancado', limit: 'nenhuma' };
@@ -963,7 +1002,7 @@
             
             currentWarmups = [];
             currentWarmups.push({
-                id: 'warmup_cardio', name: 'Esteira, Bike ou Elíptico', group: 'Core', sets: 1, reps: '5-10 min', options: [], tutorial: '<b>Aquecimento Geral:</b> Mantenha um ritmo leve a moderado apenas para elevar a temperatura corporal.'
+                id: 'warmup_cardio', name: 'Esteira, Bike ou Elíptico', group: 'Core', sets: 1, reps: '5-10 min', options: [], tutorial: '<b>Aquecimento Geral:</b> Mantenha an ritmo leve a moderado apenas para elevar a temperatura corporal.'
             });
             
             if (groups.includes('Peito') || groups.includes('Costas') || groups.includes('Ombros')) {
@@ -1100,13 +1139,13 @@
             const statusTxt = document.getElementById('energyStatusTxt');
             if (level === '100') {
                 statusTxt.innerText = "100% Pilhado";
-                applyThemeByGoal(userAnswers.goal); // Retorna ao tema padrão do objetivo
+                applyThemeByGoal(userAnswers.goal);
             } else if (level === 'mid') {
                 statusTxt.innerText = "⚠️ Volume Reduzido";
-                setTheme('orange'); // Altera o tema global do app para Laranja de Alerta
+                setTheme('orange');
             } else if (level === 'low') {
                 statusTxt.innerText = "🔴 Modo Economia (-1 Série)";
-                setTheme('red'); // Altera o tema global do app para Vermelho de Proteção
+                setTheme('red');
             }
             renderActiveWorkout();
         }
@@ -1530,7 +1569,6 @@
                 const savedName = localStorage.getItem(`custom_name_${ex.id}`) || ex.name;
                 const lastData = JSON.parse(localStorage.getItem(`last_${ex.id}_${currentUser.email}`)) || {};
                 let maxK = lastData.maxKg || 0;
-                // Exibe o exercício com 0kg caso seja novo usuário ou tenha sofrido hard reset
                 chartData.push({ label: savedName.split(' ')[0], val: maxK });
             });
 
@@ -1622,7 +1660,7 @@
                 if (generatedWorkouts[dayKey]) {
                     generatedWorkouts[dayKey].forEach(ex => {
                         localStorage.removeItem(`muscle_trained_${currentUser.email}_${ex.group}`);
-                        localStorage.removeItem(`last_${ex.id}_${currentUser.email}`); // Reseta o histórico de carga da ficha para o gráfico zerar
+                        localStorage.removeItem(`last_${ex.id}_${currentUser.email}`);
                         for(let i=1; i<=10; i++) {
                             localStorage.removeItem(`live_${currentUser.email}_${dayKey}_${ex.id}_kg_${i}`);
                             localStorage.removeItem(`live_${currentUser.email}_${dayKey}_${ex.id}_reps_${i}`);
@@ -2046,6 +2084,15 @@
         function renderComparison() { document.getElementById('compareContainer').innerHTML = `<div class="empty-msg">Registre mais sessões para comparar.</div>`; }
         function saveBodyMeasures() { alert('Medidas salvas!'); }
         function renderBodyHistory() { document.getElementById('bodyHistoryContainer').innerHTML = `<div class="empty-msg">Nenhum registro corporal ainda.</div>`; }
+
+        // Registro do Service Worker original
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW registrado!', reg))
+                    .catch(err => console.log('Erro SW:', err));
+            });
+        }
 
         window.onload = () => { if (currentUser) startFlowAfterAuth(); };
     </script>
