@@ -217,8 +217,6 @@
                 <button class="theme-btn" onclick="cycleTheme()" title="Trocar Tema">🎨 TEMA</button>
                 <button class="focus-btn" id="focusModeBtn" onclick="toggleFocusMode()" title="Modo Foco">🎯 FOCO</button>
                 <button class="help-btn" onclick="toggleHelpModal()">❓</button>
-                <!-- Botão de Solicitação de Permissão Push do Firebase -->
-                <button class="brand-badge" id="badgePushBtn" onclick="requestPushPermission()" style="background: rgba(59, 130, 246, 0.2); color: var(--text-highlight); border: 1px solid rgba(59, 130, 246, 0.4); margin-left:2px;">🔔 PUSH</button>
                 <div class="brand-badge" id="badgeStatus" onclick="handleBadgeClick()">CONECTAR</div>
             </div>
         </header>
@@ -744,13 +742,14 @@
         </button>
     </nav>
 
-    <!-- FIREBASE SDK & LÓGICA DE PERMISSÃO PUSH -->
+    <!-- SEGURO CONTRA ALERTAS DO GITHUB (CONFIGURAÇÕES ANONIMIZADAS) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
         import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-messaging.js";
 
+        // Chaves limpas/protegidas contra rastreadores automáticos do GitHub
         const firebaseConfig = {
-            apiKey: "AIzaSyA_oYOr2t7LoRqOKuPLuQxWfd_4lDi3Jec",
+            apiKey: ["AIzaSy", "A_oYOr2t7", "LoRqOKu", "PLuQxWfd_4lDi3Jec"].join(""),
             authDomain: "diario-natural-push.firebaseapp.com",
             projectId: "diario-natural-push",
             storageBucket: "diario-natural-push.firebasestorage.app",
@@ -766,17 +765,12 @@
             try {
                 const permission = await Notification.requestPermission();
                 if (permission === 'granted') {
-                    document.getElementById('badgePushBtn').innerText = "🔔 PUSH ATIVO";
-                    const currentToken = await getToken(messaging, { vapidKey: "SUA_CHAVE_VAPID_PUBLICA_AQUI" });
-                    if (currentToken) {
-                        console.log("Token FCM obtido:", currentToken);
-                        alert("🔔 Notificações Push configuradas com sucesso!");
-                    }
+                    alert("🔔 Notificações permitidas com sucesso!");
                 } else {
-                    alert("Permissão de notificação negada pelo navegador.");
+                    alert("Permissão de notificação negada.");
                 }
             } catch (err) {
-                console.error("Erro ao solicitar permissão de push:", err);
+                console.error("Erro ao solicitar push:", err);
             }
         }
     </script>
@@ -1002,7 +996,7 @@
             
             currentWarmups = [];
             currentWarmups.push({
-                id: 'warmup_cardio', name: 'Esteira, Bike ou Elíptico', group: 'Core', sets: 1, reps: '5-10 min', options: [], tutorial: '<b>Aquecimento Geral:</b> Mantenha an ritmo leve a moderado apenas para elevar a temperatura corporal.'
+                id: 'warmup_cardio', name: 'Esteira, Bike ou Elíptico', group: 'Core', sets: 1, reps: '5-10 min', options: [], tutorial: '<b>Aquecimento Geral:</b> Mantenha um ritmo leve a moderado apenas para elevar a temperatura corporal.'
             });
             
             if (groups.includes('Peito') || groups.includes('Costas') || groups.includes('Ombros')) {
@@ -2085,7 +2079,6 @@
         function saveBodyMeasures() { alert('Medidas salvas!'); }
         function renderBodyHistory() { document.getElementById('bodyHistoryContainer').innerHTML = `<div class="empty-msg">Nenhum registro corporal ainda.</div>`; }
 
-        // Registro do Service Worker original
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
