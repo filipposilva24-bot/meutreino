@@ -273,7 +273,7 @@
         <div id="authView">
             <div class="card-box">
                 <div class="question-title">Acesse sua Conta</div>
-                <div class="question-sub">Guarde seu histórico de cargas, dieta e medidas.</div>
+                <div class="question-sub">Guarde seu histórico de cargas, dieta e medidas com segurança.</div>
                 <input type="email" id="authEmail" class="input-field" placeholder="Seu e-mail">
                 <input type="password" id="authPass" class="input-field" placeholder="Sua senha">
                 <button class="btn-primary" onclick="handleAuth()">ENTRAR / CADASTRAR</button>
@@ -505,8 +505,11 @@
             </div>
 
             <div class="chart-card">
-                <div class="exercise-title" style="margin-bottom:4px; color: var(--text-highlight);">📈 Gráfico de Progressão de Carga</div>
-                <div class="question-sub" style="margin-bottom:10px;">Histórico dinâmico de suas cargas máximas.</div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <div class="exercise-title" style="color: var(--text-highlight);">📈 Progressão de Carga por Ficha</div>
+                    <select id="reportDaySelect" class="swap-select" style="width: 140px; margin: 0; padding: 6px 10px; font-size: 0.75rem;" onchange="renderWeightChart()"></select>
+                </div>
+                <div class="question-sub" style="margin-bottom:10px;">Histórico dinâmico das cargas dos exercícios da ficha selecionada.</div>
                 <div class="chart-bar-wrapper" id="chartBarWrapper"></div>
             </div>
 
@@ -693,7 +696,7 @@
 
             <div style="font-size: 0.85rem; line-height: 1.6; color: var(--text-sub);">
                 <b style="color: var(--text-title); display: block; margin-top: 4px;">📱 PWA, Notificações & Modo Offline:</b>
-                O app funciona 100% offline na academia. As notificações de descanso agora disparam em segundo plano (mesmo com o app minimizado ou fora da aba) e o som de alarme é garantido.<br><br>
+                O app funciona 100% offline na academia. O cronômetro de descanso possui verificação por timestamp real, garantindo que o alerta sonoro e a notificação disparem ao retornar ao app ou expirar o tempo.<br><br>
 
                 <b style="color: var(--text-title); display: block; margin-top: 4px;">🎵 Integração com Músicas (Spotify):</b>
                 O cronômetro e o descanso não interferem mais no seu tocador de música, permitindo ouvir suas playlists no Spotify sem pausas indesejadas.<br><br>
@@ -704,8 +707,8 @@
                 <b style="color: var(--text-title); display: block; margin-top: 4px;">🍏 Nutri Coach & Inteligência Artificial:</b>
                 Use a câmera para fotografar pratos ou escanear códigos de barras (exibe os macros em uma janela dedicada com botão X). No chat, você pode pedir substituições diretas no seu cardápio semanal (ex: *"substituir ovo por frango"*).<br><br>
 
-                <b style="color: var(--text-title); display: block; margin-top: 4px;">🔥 Frequência, Streak & Gráficos:</b>
-                Na aba <b>Relatório</b>, o calendário exibe seus dias de treino concluídos sincronizados e o gráfico de progressão exibe seu histórico de cargas real.<br><br>
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">🔥 Frequência, Streak & Gráficos por Ficha:</b>
+                Na aba <b>Relatório</b>, selecione a ficha desejada no menu superior do gráfico para visualizar a progressão de carga específica daquele treino.<br><br>
 
                 <b style="color: var(--text-title); display: block; margin-top: 4px;">🗑️ Hard Reset do Dia (Zerar Treino):</b>
                 O botão de limpar apaga todas as cargas preenchidas, marcações de falha (`F`), drop-sets (`D`), checks e limpa o Raio-X corporal daquela data.<br><br>
@@ -809,7 +812,6 @@
 
         function playBeepSound() {
             try {
-                // Áudio sintetizado robusto codificado em Base64 para garantir execução garantida sem bloqueio de autoplay
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 if (audioCtx.state === 'suspended') {
                     audioCtx.resume();
@@ -957,7 +959,7 @@
             
             currentWarmups = [];
             currentWarmups.push({
-                id: 'warmup_cardio', name: 'Esteira, Bike ou Elíptico', group: 'Core', sets: 1, reps: '5-10 min', options: [], tutorial: '<b>Aquecimento Geral:</b> Mantenha um ritmo leve a moderado apenas para elevar a temperatura corporal.'
+                id: 'warmup_cardio', name: 'Esteira, Bike ou Elíptico', group: 'Core', sets: 1, reps: '5-10 min', options: [], tutorial: '<b>Aquecimento Geral:</b> Mantenha un ritmo leve a moderado apenas para elevar a temperatura corporal.'
             });
             
             if (groups.includes('Peito') || groups.includes('Costas') || groups.includes('Ombros')) {
@@ -1227,11 +1229,16 @@
         function populateSelects() {
             const daySel = document.getElementById('daySelect');
             const compSel = document.getElementById('compareDaySelect');
+            const reportDaySel = document.getElementById('reportDaySelect');
+            
             daySel.innerHTML = '';
             compSel.innerHTML = '';
+            reportDaySel.innerHTML = '';
+
             Object.keys(generatedWorkouts).forEach(d => {
                 daySel.innerHTML += `<option value="${d}">${d}</option>`;
                 compSel.innerHTML += `<option value="${d}">${d}</option>`;
+                reportDaySel.innerHTML += `<option value="${d}">${d}</option>`;
             });
         }
 
@@ -1500,19 +1507,26 @@
         function renderWeightChart() {
             const container = document.getElementById('chartBarWrapper');
             if(!container) return;
-            const history = JSON.parse(localStorage.getItem(`history_${currentUser.email}`)) || [];
+            const reportDaySel = document.getElementById('reportDaySelect');
+            const selectedDay = reportDaySel ? reportDaySel.value : Object.keys(generatedWorkouts)[0];
             
-            let chartData = history.slice(-6).map((h, index) => ({
-                label: h.date.split('/')[0] + '/' + h.date.split('/')[1],
-                val: h.maxWeight || (40 + (index * 2.5))
-            }));
+            const exercisesInDay = generatedWorkouts[selectedDay] || [];
+            let chartData = [];
+
+            exercisesInDay.forEach(ex => {
+                const savedName = localStorage.getItem(`custom_name_${ex.id}`) || ex.name;
+                const lastData = JSON.parse(localStorage.getItem(`last_${ex.id}_${currentUser.email}`)) || {};
+                let maxK = lastData.maxKg || 0;
+                if(maxK > 0) {
+                    chartData.push({ label: savedName.split(' ')[0], val: maxK });
+                }
+            });
 
             if(chartData.length === 0) {
                 chartData = [
-                    { label: 'Treino 1', val: 35 },
-                    { label: 'Treino 2', val: 40 },
-                    { label: 'Treino 3', val: 42.5 },
-                    { label: 'Atual', val: 45 }
+                    { label: 'Ex 1', val: 35 },
+                    { label: 'Ex 2', val: 40 },
+                    { label: 'Ex 3', val: 45 }
                 ];
             }
 
@@ -1525,7 +1539,7 @@
                     <div class="chart-col">
                         <span style="font-size:0.6rem; color:var(--text-highlight); margin-bottom:4px; font-weight:700;">${d.val}k</span>
                         <div class="chart-bar" style="height: ${heightPct}%;"></div>
-                        <span class="chart-label">${d.label}</span>
+                        <span class="chart-label" title="${d.label}">${d.label}</span>
                     </div>
                 `;
             });
