@@ -695,23 +695,20 @@
             </div>
 
             <div style="font-size: 0.85rem; line-height: 1.6; color: var(--text-sub);">
-                <b style="color: var(--text-title); display: block; margin-top: 4px;">📱 PWA, Notificações & Modo Offline:</b>
-                O app funciona 100% offline na academia. O cronômetro de descanso possui verificação por timestamp real, garantindo que o alerta sonoro e a notificação disparem ao retornar ao app ou expirar o tempo.<br><br>
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">📱 PWA, Notificações em Background & Modo Offline:</b>
+                O app funciona 100% offline na academia. Para receber notificações push de descanso ao sair do app, utilize o app instalado na tela de início (PWA standalone).<br><br>
 
-                <b style="color: var(--text-title); display: block; margin-top: 4px;">🎵 Integração com Músicas (Spotify):</b>
-                O cronômetro e o descanso não interferem mais no seu tocador de música, permitindo ouvir suas playlists no Spotify sem pausas indesejadas.<br><br>
-
-                <b style="color: var(--text-title); display: block; margin-top: 4px;">🎨 Cores Dinâmicas & Temas:</b>
-                O app ajusta automaticamente a identidade visual com base no seu objetivo (Verde para Hipertrofia, Azul para Força e Laranja para Emagrecimento). O botão 🎨 TEMA no topo permite alternar manualmente.<br><br>
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">🔋 Condição Biológica Dinâmica:</b>
+                Alterar a condição biológica no card de treino agora ajusta automaticamente o tema visual de todo o aplicativo (Normal, Cansado/Alerta ou Economia).<br><br>
 
                 <b style="color: var(--text-title); display: block; margin-top: 4px;">🍏 Nutri Coach & Inteligência Artificial:</b>
-                Use a câmera para fotografar pratos ou escanear códigos de barras (exibe os macros em uma janela dedicada com botão X). No chat, você pode pedir substituições diretas no seu cardápio semanal (ex: *"substituir ovo por frango"*).<br><br>
+                Use a câmera para fotografar pratos ou escanear códigos de barras (exibe os macros em uma janela dedicada com botão X). No chat, você pode pedir substituições diretas no seu cardápio semanal.<br><br>
 
                 <b style="color: var(--text-title); display: block; margin-top: 4px;">🔥 Frequência, Streak & Gráficos por Ficha:</b>
-                Na aba <b>Relatório</b>, selecione a ficha desejada no menu superior do gráfico para visualizar a progressão de carga específica daquele treino.<br><br>
+                Na aba <b>Relatório</b>, selecione a ficha desejada no menu superior do gráfico para visualizar a progressão de carga específica daquele treino (inicia zerado para novos usuários com os exercícios da ficha).<br><br>
 
                 <b style="color: var(--text-title); display: block; margin-top: 4px;">🗑️ Hard Reset do Dia (Zerar Treino):</b>
-                O botão de limpar apaga todas as cargas preenchidas, marcações de falha (`F`), drop-sets (`D`), checks e limpa o Raio-X corporal daquela data.<br><br>
+                O botão de limpar apaga todas as cargas preenchidas, marcações de falha, drop-sets, checks, histórico de carga do dia e reseta o gráfico da ficha correspondente.<br><br>
 
                 <hr style="border: 0; border-top: 1px solid var(--border-card); margin: 16px 0;">
                 <a href="https://wa.me/5511982818590?text=Olá!%20Estou%20usando%20o%20Diário%20Natural%20e%20preciso%20de%20ajuda." target="_blank" class="whatsapp-help-btn">
@@ -769,7 +766,8 @@
             blue: { primary: '#3b82f6', glow: 'rgba(59, 130, 246, 0.25)', highlight: '#38bdf8' },
             green: { primary: '#10b981', glow: 'rgba(16, 185, 129, 0.25)', highlight: '#34d399' },
             orange: { primary: '#f59e0b', glow: 'rgba(245, 158, 11, 0.25)', highlight: '#fbbf24' },
-            purple: { primary: '#8b5cf6', glow: 'rgba(139, 92, 246, 0.25)', highlight: '#c084fc' }
+            purple: { primary: '#8b5cf6', glow: 'rgba(139, 92, 246, 0.25)', highlight: '#c084fc' },
+            red: { primary: '#ef4444', glow: 'rgba(239, 68, 68, 0.25)', highlight: '#f87171' }
         };
 
         function setTheme(themeName) {
@@ -805,7 +803,13 @@
         function sendPushNotification(title, body) {
             if ("Notification" in window && Notification.permission === "granted") {
                 try {
-                    new Notification(title, { body: body, icon: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24" fill="%233b82f6"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-2h2zm0-4h-2V7h2z"/></svg>' });
+                    if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+                        navigator.serviceWorker.ready.then(reg => {
+                            reg.showNotification(title, { body: body, icon: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24" fill="%233b82f6"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-2h2zm0-4h-2V7h2z"/></svg>' });
+                        });
+                    } else {
+                        new Notification(title, { body: body, icon: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24" fill="%233b82f6"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-2h2zm0-4h-2V7h2z"/></svg>' });
+                    }
                 } catch(e) {}
             }
         }
@@ -821,16 +825,16 @@
                 
                 osc.type = 'sine';
                 osc.frequency.setValueAtTime(880, audioCtx.currentTime);
-                gainNode.gain.setValueAtTime(0.4, audioCtx.currentTime);
+                gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
                 
                 osc.connect(gainNode);
                 gainNode.connect(audioCtx.destination);
                 
                 osc.start();
-                osc.stop(audioCtx.currentTime + 0.5);
+                osc.stop(audioCtx.currentTime + 0.6);
 
                 if (navigator.vibrate) {
-                    navigator.vibrate([300, 150, 300, 150, 400]);
+                    navigator.vibrate([400, 200, 400, 200, 500]);
                 }
             } catch (e) {}
         }
@@ -959,7 +963,7 @@
             
             currentWarmups = [];
             currentWarmups.push({
-                id: 'warmup_cardio', name: 'Esteira, Bike ou Elíptico', group: 'Core', sets: 1, reps: '5-10 min', options: [], tutorial: '<b>Aquecimento Geral:</b> Mantenha un ritmo leve a moderado apenas para elevar a temperatura corporal.'
+                id: 'warmup_cardio', name: 'Esteira, Bike ou Elíptico', group: 'Core', sets: 1, reps: '5-10 min', options: [], tutorial: '<b>Aquecimento Geral:</b> Mantenha um ritmo leve a moderado apenas para elevar a temperatura corporal.'
             });
             
             if (groups.includes('Peito') || groups.includes('Costas') || groups.includes('Ombros')) {
@@ -1092,10 +1096,18 @@
             document.getElementById('enBtn100').className = 'energy-chip' + (level === '100' ? ' active-100' : '');
             document.getElementById('enBtnMid').className = 'energy-chip' + (level === 'mid' ? ' active-mid' : '');
             document.getElementById('enBtnLow').className = 'energy-chip' + (level === 'low' ? ' active-low' : '');
+            
             const statusTxt = document.getElementById('energyStatusTxt');
-            if (level === '100') statusTxt.innerText = "100% Pilhado";
-            if (level === 'mid') statusTxt.innerText = "⚠️ Volume Reduzido";
-            if (level === 'low') statusTxt.innerText = "🔴 Modo Economia (-1 Série)";
+            if (level === '100') {
+                statusTxt.innerText = "100% Pilhado";
+                applyThemeByGoal(userAnswers.goal); // Retorna ao tema padrão do objetivo
+            } else if (level === 'mid') {
+                statusTxt.innerText = "⚠️ Volume Reduzido";
+                setTheme('orange'); // Altera o tema global do app para Laranja de Alerta
+            } else if (level === 'low') {
+                statusTxt.innerText = "🔴 Modo Economia (-1 Série)";
+                setTheme('red'); // Altera o tema global do app para Vermelho de Proteção
+            }
             renderActiveWorkout();
         }
 
@@ -1132,6 +1144,7 @@
             document.getElementById('badgeStatus').innerText = currentUser.email.split('@')[0].toUpperCase();
             
             const savedGoal = localStorage.getItem(`user_goal_${currentUser.email}`) || 'hipertrofia';
+            userAnswers.goal = savedGoal;
             applyThemeByGoal(savedGoal);
 
             const savedWorkout = localStorage.getItem(`workout_${currentUser.email}`);
@@ -1517,16 +1530,15 @@
                 const savedName = localStorage.getItem(`custom_name_${ex.id}`) || ex.name;
                 const lastData = JSON.parse(localStorage.getItem(`last_${ex.id}_${currentUser.email}`)) || {};
                 let maxK = lastData.maxKg || 0;
-                if(maxK > 0) {
-                    chartData.push({ label: savedName.split(' ')[0], val: maxK });
-                }
+                // Exibe o exercício com 0kg caso seja novo usuário ou tenha sofrido hard reset
+                chartData.push({ label: savedName.split(' ')[0], val: maxK });
             });
 
             if(chartData.length === 0) {
                 chartData = [
-                    { label: 'Ex 1', val: 35 },
-                    { label: 'Ex 2', val: 40 },
-                    { label: 'Ex 3', val: 45 }
+                    { label: 'Ex 1', val: 0 },
+                    { label: 'Ex 2', val: 0 },
+                    { label: 'Ex 3', val: 0 }
                 ];
             }
 
@@ -1534,7 +1546,7 @@
             let html = '';
 
             chartData.forEach(d => {
-                const heightPct = Math.max(15, Math.round((d.val / maxVal) * 100));
+                const heightPct = Math.max(8, Math.round((d.val / maxVal) * 100));
                 html += `
                     <div class="chart-col">
                         <span style="font-size:0.6rem; color:var(--text-highlight); margin-bottom:4px; font-weight:700;">${d.val}k</span>
@@ -1605,11 +1617,12 @@
             const dayKey = document.getElementById('daySelect').value;
             const todayDateStr = new Date().toLocaleDateString('pt-BR');
 
-            if (confirm(`⚠️ HARD RESET: Deseja apagar TUDO do treino de ${dayKey} referente a hoje (${todayDateStr})?\n\nIsso removerá:\n- Cargas, repetições, falhas (F) e drop-sets (D)\n- Marcações de check (✓) e timer de descanso ativo\n- Histórico de calorias e treinos do dia na aba Relatório\n- Status de fadiga do Raio-X corporal\n- Presença no Calendário (Streak) e Gráfico`)) {
+            if (confirm(`⚠️ HARD RESET: Deseja apagar TUDO do treino de ${dayKey} referente a hoje (${todayDateStr})?\n\nIsso removerá:\n- Cargas, repetições, falhas (F) e drop-sets (D)\n- Marcações de check (✓) e timer de descanso ativo\n- Histórico de cargas e metas da ficha no gráfico\n- Status de fadiga do Raio-X corporal`)) {
                 
                 if (generatedWorkouts[dayKey]) {
                     generatedWorkouts[dayKey].forEach(ex => {
                         localStorage.removeItem(`muscle_trained_${currentUser.email}_${ex.group}`);
+                        localStorage.removeItem(`last_${ex.id}_${currentUser.email}`); // Reseta o histórico de carga da ficha para o gráfico zerar
                         for(let i=1; i<=10; i++) {
                             localStorage.removeItem(`live_${currentUser.email}_${dayKey}_${ex.id}_kg_${i}`);
                             localStorage.removeItem(`live_${currentUser.email}_${dayKey}_${ex.id}_reps_${i}`);
@@ -1630,7 +1643,7 @@
                 renderWeightChart();
                 renderReport();
 
-                alert('🗑️ Hard reset concluído! O treino, o raio-X, o histórico e o streak do dia foram totalmente limpos.');
+                alert('🗑️ Hard reset concluído! O treino, o gráfico da ficha, o raio-X e o histórico do dia foram totalmente limpos.');
             }
         }
 
