@@ -269,11 +269,12 @@
             </div>
         </div>
 
-        <!-- AUTENTICAÇÃO -->
+        <!-- AUTENTICAÇÃO COM NOME -->
         <div id="authView">
             <div class="card-box">
                 <div class="question-title">Acesse sua Conta</div>
                 <div class="question-sub">Guarde seu histórico de cargas, dieta e medidas com segurança.</div>
+                <input type="text" id="authName" class="input-field" placeholder="Seu Nome Completo">
                 <input type="email" id="authEmail" class="input-field" placeholder="Seu e-mail">
                 <input type="password" id="authPass" class="input-field" placeholder="Sua senha">
                 <button class="btn-primary" onclick="handleAuth()">ENTRAR / CADASTRAR</button>
@@ -1214,15 +1215,18 @@
         }
 
         function handleAuth() {
-            const email = document.getElementById('authEmail').value;
-            if (!email || !email.includes('@')) return alert('Digite um e-mail válido.');
-            currentUser = { email: email };
+            const name = document.getElementById('authName').value.trim();
+            const email = document.getElementById('authEmail').value.trim();
+            if (!name || !email || !email.includes('@')) return alert('Digite um Nome e um E-mail válido.');
+            
+            currentUser = { email: email, name: name };
             localStorage.setItem('saas_user', JSON.stringify(currentUser));
+            localStorage.setItem(`user_name_${email}`, name);
             startFlowAfterAuth();
         }
 
         function guestLogin() {
-            currentUser = { email: "convidado@diario.com" };
+            currentUser = { email: "convidado@diario.com", name: "Convidado" };
             localStorage.setItem('saas_user', JSON.stringify(currentUser));
             startFlowAfterAuth();
         }
@@ -1243,9 +1247,8 @@
 
         function startFlowAfterAuth() {
             document.getElementById('authView').style.display = 'none';
-            document.getElementById('badgeStatus').innerText = currentUser.email.split('@')[0].toUpperCase();
+            document.getElementById('badgeStatus').innerText = (currentUser.name || currentUser.email.split('@')[0]).toUpperCase();
             
-            // Verifica se o usuário logado é um personal ou um aluno
             let isPersonalAccount = localStorage.getItem(`is_personal_account_${currentUser.email}`) === 'true';
             
             if (isPersonalAccount || userAnswers.role === 'personal') {
@@ -1342,15 +1345,16 @@
             checkRunningSessionOnLoad();
             checkRunningTimerOnLoad();
 
-            // Verifica se a ficha foi prescrita por um personal
-            const personalOwner = localStorage.getItem(`prescribed_by_${currentUser.email}`);
-            if (personalOwner) {
+            // Exibe o nome do personal no banner do aluno
+            const personalEmail = localStorage.getItem(`prescribed_by_${currentUser.email}`);
+            if (personalEmail) {
+                const personalName = localStorage.getItem(`user_name_${personalEmail}`) || personalEmail;
                 let existingBanner = document.getElementById('personalBannerNotice');
                 if (!existingBanner) {
                     let banner = document.createElement('div');
                     banner.id = 'personalBannerNotice';
                     banner.style.cssText = "background: rgba(56, 189, 248, 0.15); border: 1px solid var(--text-highlight); padding: 12px; border-radius: 12px; margin-bottom: 16px; font-size: 0.8rem; color: var(--text-highlight); font-weight: 700; text-align: center;";
-                    banner.innerHTML = `📋 Ficha de treino personalizada e prescrita pelo seu Personal Trainer (${personalOwner})`;
+                    banner.innerHTML = `📋 Ficha de treino personalizada e prescrita pelo seu Personal Trainer (${personalName})`;
                     
                     const workoutView = document.getElementById('workoutView');
                     workoutView.insertBefore(banner, workoutView.firstChild);
@@ -1418,6 +1422,8 @@
                 container.innerHTML += `<div style="background: rgba(245, 158, 11, 0.15); border: 1px dashed #f59e0b; padding: 12px; border-radius: 12px; text-align: center; color: #f59e0b; font-weight: 800; font-size: 0.9rem; margin-bottom: 16px;">🔥 FASE 1: AQUECIMENTO & MOBILIDADE</div>`;
             }
 
+            const isPrescribedByPersonal = !!localStorage.getItem(`prescribed_by_${currentUser.email}`);
+
             exercisesToRender.forEach((ex, index) => {
                 const savedName = localStorage.getItem(`custom_name_${ex.id}`) || ex.name;
                 const lastData = JSON.parse(localStorage.getItem(`last_${ex.id}_${currentUser.email}`)) || {};
@@ -1479,7 +1485,13 @@
                     </div>
                 `;
 
-                let actionDelBtn = isWarmupPhase ? '' : `<button class="action-icon-btn delete-ex-btn" onclick="removeExercise('${dayKey}', ${index})" title="Remover Exercício">✕</button>`;
+                // Se a ficha foi prescrita pelo personal, o aluno NÃO pode deletar ou adicionar séries de forma avulsa
+                let actionDelBtn = (isWarmupPhase || isPrescribedByPersonal) ? '' : `<button class="action-icon-btn delete-ex-btn" onclick="removeExercise('${dayKey}', ${index})" title="Remover Exercício">✕</button>`;
+                let setActionsBar = (isWarmupPhase || isPrescribedByPersonal) ? '' : `
+                    <div class="set-actions-bar">
+                        <button class="mini-link-btn" onclick="adjustExerciseSets('${dayKey}', ${index}, 1)">+ Adicionar Série</button>
+                        <button class="mini-link-btn" style="color:var(--danger);" onclick="adjustExerciseSets('${dayKey}', ${index}, -1)">- Remover Série</button>
+                    </div>`;
 
                 container.innerHTML += `
                     <div class="exercise-card">
@@ -1499,11 +1511,7 @@
                         </div>
                         ${historyHTML}
                         ${setsHTML}
-                        ${isWarmupPhase ? '' : `
-                        <div class="set-actions-bar">
-                            <button class="mini-link-btn" onclick="adjustExerciseSets('${dayKey}', ${index}, 1)">+ Adicionar Série</button>
-                            <button class="mini-link-btn" style="color:var(--danger);" onclick="adjustExerciseSets('${dayKey}', ${index}, -1)">- Remover Série</button>
-                        </div>`}
+                        ${setActionsBar}
                     </div>
                 `;
             });
@@ -1522,7 +1530,8 @@
                 if(btnFinishWarmup) btnFinishWarmup.style.display = 'flex';
             } else {
                 if(btnSaveWorkout) btnSaveWorkout.style.display = 'flex';
-                if(btnAddEx) btnAddEx.style.display = 'block';
+                // Se prescrito pelo personal, o aluno não adiciona exercícios extras por conta própria
+                if(btnAddEx) btnAddEx.style.display = isPrescribedByPersonal ? 'none' : 'block';
                 if(btnExport) btnExport.style.display = 'block';
                 if(btnClear) btnClear.style.display = 'block';
                 if(btnFinishWarmup) btnFinishWarmup.style.display = 'none';
@@ -2207,6 +2216,7 @@
             students.push({ email, name, goal, days });
             localStorage.setItem(`personal_students_${currentUser.email}`, JSON.stringify(students));
             localStorage.setItem(`prescribed_by_${email}`, currentUser.email);
+            localStorage.setItem(`user_name_${email}`, name);
 
             userAnswers.goal = goal;
             userAnswers.days = days;
