@@ -283,7 +283,25 @@
 
         <!-- ONBOARDING (5 ETAPAS) -->
         <div id="onboardingView" style="display: none;">
-            <div id="step1" class="card-box">
+            
+            <!-- ETAPA 0: SELEÇÃO DE PERFIL -->
+            <div id="step0" class="card-box">
+                <span class="step-progress">BEM-VINDO</span>
+                <div class="question-title">Como você vai usar o app?</div>
+                <div class="question-sub">Selecione o seu perfil para direcionarmos sua experiência.</div>
+                
+                <div class="option-btn active" onclick="selectOption('role', 'aluno', this)">
+                    <span>🏋️‍♂️ Sou Aluno</span><span style="font-size:0.75rem; color:var(--text-sub);">Montar meu treino</span>
+                </div>
+                <div class="option-btn" onclick="selectOption('role', 'personal', this)">
+                    <span>📋 Sou Personal Trainer</span><span style="font-size:0.75rem; color:var(--text-sub);">Gerenciar alunos</span>
+                </div>
+                
+                <button class="btn-primary" onclick="proceedFromRole()">CONTINUAR ➔</button>
+            </div>
+
+            <!-- ETAPA 1 (AGORA COM DISPLAY NONE INICIAL) -->
+            <div id="step1" class="card-box" style="display: none;">
                 <span class="step-progress">ETAPA 1 DE 5</span>
                 <div class="question-title">Qual é o seu objetivo principal?</div>
                 <div class="question-sub">Ajustará a faixa de repetições e a identidade visual do app.</div>
@@ -563,6 +581,22 @@
             <div id="bodyHistoryContainer"></div>
         </div>
 
+        <!-- ABA DO PERSONAL TRAINER (NOVA) -->
+        <div id="personalDashboardView" style="display: none;">
+            <div class="card-box">
+                <div class="question-title">📋 Painel do Personal</div>
+                <div class="question-sub">Aqui você poderá cadastrar seus alunos, montar as fichas e acompanhar a evolução de cada um.</div>
+                
+                <button class="btn-primary" style="background: linear-gradient(135deg, var(--accent-primary) 0%, #1d4ed8 100%);">
+                    + NOVO ALUNO
+                </button>
+                
+                <div class="empty-msg" style="margin-top: 20px;">
+                    Você ainda não tem alunos cadastrados.
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- MODAIS -->
@@ -777,7 +811,7 @@
 
     <script>
         let currentUser = JSON.parse(localStorage.getItem('saas_user')) || null;
-        let userAnswers = { goal: 'hipertrofia', days: '5', exp: 'avancado', limit: 'nenhuma' };
+        let userAnswers = { role: 'aluno', goal: 'hipertrofia', days: '5', exp: 'avancado', limit: 'nenhuma' };
         let generatedWorkouts = {};
         let weeklyDietData = {};
         let activeDietDay = 'seg';
@@ -1186,6 +1220,17 @@
                 showMainApp();
             } else {
                 document.getElementById('onboardingView').style.display = 'block';
+                document.getElementById('step0').style.display = 'block';
+            }
+        }
+
+        function proceedFromRole() {
+            document.getElementById('step0').style.display = 'none';
+            
+            if (userAnswers.role === 'personal') {
+                document.getElementById('onboardingView').style.display = 'none';
+                document.getElementById('personalDashboardView').style.display = 'block';
+            } else {
                 document.getElementById('step1').style.display = 'block';
             }
         }
