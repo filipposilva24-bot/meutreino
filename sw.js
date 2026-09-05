@@ -1,4 +1,6 @@
-// Service Worker para lidar com Push Notifications do Firebase
+// ==========================================
+// 1. IMPORTAÇÕES E CONFIGURAÇÃO DO FIREBASE
+// ==========================================
 importScripts('https://www.gstatic.com/firebasejs/12.18.0/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/12.18.0/firebase-messaging-compat.js');
 
@@ -24,4 +26,60 @@ messaging.onBackgroundMessage((payload) => {
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);
+});
+
+// ==========================================
+// 2. LÓGICA DE CACHE (FUNCIONAMENTO OFFLINE)
+// ==========================================
+const CACHE_NAME = 'diario-natural-v2';
+const assetsToCache = [
+  './',
+  './index.html',
+  'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'
+];
+
+// Instala o Service Worker e salva os arquivos no cache
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      console.log('[sw.js] Fazendo cache dos arquivos para modo offline');
+      return cache.addAll(assetsToCache);
+    })
+  );
+  self.skipWaiting();
+});
+
+// Ativa o Service Worker e limpa caches antigos (importante para o Vercel)
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cacheName) => {
+          if (cacheName !== CACHE_NAME) {
+            console.log('[sw.js] Apagando cache antigo:', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+  self.clients.claim();
+});
+
+// Intercepta as requisições para funcionar sem internet
+self.addEventListener('fetch', (event) => {
+  // Ignora requisições do Firebase/Google e foca só no app
+  if (event.request.url.includes('firestore') || event.request.url.includes('firebase') || event.request.url.includes('google')) {
+      return;
+  }
+
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      // Se tem no cache (offline), retorna. Se não, tenta baixar da internet.
+      return response || fetch(event.request).catch(() => {
+        // Se estiver offline e a requisição falhar, retorna o index.html por padrão
+        return caches.match('./index.html');
+      });
+    })
+  );
 });
