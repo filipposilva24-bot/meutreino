@@ -269,16 +269,25 @@
             </div>
         </div>
 
-        <!-- AUTENTICAÇÃO COM NOME -->
+        <!-- TELA DE LOGIN LIMPA (SEM CAMPO DE NOME REPETITIVO) -->
         <div id="authView">
             <div class="card-box">
                 <div class="question-title">Acesse sua Conta</div>
                 <div class="question-sub">Guarde seu histórico de cargas, dieta e medidas com segurança.</div>
-                <input type="text" id="authName" class="input-field" placeholder="Seu Nome Completo">
                 <input type="email" id="authEmail" class="input-field" placeholder="Seu e-mail">
                 <input type="password" id="authPass" class="input-field" placeholder="Sua senha">
                 <button class="btn-primary" onclick="handleAuth()">ENTRAR / CADASTRAR</button>
                 <button class="btn-primary btn-secondary" onclick="guestLogin()">CONTINUAR COMO CONVIDADO</button>
+            </div>
+        </div>
+
+        <!-- MODAL DE PRIMEIRO ACESSO (SOLICITA O NOME Só SE FOR NOVO CADASTRO) -->
+        <div id="firstAccessModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 4000; align-items: center; justify-content: center; padding: 16px;">
+            <div class="card-box" style="max-width: 440px; width: 100%; position: relative;">
+                <div class="question-title" style="color: var(--text-highlight);">👋 Bem-vindo ao Diário Natural!</div>
+                <div class="question-sub">Notamos que este é o seu primeiro acesso com este e-mail. Como devemos te chamar?</div>
+                <input type="text" id="modalNewUserName" class="input-field" placeholder="Seu Nome Completo">
+                <button class="btn-primary" onclick="confirmFirstAccessName()">SALVAR E CONTINUAR ➔</button>
             </div>
         </div>
 
@@ -866,6 +875,7 @@
         let isWidgetModeActive = false;
         let activeExForSwap = null;
         let editingStudentEmail = null;
+        let tempLoginEmail = "";
 
         const themes = {
             blue: { primary: '#3b82f6', glow: 'rgba(59, 130, 246, 0.25)', highlight: '#38bdf8' },
@@ -1214,14 +1224,35 @@
             renderActiveWorkout();
         }
 
+        // LÓGICA DE LOGIN INTELIGENTE (VERIFICA SE JÁ EXISTE CADASTRO)
         function handleAuth() {
-            const name = document.getElementById('authName').value.trim();
             const email = document.getElementById('authEmail').value.trim();
-            if (!name || !email || !email.includes('@')) return alert('Digite um Nome e um E-mail válido.');
+            if (!email || !email.includes('@')) return alert('Digite um e-mail válido.');
             
-            currentUser = { email: email, name: name };
+            tempLoginEmail = email;
+            let savedName = localStorage.getItem(`user_name_${email}`);
+
+            if (!savedName) {
+                // Se o usuário não existe no navegador, abre modal rápido pedindo o nome apenas uma vez
+                document.getElementById('firstAccessModal').style.display = 'flex';
+            } else {
+                // Se já existe, entra direto sem pedir nome de novo!
+                currentUser = { email: email, name: savedName };
+                localStorage.setItem('saas_user', JSON.stringify(currentUser));
+                startFlowAfterAuth();
+            }
+        }
+
+        function confirmFirstAccessName() {
+            const nameInput = document.getElementById('modalNewUserName').value.trim();
+            if (!nameInput) return alert('Por favor, digite seu nome.');
+
+            localStorage.setItem(`user_name_${tempLoginEmail}`, nameInput);
+            currentUser = { email: tempLoginEmail, name: nameInput };
             localStorage.setItem('saas_user', JSON.stringify(currentUser));
-            localStorage.setItem(`user_name_${email}`, name);
+            
+            document.getElementById('firstAccessModal').style.display = 'none';
+            document.getElementById('modalNewUserName').value = '';
             startFlowAfterAuth();
         }
 
@@ -1345,7 +1376,6 @@
             checkRunningSessionOnLoad();
             checkRunningTimerOnLoad();
 
-            // Exibe o nome do personal no banner do aluno
             const personalEmail = localStorage.getItem(`prescribed_by_${currentUser.email}`);
             if (personalEmail) {
                 const personalName = localStorage.getItem(`user_name_${personalEmail}`) || personalEmail;
@@ -1485,7 +1515,6 @@
                     </div>
                 `;
 
-                // Se a ficha foi prescrita pelo personal, o aluno NÃO pode deletar ou adicionar séries de forma avulsa
                 let actionDelBtn = (isWarmupPhase || isPrescribedByPersonal) ? '' : `<button class="action-icon-btn delete-ex-btn" onclick="removeExercise('${dayKey}', ${index})" title="Remover Exercício">✕</button>`;
                 let setActionsBar = (isWarmupPhase || isPrescribedByPersonal) ? '' : `
                     <div class="set-actions-bar">
@@ -1530,7 +1559,6 @@
                 if(btnFinishWarmup) btnFinishWarmup.style.display = 'flex';
             } else {
                 if(btnSaveWorkout) btnSaveWorkout.style.display = 'flex';
-                // Se prescrito pelo personal, o aluno não adiciona exercícios extras por conta própria
                 if(btnAddEx) btnAddEx.style.display = isPrescribedByPersonal ? 'none' : 'block';
                 if(btnExport) btnExport.style.display = 'block';
                 if(btnClear) btnClear.style.display = 'block';
