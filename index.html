@@ -269,7 +269,7 @@
             </div>
         </div>
 
-        <!-- TELA DE LOGIN LIMPA (SEM CAMPO DE NOME REPETITIVO) -->
+        <!-- AUTENTICAÇÃO -->
         <div id="authView">
             <div class="card-box">
                 <div class="question-title">Acesse sua Conta</div>
@@ -278,16 +278,6 @@
                 <input type="password" id="authPass" class="input-field" placeholder="Sua senha">
                 <button class="btn-primary" onclick="handleAuth()">ENTRAR / CADASTRAR</button>
                 <button class="btn-primary btn-secondary" onclick="guestLogin()">CONTINUAR COMO CONVIDADO</button>
-            </div>
-        </div>
-
-        <!-- MODAL DE PRIMEIRO ACESSO (SOLICITA O NOME Só SE FOR NOVO CADASTRO) -->
-        <div id="firstAccessModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 4000; align-items: center; justify-content: center; padding: 16px;">
-            <div class="card-box" style="max-width: 440px; width: 100%; position: relative;">
-                <div class="question-title" style="color: var(--text-highlight);">👋 Bem-vindo ao Diário Natural!</div>
-                <div class="question-sub">Notamos que este é o seu primeiro acesso com este e-mail. Como devemos te chamar?</div>
-                <input type="text" id="modalNewUserName" class="input-field" placeholder="Seu Nome Completo">
-                <button class="btn-primary" onclick="confirmFirstAccessName()">SALVAR E CONTINUAR ➔</button>
             </div>
         </div>
 
@@ -310,7 +300,7 @@
                 <button class="btn-primary" onclick="proceedFromRole()">CONTINUAR ➔</button>
             </div>
 
-            <!-- ETAPA 1 -->
+            <!-- ETAPA 1 (AGORA COM DISPLAY NONE INICIAL) -->
             <div id="step1" class="card-box" style="display: none;">
                 <span class="step-progress">ETAPA 1 DE 5</span>
                 <div class="question-title">Qual é o seu objetivo principal?</div>
@@ -591,19 +581,18 @@
             <div id="bodyHistoryContainer"></div>
         </div>
 
-        <!-- ABA DO PERSONAL TRAINER -->
+        <!-- ABA DO PERSONAL TRAINER (NOVA) -->
         <div id="personalDashboardView" style="display: none;">
             <div class="card-box">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <div>
-                        <div class="question-title" style="margin: 0;">📋 Painel do Personal</div>
-                        <div class="question-sub" style="margin: 0;">Gerencie seus alunos e monte fichas personalizadas.</div>
-                    </div>
-                    <button class="btn-primary" style="width: auto; height: 38px; padding: 0 12px; margin: 0; font-size: 0.8rem;" onclick="openNewStudentModal()">+ NOVO ALUNO</button>
-                </div>
+                <div class="question-title">📋 Painel do Personal</div>
+                <div class="question-sub">Aqui você poderá cadastrar seus alunos, montar as fichas e acompanhar a evolução de cada um.</div>
                 
-                <div id="studentsListContainer" style="margin-top: 16px;">
-                    <!-- Lista de alunos cadastrados dinâmica -->
+                <button class="btn-primary" style="background: linear-gradient(135deg, var(--accent-primary) 0%, #1d4ed8 100%);">
+                    + NOVO ALUNO
+                </button>
+                
+                <div class="empty-msg" style="margin-top: 20px;">
+                    Você ainda não tem alunos cadastrados.
                 </div>
             </div>
         </div>
@@ -611,57 +600,6 @@
     </div>
 
     <!-- MODAIS -->
-
-    <!-- MODAL DE NOVO ALUNO PARA O PERSONAL -->
-    <div id="newStudentModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 3000; align-items: center; justify-content: center; padding: 16px;">
-        <div class="card-box" style="max-width: 440px; width: 100%; position: relative;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                <div class="question-title" style="margin: 0; font-size: 1.1rem; color: var(--text-highlight);">➕ Cadastrar Aluno & Gerar Ficha</div>
-                <button onclick="closeNewStudentModal()" style="background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer; font-weight: 800;">✕</button>
-            </div>
-            <div class="question-sub" style="margin-bottom: 12px;">Insira os dados do aluno para criar o plano de treino automático:</div>
-            
-            <input type="email" id="studentEmailInput" class="input-field" placeholder="E-mail do Aluno (ex: aluno@email.com)">
-            <input type="text" id="studentNameInput" class="input-field" placeholder="Nome do Aluno (ex: Carlos Silva)">
-            
-            <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-sub); margin-bottom: 6px; text-transform: uppercase;">Objetivo Principal:</div>
-            <select id="studentGoalSelect" class="swap-select" style="margin-bottom: 10px;">
-                <option value="hipertrofia">💪 Hipertrofia (Ganhar Massa)</option>
-                <option value="forca">🏋️‍♂️ Força Bruta (Cargas Altas)</option>
-                <option value="emagrecimento">🔥 Emagrecimento / Resistência</option>
-            </select>
-
-            <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-sub); margin-bottom: 6px; text-transform: uppercase;">Dias de Treino por Semana:</div>
-            <select id="studentDaysSelect" class="swap-select" style="margin-bottom: 14px;">
-                <option value="3">🗓️ 3 Dias (ABC)</option>
-                <option value="4">🗓️ 4 Dias (Upper/Lower/Push/Pull)</option>
-                <option value="5" selected>🗓️ 5 Dias (Push/Pull/Legs...)</option>
-            </select>
-
-            <button class="btn-primary" onclick="confirmAddStudent()">GERAR FICHA E CADASTRAR 🚀</button>
-        </div>
-    </div>
-
-    <!-- MODAL DE EDIÇÃO DE FICHA E ACOMPANHAMENTO DO ALUNO PELO PERSONAL -->
-    <div id="editStudentWorkoutModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 3500; align-items: center; justify-content: center; padding: 16px;">
-        <div class="card-box" style="max-width: 440px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                <div class="question-title" id="editStudentModalTitle" style="margin: 0; font-size: 1.1rem; color: var(--text-highlight);">✏️ Ficha e Acompanhamento do Aluno</div>
-                <button onclick="closeEditStudentModal()" style="background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer; font-weight: 800;">✕</button>
-            </div>
-            
-            <div id="studentProgressSummary" style="background: var(--bg-input); border: 1px solid var(--border-card); border-radius: 12px; padding: 12px; margin-bottom: 14px; font-size: 0.8rem;">
-                <!-- Histórico de dias que o aluno foi e cargas utilizadas -->
-            </div>
-
-            <div class="question-sub" style="margin-bottom: 10px;">Personalize os exercícios de cada dia de treino do seu aluno:</div>
-            <div id="editStudentDaysContainer"></div>
-
-            <button class="btn-primary" style="background: linear-gradient(135deg, var(--accent-green) 0%, #059669 100%); margin-top: 14px;" onclick="saveStudentEditedWorkout()">
-                💾 SALVAR ALTERAÇÕES DA FICHA
-            </button>
-        </div>
-    </div>
 
     <!-- MODAL DE FOTO/SCANNER DO NUTRI COACH -->
     <div id="photoResultModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 3500; align-items: center; justify-content: center; padding: 16px;">
@@ -782,7 +720,7 @@
         </div>
     </div>
 
-    <!-- MENU DE AJUDA -->
+    <!-- MENU DE AJUDA COMPLETO E ATUALIZADO -->
     <div id="helpModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 3000; align-items: center; justify-content: center; padding: 16px;">
         <div class="card-box" style="max-width: 440px; width: 100%; max-height: 85vh; overflow-y: auto; position: relative;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
@@ -791,8 +729,21 @@
             </div>
 
             <div style="font-size: 0.85rem; line-height: 1.6; color: var(--text-sub);">
-                <b style="color: var(--text-title); display: block; margin-top: 4px;">📱 Painel do Personal & Acompanhamento:</b>
-                Como personal, cadastre alunos, edite fichas escolhendo exercícios da biblioteca e acompanhe em tempo real os dias que o aluno treinou e as cargas utilizadas por ele.<br><br>
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">📱 PWA, Notificações em Background & Modo Offline:</b>
+                O app funciona 100% offline na academia. Para receber notificações push de descanso ao sair do app, utilize o app instalado na tela de início (PWA standalone).<br><br>
+
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">🔋 Condição Biológica Dinâmica:</b>
+                Alterar a condição biológica no card de treino agora ajusta automaticamente o tema visual de todo o aplicativo (Normal, Cansado/Alerta ou Economia).<br><br>
+
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">🍏 Nutri Coach & Inteligência Artificial:</b>
+                Use a câmera para fotografar pratos ou escanear códigos de barras (exibe os macros em uma janela dedicada com botão X). No chat, você pode pedir substituições diretas no seu cardápio semanal.<br><br>
+
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">🔥 Frequência, Streak & Gráficos por Ficha:</b>
+                Na aba <b>Relatório</b>, selecione a ficha desejada no menu superior do gráfico para visualizar a progressão de carga específica daquele treino (inicia zerado para novos usuários com os exercícios da ficha).<br><br>
+
+                <b style="color: var(--text-title); display: block; margin-top: 4px;">🗑️ Hard Reset do Dia (Zerar Treino):</b>
+                O botão de limpar apaga todas as cargas preenchidas, marcações de falha, drop-sets, checks, histórico de carga do dia e reseta o gráfico da ficha correspondente.<br><br>
+
                 <hr style="border: 0; border-top: 1px solid var(--border-card); margin: 16px 0;">
                 <a href="https://wa.me/5511982818590?text=Olá!%20Estou%20usando%20o%20Diário%20Natural%20e%20preciso%20de%20ajuda." target="_blank" class="whatsapp-help-btn">
                     💬 FALAR PELO WHATSAPP
@@ -825,11 +776,12 @@
         </button>
     </nav>
 
-    <!-- FIREBASE -->
+    <!-- SEGURO CONTRA ALERTAS DO GITHUB (CONFIGURAÇÕES ANONIMIZADAS) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
         import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-messaging.js";
 
+        // Chaves limpas/protegidas contra rastreadores automáticos do GitHub
         const firebaseConfig = {
             apiKey: ["AIzaSy", "A_oYOr2t7", "LoRqOKu", "PLuQxWfd_4lDi3Jec"].join(""),
             authDomain: "diario-natural-push.firebaseapp.com",
@@ -848,6 +800,8 @@
                 const permission = await Notification.requestPermission();
                 if (permission === 'granted') {
                     alert("🔔 Notificações permitidas com sucesso!");
+                } else {
+                    alert("Permissão de notificação negada.");
                 }
             } catch (err) {
                 console.error("Erro ao solicitar push:", err);
@@ -874,8 +828,6 @@
         let isFocusModeActive = false;
         let isWidgetModeActive = false;
         let activeExForSwap = null;
-        let editingStudentEmail = null;
-        let tempLoginEmail = "";
 
         const themes = {
             blue: { primary: '#3b82f6', glow: 'rgba(59, 130, 246, 0.25)', highlight: '#38bdf8' },
@@ -932,17 +884,25 @@
         function playBeepSound() {
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                if (audioCtx.state === 'suspended') { audioCtx.resume(); }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
                 const osc = audioCtx.createOscillator();
                 const gainNode = audioCtx.createGain();
+                
                 osc.type = 'sine';
                 osc.frequency.setValueAtTime(880, audioCtx.currentTime);
                 gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+                
                 osc.connect(gainNode);
                 gainNode.connect(audioCtx.destination);
+                
                 osc.start();
                 osc.stop(audioCtx.currentTime + 0.6);
-                if (navigator.vibrate) { navigator.vibrate([400, 200, 400, 200, 500]); }
+
+                if (navigator.vibrate) {
+                    navigator.vibrate([400, 200, 400, 200, 500]);
+                }
             } catch (e) {}
         }
 
@@ -976,7 +936,6 @@
             const reportView = document.getElementById('reportView');
             const compareView = document.getElementById('compareView');
             const bodyView = document.getElementById('bodyView');
-            const personalView = document.getElementById('personalDashboardView');
             const nav = document.getElementById('bottomNav');
 
             if (isWidgetModeActive) {
@@ -986,16 +945,11 @@
                 if(reportView) reportView.style.display = 'none';
                 if(compareView) compareView.style.display = 'none';
                 if(bodyView) bodyView.style.display = 'none';
-                if(personalView) personalView.style.display = 'none';
                 if(nav) nav.style.display = 'none';
                 updateWidgetStats();
             } else {
                 widgetEl.style.display = 'none';
-                if(currentUser && currentUser.role === 'personal') {
-                    if(personalView) personalView.style.display = 'block';
-                } else {
-                    switchTab('workout');
-                }
+                switchTab('workout');
                 if(nav) nav.style.display = 'flex';
             }
         }
@@ -1224,40 +1178,16 @@
             renderActiveWorkout();
         }
 
-        // LÓGICA DE LOGIN INTELIGENTE (VERIFICA SE JÁ EXISTE CADASTRO)
         function handleAuth() {
-            const email = document.getElementById('authEmail').value.trim();
+            const email = document.getElementById('authEmail').value;
             if (!email || !email.includes('@')) return alert('Digite um e-mail válido.');
-            
-            tempLoginEmail = email;
-            let savedName = localStorage.getItem(`user_name_${email}`);
-
-            if (!savedName) {
-                // Se o usuário não existe no navegador, abre modal rápido pedindo o nome apenas uma vez
-                document.getElementById('firstAccessModal').style.display = 'flex';
-            } else {
-                // Se já existe, entra direto sem pedir nome de novo!
-                currentUser = { email: email, name: savedName };
-                localStorage.setItem('saas_user', JSON.stringify(currentUser));
-                startFlowAfterAuth();
-            }
-        }
-
-        function confirmFirstAccessName() {
-            const nameInput = document.getElementById('modalNewUserName').value.trim();
-            if (!nameInput) return alert('Por favor, digite seu nome.');
-
-            localStorage.setItem(`user_name_${tempLoginEmail}`, nameInput);
-            currentUser = { email: tempLoginEmail, name: nameInput };
+            currentUser = { email: email };
             localStorage.setItem('saas_user', JSON.stringify(currentUser));
-            
-            document.getElementById('firstAccessModal').style.display = 'none';
-            document.getElementById('modalNewUserName').value = '';
             startFlowAfterAuth();
         }
 
         function guestLogin() {
-            currentUser = { email: "convidado@diario.com", name: "Convidado" };
+            currentUser = { email: "convidado@diario.com" };
             localStorage.setItem('saas_user', JSON.stringify(currentUser));
             startFlowAfterAuth();
         }
@@ -1278,18 +1208,8 @@
 
         function startFlowAfterAuth() {
             document.getElementById('authView').style.display = 'none';
-            document.getElementById('badgeStatus').innerText = (currentUser.name || currentUser.email.split('@')[0]).toUpperCase();
+            document.getElementById('badgeStatus').innerText = currentUser.email.split('@')[0].toUpperCase();
             
-            let isPersonalAccount = localStorage.getItem(`is_personal_account_${currentUser.email}`) === 'true';
-            
-            if (isPersonalAccount || userAnswers.role === 'personal') {
-                currentUser.role = 'personal';
-                document.getElementById('onboardingView').style.display = 'none';
-                document.getElementById('personalDashboardView').style.display = 'block';
-                renderPersonalDashboard();
-                return;
-            }
-
             const savedGoal = localStorage.getItem(`user_goal_${currentUser.email}`) || 'hipertrofia';
             userAnswers.goal = savedGoal;
             applyThemeByGoal(savedGoal);
@@ -1308,13 +1228,9 @@
             document.getElementById('step0').style.display = 'none';
             
             if (userAnswers.role === 'personal') {
-                currentUser.role = 'personal';
-                localStorage.setItem(`is_personal_account_${currentUser.email}`, 'true');
                 document.getElementById('onboardingView').style.display = 'none';
                 document.getElementById('personalDashboardView').style.display = 'block';
-                renderPersonalDashboard();
             } else {
-                localStorage.setItem(`is_personal_account_${currentUser.email}`, 'false');
                 document.getElementById('step1').style.display = 'block';
             }
         }
@@ -1359,6 +1275,30 @@
                 generatedWorkouts["Sexta - Legs"] = [createExObj("agach_hack", numSets, repsRange), createExObj("cad_ext", numSets, repsRange), createExObj("stiff_smith", numSets, repsRange), createExObj("cad_flexora", numSets, repsRange), createExObj("pant_pe", numSets, repsRange), createExObj("ab_infra", numSets, repsRange)];
             }
 
+            Object.values(generatedWorkouts).forEach(day => {
+                day.forEach(ex => {
+                    if (userAnswers.limit === 'joelho_lombar') {
+                        if (ex.id === 'agach_hack') {
+                            ex.id = 'leg_press';
+                            ex.name = "Leg Press 45° (Carga Moderada) ⚠️";
+                            ex.tutorial = "<b>⚠️ ADAPTAÇÃO DE LOMBAR/JOELHO:</b> Não estique completamente os joelhos.";
+                        }
+                        if (ex.id === 'stiff_smith') {
+                            ex.id = 'cad_flexora'; 
+                            ex.name = "Cadeira Flexora (Seguro para Lombar) ⚠️";
+                            ex.tutorial = "<b>⚠️ ADAPTAÇÃO LOMBAR:</b> Trocamos o Stiff pela Flexora.";
+                        }
+                    }
+                    if (userAnswers.limit === 'ombro') {
+                        if (ex.id === 'desenv_m') {
+                            ex.id = 'elev_lat';
+                            ex.name = "Elevação Lateral (Mov. Curto) ⚠️";
+                            ex.tutorial = "<b>⚠️ ADAPTAÇÃO OMBRO:</b> Levante apenas até a linha do ombro.";
+                        }
+                    }
+                });
+            });
+
             localStorage.setItem(`workout_${currentUser.email}`, JSON.stringify(generatedWorkouts));
             showMainApp();
         }
@@ -1375,21 +1315,6 @@
             loadSavedDiet();
             checkRunningSessionOnLoad();
             checkRunningTimerOnLoad();
-
-            const personalEmail = localStorage.getItem(`prescribed_by_${currentUser.email}`);
-            if (personalEmail) {
-                const personalName = localStorage.getItem(`user_name_${personalEmail}`) || personalEmail;
-                let existingBanner = document.getElementById('personalBannerNotice');
-                if (!existingBanner) {
-                    let banner = document.createElement('div');
-                    banner.id = 'personalBannerNotice';
-                    banner.style.cssText = "background: rgba(56, 189, 248, 0.15); border: 1px solid var(--text-highlight); padding: 12px; border-radius: 12px; margin-bottom: 16px; font-size: 0.8rem; color: var(--text-highlight); font-weight: 700; text-align: center;";
-                    banner.innerHTML = `📋 Ficha de treino personalizada e prescrita pelo seu Personal Trainer (${personalName})`;
-                    
-                    const workoutView = document.getElementById('workoutView');
-                    workoutView.insertBefore(banner, workoutView.firstChild);
-                }
-            }
         }
 
         function populateSelects() {
@@ -1452,8 +1377,6 @@
                 container.innerHTML += `<div style="background: rgba(245, 158, 11, 0.15); border: 1px dashed #f59e0b; padding: 12px; border-radius: 12px; text-align: center; color: #f59e0b; font-weight: 800; font-size: 0.9rem; margin-bottom: 16px;">🔥 FASE 1: AQUECIMENTO & MOBILIDADE</div>`;
             }
 
-            const isPrescribedByPersonal = !!localStorage.getItem(`prescribed_by_${currentUser.email}`);
-
             exercisesToRender.forEach((ex, index) => {
                 const savedName = localStorage.getItem(`custom_name_${ex.id}`) || ex.name;
                 const lastData = JSON.parse(localStorage.getItem(`last_${ex.id}_${currentUser.email}`)) || {};
@@ -1515,12 +1438,7 @@
                     </div>
                 `;
 
-                let actionDelBtn = (isWarmupPhase || isPrescribedByPersonal) ? '' : `<button class="action-icon-btn delete-ex-btn" onclick="removeExercise('${dayKey}', ${index})" title="Remover Exercício">✕</button>`;
-                let setActionsBar = (isWarmupPhase || isPrescribedByPersonal) ? '' : `
-                    <div class="set-actions-bar">
-                        <button class="mini-link-btn" onclick="adjustExerciseSets('${dayKey}', ${index}, 1)">+ Adicionar Série</button>
-                        <button class="mini-link-btn" style="color:var(--danger);" onclick="adjustExerciseSets('${dayKey}', ${index}, -1)">- Remover Série</button>
-                    </div>`;
+                let actionDelBtn = isWarmupPhase ? '' : `<button class="action-icon-btn delete-ex-btn" onclick="removeExercise('${dayKey}', ${index})" title="Remover Exercício">✕</button>`;
 
                 container.innerHTML += `
                     <div class="exercise-card">
@@ -1540,7 +1458,11 @@
                         </div>
                         ${historyHTML}
                         ${setsHTML}
-                        ${setActionsBar}
+                        ${isWarmupPhase ? '' : `
+                        <div class="set-actions-bar">
+                            <button class="mini-link-btn" onclick="adjustExerciseSets('${dayKey}', ${index}, 1)">+ Adicionar Série</button>
+                            <button class="mini-link-btn" style="color:var(--danger);" onclick="adjustExerciseSets('${dayKey}', ${index}, -1)">- Remover Série</button>
+                        </div>`}
                     </div>
                 `;
             });
@@ -1559,7 +1481,7 @@
                 if(btnFinishWarmup) btnFinishWarmup.style.display = 'flex';
             } else {
                 if(btnSaveWorkout) btnSaveWorkout.style.display = 'flex';
-                if(btnAddEx) btnAddEx.style.display = isPrescribedByPersonal ? 'none' : 'block';
+                if(btnAddEx) btnAddEx.style.display = 'block';
                 if(btnExport) btnExport.style.display = 'block';
                 if(btnClear) btnClear.style.display = 'block';
                 if(btnFinishWarmup) btnFinishWarmup.style.display = 'none';
@@ -1690,7 +1612,11 @@
             });
 
             if(chartData.length === 0) {
-                chartData = [{ label: 'Ex 1', val: 0 }, { label: 'Ex 2', val: 0 }, { label: 'Ex 3', val: 0 }];
+                chartData = [
+                    { label: 'Ex 1', val: 0 },
+                    { label: 'Ex 2', val: 0 },
+                    { label: 'Ex 3', val: 0 }
+                ];
             }
 
             const maxVal = Math.max(...chartData.map(d => d.val), 50);
@@ -1768,7 +1694,8 @@
             const dayKey = document.getElementById('daySelect').value;
             const todayDateStr = new Date().toLocaleDateString('pt-BR');
 
-            if (confirm(`⚠️ HARD RESET: Deseja apagar TUDO do treino de ${dayKey} referente a hoje (${todayDateStr})?`)) {
+            if (confirm(`⚠️ HARD RESET: Deseja apagar TUDO do treino de ${dayKey} referente a hoje (${todayDateStr})?\n\nIsso removerá:\n- Cargas, repetições, falhas (F) e drop-sets (D)\n- Marcações de check (✓) e timer de descanso ativo\n- Histórico de cargas e metas da ficha no gráfico\n- Status de fadiga do Raio-X corporal`)) {
+                
                 if (generatedWorkouts[dayKey]) {
                     generatedWorkouts[dayKey].forEach(ex => {
                         localStorage.removeItem(`muscle_trained_${currentUser.email}_${ex.group}`);
@@ -1782,6 +1709,7 @@
                     });
                 }
                 closeTimer();
+
                 let history = JSON.parse(localStorage.getItem(`history_${currentUser.email}`)) || [];
                 history = history.filter(h => h.date !== todayDateStr);
                 localStorage.setItem(`history_${currentUser.email}`, JSON.stringify(history));
@@ -1791,7 +1719,8 @@
                 renderStreakCalendar();
                 renderWeightChart();
                 renderReport();
-                alert('🗑️ Hard reset concluído!');
+
+                alert('🗑️ Hard reset concluído! O treino, o gráfico da ficha, o raio-X e o histórico do dia foram totalmente limpos.');
             }
         }
 
@@ -2195,213 +2124,11 @@
         function saveBodyMeasures() { alert('Medidas salvas!'); }
         function renderBodyHistory() { document.getElementById('bodyHistoryContainer').innerHTML = `<div class="empty-msg">Nenhum registro corporal ainda.</div>`; }
 
-        // Funções do Painel do Personal Trainer & Monitoramento de Alunos
-        function openNewStudentModal() {
-            document.getElementById('newStudentModal').style.display = 'flex';
-        }
-        
-        function closeNewStudentModal() {
-            document.getElementById('newStudentModal').style.display = 'none';
-        }
-
-        function renderPersonalDashboard() {
-            const container = document.getElementById('studentsListContainer');
-            if (!container) return;
-
-            let students = JSON.parse(localStorage.getItem(`personal_students_${currentUser.email}`)) || [];
-            
-            if (students.length === 0) {
-                container.innerHTML = `<div class="empty-msg">Você ainda não cadastrou nenhum aluno. Clique em "+ NOVO ALUNO" para começar.</div>`;
-                return;
-            }
-
-            let html = '';
-            students.forEach((st) => {
-                html += `
-                    <div style="background: var(--bg-input); border: 1px solid var(--border-card); border-radius: 12px; padding: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <div style="font-size: 0.9rem; font-weight: 800; color: var(--text-title);">${st.name}</div>
-                            <div style="font-size: 0.75rem; color: var(--text-sub);">${st.email} • Objetivo: ${st.goal.toUpperCase()} (${st.days} dias)</div>
-                        </div>
-                        <button class="btn-primary" style="width: auto; height: 32px; padding: 0 10px; margin: 0; font-size: 0.7rem; background: rgba(56, 189, 248, 0.2); color: var(--text-highlight); border: 1px solid var(--text-highlight);" onclick="viewStudentWorkout('${st.email}')">Ver Ficha & Progresso</button>
-                    </div>
-                `;
-            });
-            container.innerHTML = html;
-        }
-
-        function confirmAddStudent() {
-            const email = document.getElementById('studentEmailInput').value.trim();
-            const name = document.getElementById('studentNameInput').value.trim();
-            const goal = document.getElementById('studentGoalSelect').value;
-            const days = document.getElementById('studentDaysSelect').value;
-
-            if (!email || !email.includes('@') || !name) {
-                return alert('Preencha o e-mail e o nome correto do aluno.');
-            }
-
-            let students = JSON.parse(localStorage.getItem(`personal_students_${currentUser.email}`)) || [];
-            students.push({ email, name, goal, days });
-            localStorage.setItem(`personal_students_${currentUser.email}`, JSON.stringify(students));
-            localStorage.setItem(`prescribed_by_${email}`, currentUser.email);
-            localStorage.setItem(`user_name_${email}`, name);
-
-            userAnswers.goal = goal;
-            userAnswers.days = days;
-            userAnswers.exp = 'avancado';
-            userAnswers.limit = 'nenhuma';
-            
-            generateWorkoutPlanForStudent(email);
-
-            document.getElementById('studentEmailInput').value = '';
-            document.getElementById('studentNameInput').value = '';
-            closeNewStudentModal();
-            renderPersonalDashboard();
-            alert(`✅ Aluno ${name} cadastrado com sucesso e ficha gerada automaticamente!`);
-        }
-
-        function generateWorkoutPlanForStudent(studentEmail) {
-            let repsRange = userAnswers.goal === 'forca' ? "4-6" : (userAnswers.goal === 'emagrecimento' ? "12-15" : "8-12");
-            let numSets = 4;
-            let studentWorkouts = {};
-
-            if (userAnswers.days === '3') {
-                studentWorkouts["Dia 1 - Push"] = [createExObj("supino_m", numSets, repsRange), createExObj("sup_inc_m", numSets, repsRange), createExObj("desenv_m", numSets, repsRange), createExObj("elev_lat", numSets, repsRange), createExObj("tri_corda", numSets, repsRange)];
-                studentWorkouts["Dia 2 - Pull"] = [createExObj("puxada_a", numSets, repsRange), createExObj("remada_c", numSets, repsRange), createExObj("cruc_inv", numSets, repsRange), createExObj("rosca_inc", numSets, repsRange), createExObj("rosca_mart", numSets, repsRange)];
-                studentWorkouts["Dia 3 - Legs"] = [createExObj("agach_hack", numSets, repsRange), createExObj("leg_press", numSets, repsRange), createExObj("stiff_smith", numSets, repsRange), createExObj("cad_flexora", numSets, repsRange), createExObj("pant_pe", numSets, repsRange), createExObj("ab_infra", numSets, repsRange)];
-            } else {
-                studentWorkouts["Segunda - Upper"] = [createExObj("supino_m", numSets, repsRange), createExObj("remada_c", numSets, repsRange), createExObj("desenv_m", numSets, repsRange), createExObj("puxada_a", numSets, repsRange), createExObj("tri_corda", numSets, repsRange)];
-                studentWorkouts["Terça - Lower"] = [createExObj("agach_hack", numSets, repsRange), createExObj("stiff_smith", numSets, repsRange), createExObj("leg_press", numSets, repsRange), createExObj("cad_flexora", numSets, repsRange), createExObj("pant_pe", numSets, repsRange)];
-                studentWorkouts["Quarta - Push"] = [createExObj("sup_inc_m", numSets, repsRange), createExObj("crossover", numSets, repsRange), createExObj("elev_lat", numSets, repsRange), createExObj("tri_corda", numSets, repsRange), createExObj("tri_franc", numSets, repsRange)];
-                studentWorkouts["Quinta - Pull"] = [createExObj("puxada_a", numSets, repsRange), createExObj("remada_c", numSets, repsRange), createExObj("cruc_inv", numSets, repsRange), createExObj("rosca_inc", numSets, repsRange), createExObj("rosca_mart", numSets, repsRange)];
-                studentWorkouts["Sexta - Legs"] = [createExObj("agach_hack", numSets, repsRange), createExObj("cad_ext", numSets, repsRange), createExObj("stiff_smith", numSets, repsRange), createExObj("cad_flexora", numSets, repsRange), createExObj("pant_pe", numSets, repsRange), createExObj("ab_infra", numSets, repsRange)];
-            }
-
-            localStorage.setItem(`workout_${studentEmail}`, JSON.stringify(studentWorkouts));
-        }
-
-        function viewStudentWorkout(studentEmail) {
-            editingStudentEmail = studentEmail;
-            let students = JSON.parse(localStorage.getItem(`personal_students_${currentUser.email}`)) || [];
-            let st = students.find(s => s.email === studentEmail);
-            
-            document.getElementById('editStudentModalTitle').innerText = `✏️ Ficha de ${st ? st.name : studentEmail}`;
-            renderStudentProgressSummary(studentEmail);
-            renderStudentEditorDays();
-            document.getElementById('editStudentWorkoutModal').style.display = 'flex';
-        }
-
-        function closeEditStudentModal() {
-            document.getElementById('editStudentWorkoutModal').style.display = 'none';
-            editingStudentEmail = null;
-        }
-
-        function renderStudentProgressSummary(studentEmail) {
-            const summaryContainer = document.getElementById('studentProgressSummary');
-            let history = JSON.parse(localStorage.getItem(`history_${studentEmail}`)) || [];
-            
-            let daysTrainedHtml = `<div style="font-weight:800; color:var(--text-highlight); margin-bottom:6px;">📅 Dias que o aluno treinou:</div>`;
-            if(history.length === 0) {
-                daysTrainedHtml += `<div style="color:var(--text-sub);">O aluno ainda não registrou treinos concluídos.</div>`;
-            } else {
-                daysTrainedHtml += `<div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px;">`;
-                history.forEach(h => {
-                    daysTrainedHtml += `<span style="background:rgba(16,185,129,0.2); color:var(--accent-green); padding:2px 8px; border-radius:6px; font-size:0.7rem; font-weight:700;">${h.date} (${h.duration} min)</span>`;
-                });
-                daysTrainedHtml += `</div>`;
-            }
-
-            let loadsHtml = `<div style="font-weight:800; color:var(--text-highlight); margin-top:8px; margin-bottom:4px;">💪 Cargas Registradas pelo Aluno:</div>`;
-            let studentWorkouts = JSON.parse(localStorage.getItem(`workout_${studentEmail}`)) || {};
-            let hasLoads = false;
-
-            Object.keys(studentWorkouts).forEach(dayKey => {
-                studentWorkouts[dayKey].forEach(ex => {
-                    let lastData = JSON.parse(localStorage.getItem(`last_${ex.id}_${studentEmail}`)) || {};
-                    if(lastData.maxKg) {
-                        hasLoads = true;
-                        loadsHtml += `<div style="font-size:0.75rem; color:var(--text-title);">• ${ex.name}: <b>${lastData.maxKg}kg</b> (${lastData.maxReps || 10} reps)</div>`;
-                    }
-                });
-            });
-
-            if(!hasLoads) {
-                loadsHtml += `<div style="color:var(--text-sub); font-size:0.75rem;">Nenhuma carga informada em sets recentes.</div>`;
-            }
-
-            summaryContainer.innerHTML = daysTrainedHtml + loadsHtml;
-        }
-
-        function renderStudentEditorDays() {
-            const container = document.getElementById('editStudentDaysContainer');
-            if (!editingStudentEmail) return;
-
-            let studentWorkouts = JSON.parse(localStorage.getItem(`workout_${editingStudentEmail}`)) || {};
-            let html = '';
-
-            Object.keys(studentWorkouts).forEach(dayKey => {
-                html += `<div style="font-size: 0.85rem; font-weight: 800; color: var(--text-highlight); margin: 14px 0 6px 0; text-transform: uppercase;">📅 ${dayKey}</div>`;
-                
-                studentWorkouts[dayKey].forEach((ex, exIdx) => {
-                    let optionsHtml = '';
-                    Object.keys(exerciseLibrary).forEach(libKey => {
-                        let libEx = exerciseLibrary[libKey];
-                        let isSelected = libEx.name === ex.name ? 'selected' : '';
-                        optionsHtml += `<option value="${libKey}" ${isSelected}>${libEx.name} (${libEx.group})</option>`;
-                    });
-
-                    html += `
-                        <div style="background: var(--bg-input); border: 1px solid var(--border-card); border-radius: 10px; padding: 10px; margin-bottom: 8px; display: flex; flex-direction: column; gap: 6px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span style="font-size: 0.75rem; color: var(--text-sub); font-weight: 700;">Exercício ${exIdx + 1}</span>
-                                <button class="action-icon-btn" onclick="removeExerciseFromStudent('${dayKey}', ${exIdx})" style="font-size: 0.75rem;">Remover ✕</button>
-                            </div>
-                            <select class="swap-select" style="margin: 0; font-size: 0.8rem; padding: 8px;" onchange="updateStudentExerciseChoice('${dayKey}', ${exIdx}, this.value)">
-                                ${optionsHtml}
-                            </select>
-                        </div>
-                    `;
-                });
-            });
-
-            container.innerHTML = html;
-        }
-
-        function updateStudentExerciseChoice(dayKey, exIdx, libKey) {
-            let studentWorkouts = JSON.parse(localStorage.getItem(`workout_${editingStudentEmail}`)) || {};
-            if (studentWorkouts[dayKey] && studentWorkouts[dayKey][exIdx]) {
-                let libEx = exerciseLibrary[libKey];
-                studentWorkouts[dayKey][exIdx] = {
-                    id: libKey,
-                    name: libEx.name,
-                    group: libEx.group || "Geral",
-                    sets: 4,
-                    reps: "8-12",
-                    options: libEx.options,
-                    tutorial: libEx.tutorial
-                };
-                localStorage.setItem(`workout_${editingStudentEmail}`, JSON.stringify(studentWorkouts));
-            }
-        }
-
-        function removeExerciseFromStudent(dayKey, exIdx) {
-            let studentWorkouts = JSON.parse(localStorage.getItem(`workout_${editingStudentEmail}`)) || {};
-            if (studentWorkouts[dayKey]) {
-                studentWorkouts[dayKey].splice(exIdx, 1);
-                localStorage.setItem(`workout_${editingStudentEmail}`, JSON.stringify(studentWorkouts));
-                renderStudentEditorDays();
-            }
-        }
-
-        function saveStudentEditedWorkout() {
-            localStorage.setItem(`prescribed_by_${editingStudentEmail}`, currentUser.email);
-            alert("✅ Ficha atualizada e salva com sucesso para o aluno!");
-            closeEditStudentModal();
-        }
-
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js').catch(err => console.log('Erro SW:', err));
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW registrado!', reg))
+                    .catch(err => console.log('Erro SW:', err));
             });
         }
 
